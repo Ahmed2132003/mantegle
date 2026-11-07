@@ -259,4 +259,48 @@ r, w = quiet(t4_caption_items, dict(job, captions=[dict(GL, srt=str(ctmp / "g_en
 rec("T4-5 glow: missing font / junk size, y, anim_dur -> fallbacks, one font warning", len(r) == 1 and len(w) == 1 and "font" in w[0], f"{len(r)} items {w}")
 cg = scripted2(["3"])
 rec("T4-5 t4_caption_style: choice 3 -> t4_style glow + blue keyword default + y_pct None; 'pill' stays pill", cg.get("t4_style") == "glow" and cg["hl_color"].lower() == T4_GLOW["hl"].lower() and cg.get("y_pct") in (None, "") and cp.get("t4_style") == "pill", str({k: cg.get(k) for k in ("t4_style", "hl_color", "neon", "size")}))
+# ---- T4-6 captions 'twoline' (unit checks; stills are checked by eye - see T4_NOTES) ------------------------------------------------
+from mt.templates.t4.captions_twoline import T4_TWO, t4_split_words, t4_twoline_sprite   # noqa: E402
+W6 = lambda s: [[w, False] for w in s.split()]
+a, b = t4_split_words(W6("a b c d e"), 3), t4_split_words(W6("a b c"), 3)
+rec("T4-6 split by word count: 5 words -> 3 + 2; <= words1 words or 1 word -> pill only; 0 = half; junk -> 3",
+    [len(x) for x in a] == [3, 2] and [len(x) for x in b] == [0, 3] and t4_split_words(W6("a"), 3)[0] == []
+    and [len(x) for x in t4_split_words(W6("a b c d e"), 0)] == [3, 2] and [len(x) for x in t4_split_words(W6("a b c d"), "x")] == [3, 1]
+    and t4_split_words(None, 3) == ([], []) and [len(x) for x in t4_split_words(W6("a b c d"), float("inf"))] == [3, 1], f"{[len(x) for x in a]} {[len(x) for x in b]}")
+TW = {"t4_style": "twoline", "ref": "canvas", "mode": "phrase", "words1": 3}
+TAR = {"two": "أنا *أحمد* إيراهيم، مطور ويب وتطبيقات موبايل", "one": "مطور ويب"}
+TEN = {"two": "I am *Ahmed* Ibrahim, a web and mobile app developer", "one": "Web developer"}
+bad_t = []
+for cv in ("reels", "youtube"):
+    W, H = CV[cv]
+    for nm, d in (("ar", TAR), ("en", TEN)):
+        for kind, txt in d.items():
+            f = ctmp / f"t_{nm}_{kind}.srt"
+            f.write_text("1\n00:00:00,000 --> 00:00:02,000\n" + txt + "\n", encoding="utf-8")
+            t4_warn_reset()
+            items, w = quiet(t4_caption_items, job_for(ctmp / "none.mp4", cv, "fill", captions=[dict(TW, srt=str(f))]), 4.0)
+            if len(items) != 1 or w:
+                bad_t.append(f"{cv}/{nm}/{kind}: {len(items)} items warn={w}"); continue
+            it = items[0]; i = it.sprite.info
+            a_ = np.asarray(it.sprite.getchannel("A")); ys, xs = np.where(a_ > 60)
+            x0, x1 = it.cx - it.sprite.width / 2.0 + xs.min(), it.cx - it.sprite.width / 2.0 + xs.max()
+            y0, y1 = it.cy - it.sprite.height / 2.0 + ys.min(), it.cy - it.sprite.height / 2.0 + ys.max()
+            sf, want = 48 * min(W, H) / 1080.0, H * T4_TWO["y_pct"][cv] / 100.0
+            pill_w = it.sprite.width - 2 * (i["pad"] + int(i["pill_h"] * 0.4))
+            if not (x0 >= sf * 0.9 and x1 <= W - sf * 0.9 and y0 >= sf and y1 <= H - sf * 0.9 and it.cx == W / 2.0
+                    and i["lines"] == (2 if kind == "two" else 1) and abs(it.cy + i["pill_bottom"] - it.sprite.height / 2.0 - want) < 1.5
+                    and pill_w <= W * 0.84 + 2):
+                bad_t.append(f"{cv}/{nm}/{kind}: ink x {x0:.0f}-{x1:.0f} y {y0:.0f}-{y1:.0f} lines={i['lines']}")
+rec("T4-6 twoline items (ar/en x two-line/one-line x both canvases): 1 item, no warning, 2 vs 1 lines, ink in the safe margin, pill bottom at y_pct", not bad_t, "; ".join(bad_t[:3]))
+job = job_for(ctmp / "none.mp4", "reels", "fill", captions=[dict(TW, srt=str(ctmp / "t_ar_two.srt"))])
+rec("T4-6 render.build_items: twoline streams drawn once (generic caption loop skips them)", len(quiet(t4_caption_items, job, 4.0)[0]) == 1 and len([i for i in quiet(build_items, job, 4.0)[0] if i.sprite.info.get("pill_bottom")]) == 1)
+ok = (t4_twoline_sprite([], None) is None and t4_twoline_sprite(None, None) is None and t4_twoline_sprite([["  ", False]], None) is None
+      and t4_twoline_sprite([["Hi", True], [5, True], ["x", False], ["y", False]], "/no/font.ttf", 40, color="junk", hl=None, neon=(1, 2), words1="q") is not None)
+one_s, two_s = t4_twoline_sprite(W6("Web developer"), None, 60, max_w=700), t4_twoline_sprite(W6("I am Ahmed Ibrahim a web developer"), None, 60, max_w=700)
+rec("T4-6 t4_twoline_sprite never raises; one line (pill only) is shorter than two lines", ok and one_s.info["lines"] == 1 and two_s.info["lines"] == 2 and one_s.height < two_s.height)
+t4_warn_reset()
+r, w = quiet(t4_caption_items, dict(job, captions=[dict(TW, srt=str(ctmp / "t_en_two.srt"), font="/no/such/font.ttf", size="abc", y_pct="zz", anim_dur="q", words1="zz")]), 4.0)
+rec("T4-6 twoline: missing font / junk size, y, anim_dur, words1 -> fallbacks, one font warning", len(r) == 1 and len(w) == 1 and "font" in w[0], f"{len(r)} items {w}")
+ct = scripted2(["4"])
+rec("T4-6 t4_caption_style: choice 4 -> t4_style twoline + cyan keyword default + words1 3 + y_pct None; pill / glow unchanged", ct.get("t4_style") == "twoline" and ct["hl_color"].lower() == T4_TWO["hl"].lower() and ct.get("words1") == 3 and ct.get("y_pct") in (None, "") and cp.get("t4_style") == "pill" and cg.get("t4_style") == "glow", str({k: ct.get(k) for k in ("t4_style", "hl_color", "neon", "words1", "size")}))
 print(sum(rows), "pass,", len(rows) - sum(rows), "fail"); sys.exit(0 if all(rows) else 1)

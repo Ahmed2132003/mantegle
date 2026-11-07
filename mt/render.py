@@ -147,7 +147,7 @@ def build_items(cfg, duration):
         if c.get("t2_style") in ("box", "sub"):          # Template 2 caption style (Part 3A)
             items += t2_caption_items(cfg, c, groups, duration)
             continue
-        if c.get("t3_style") in ("box", "sub") or c.get("t4_style") in ("pill", "glow"):      # T3 / T4 captions come from their build_items hook
+        if c.get("t3_style") in ("box", "sub") or c.get("t4_style") in ("pill", "glow", "twoline"):      # T3 / T4 captions come from their build_items hook
             continue
         if c.get("ref", "box") == "box":
             cx = box["x"] + box["w"] / 2.0

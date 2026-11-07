@@ -204,6 +204,9 @@ def _stream_items(cfg, c, duration, W, H, idx):
     if c.get("t4_style") == "glow":                                                  # style 'glow' = its own sprite builder
         from mt.templates.t4.captions_glow import t4_glow_items
         return t4_glow_items(c, groups, duration, W, H, idx)
+    if c.get("t4_style") == "twoline":                                               # style 'twoline' = its own sprite builder (R9)
+        from mt.templates.t4.captions_twoline import t4_twoline_items
+        return t4_twoline_items(c, groups, duration, W, H, idx)
     s = min(W, H) / 1080.0
     font = _stream_font(c)
     size = _num(c.get("size"), 8, 400, T4_CAP["size"] if idx == 0 else T4_CAP["size_sub"])
@@ -239,7 +242,7 @@ def t4_caption_items(cfg, duration):
         return []
     out = []
     for i, c in enumerate(caption_streams(cfg)):
-        if c.get("t4_style") in ("pill", "glow"):
+        if c.get("t4_style") in ("pill", "glow", "twoline"):
             out += _stream_items(cfg, c, duration, W, H, i)
     return out
 
@@ -251,23 +254,28 @@ def t4_caption_style(idx, srt_path):
     k = "t4cap" + str(idx)
     st = ask_choice("Caption style:", ["Pill - dark rounded pill, neon underline, yellow keywords (reference R2)",
                                        "Plain text - the classic captions, no plate",
-                                       "Glow - no plate, white text + shadow, blue neon keyword with swoosh and sparks (reference R3)"],
+                                       "Glow - no plate, white text + shadow, blue neon keyword with swoosh and sparks (reference R3)",
+                                       "Two lines - shadowed text with a cyan keyword over a dark pill with a glowing border (reference R9)"],
                     default=1, key=k + "_style")
     if st == 2:
         return ask_caption_style(idx, srt_path)
-    glow = st == 3
-    kg = k + ("g" if glow else "")                                                 # remembered answers are per style
-    from mt.templates.t4.captions_glow import T4_GLOW                                # defaults of the glow style (own table)
-    dflt = T4_GLOW if glow else T4_CAP
+    glow, two = st == 3, st == 4
+    kg = k + ("g" if glow else "t" if two else "")                                  # remembered answers are per style
+    from mt.templates.t4.captions_glow import T4_GLOW                                # defaults of the glow / twoline styles (own tables)
+    from mt.templates.t4.captions_twoline import T4_TWO
+    dflt = T4_GLOW if glow else T4_TWO if two else T4_CAP
     if not (D.get("cap_font" + k) and os.path.isfile(D.get("cap_font" + k))):
         D["cap_font" + k] = t2_font("arabic", "ع")[0] or ""
-    c = {"srt": srt_path, "t4_style": "glow" if glow else "pill", "ref": "canvas"}
+    c = {"srt": srt_path, "t4_style": "glow" if glow else "twoline" if two else "pill", "ref": "canvas"}
     c["font"] = ask_font("Caption font (a bold font: Cairo / Tajawal Bold; it must have Arabic for Arabic text)", "cap_font" + k)
-    c["size"] = ask("Caption font size (px, for a 1080 px short side - same look on both canvases)",
+    c["size"] = ask("Caption font size (px, for a 1080 px short side - same look on both canvases%s)" % (
+                    "; this is line 1, the pill text is a bit smaller" if two else ""),
                     default=dflt["size"] if idx == 0 else dflt["size_sub"], key=kg + "_size", cast=c_int)
     c["color"] = ask("Text color", default="white", key=k + "_color", cast=c_color)
-    c["hl_color"] = ask("Keyword color (%s in the reference)" % ("blue" if glow else "yellow"), default=dflt["hl"], key=kg + "_hl", cast=c_color)
-    c["neon"] = ask("Glow / swoosh color" if glow else "Underline glow color", default=dflt["neon"], key=kg + "_neon", cast=c_color)
+    c["hl_color"] = ask("Keyword color (%s in the reference)" % ("blue" if glow else "cyan" if two else "yellow"), default=dflt["hl"],
+                        key=kg + "_hl", cast=c_color)
+    c["neon"] = ask("Glow / swoosh color" if glow else "Pill border + decor glow color" if two else "Underline glow color",
+                    default=dflt["neon"], key=kg + "_neon", cast=c_color)
     c["keywords"] = ask("Words to highlight automatically, comma separated "
                         "(Enter = none; you can also put *stars* around words inside the SRT)", allow_empty=True) or ""
     c["stroke_color"], c["stroke_w"], c["shadow"] = "#000000", 0, False
@@ -277,6 +285,9 @@ def t4_caption_style(idx, srt_path):
         c["words_per_group"] = ask("Words shown at the same time (1 = word by word)", default=1, key=k + "_wpg", cast=c_int)
     else:
         c["max_words"] = ask("Max words per phrase (only used when the SRT is word-by-word)", default=8, key=k + "_maxw", cast=c_int)
+    if two:
+        c["words1"] = ask("Words on line 1 (the rest goes in the pill; a phrase with that many words or fewer is the pill only; "
+                          "0 = half of the words)", default=T4_TWO["words1"], key=kg + "_w1", cast=c_int)
     c["y_pct"] = ask(f"Vertical position of the {'text' if glow else 'pill'}'s bottom edge (percent of the canvas height; Enter = "
                      f"{dflt['y_pct']['reels']:g} reels / {dflt['y_pct']['youtube']:g} YouTube)", allow_empty=True, cast=c_percent)
     c["anim"] = ask_anim("Caption animation", default="pop" if mode == 1 else "fade", key=k + "_anim")
