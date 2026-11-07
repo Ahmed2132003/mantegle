@@ -1,0 +1,272 @@
+{
+ "template_id": 2,
+ "video": "assets/test.mp4",
+ "canvas": [
+  1080,
+  1920
+ ],
+ "video_box": {
+  "x": 110,
+  "y": 352,
+  "w": 802,
+  "h": 932,
+  "mode": "fill"
+ },
+ "background": {
+  "type": "t2"
+ },
+ "layers": [],
+ "captions": [
+  {
+   "font": "/home/claude/work/selftest_golden/selftest_font.ttf",
+   "color": "#ffffff",
+   "hl_color": "#BDDE38",
+   "stroke_color": "#000000",
+   "stroke_w": 0,
+   "shadow": false,
+   "mode": "phrase",
+   "max_words": 8,
+   "anim": "fade",
+   "anim_dur": 0.25,
+   "ref": "box",
+   "y_pct": null,
+   "srt": "assets/ar.srt",
+   "t2_style": "box",
+   "size": 50
+  },
+  {
+   "font": "/home/claude/work/selftest_golden/selftest_font.ttf",
+   "color": "#ffffff",
+   "hl_color": "#BDDE38",
+   "stroke_color": "#000000",
+   "stroke_w": 0,
+   "shadow": true,
+   "mode": "phrase",
+   "max_words": 8,
+   "anim": "fade",
+   "anim_dur": 0.25,
+   "ref": "box",
+   "y_pct": null,
+   "srt": "assets/en.srt",
+   "t2_style": "sub",
+   "size": 30,
+   "keywords": "Flutter"
+  }
+ ],
+ "texts": [],
+ "cards": [],
+ "elements": [],
+ "video_layers": [],
+ "output": "t2_golden.mp4",
+ "preview": 3.0,
+ "t2": {
+  "accent": "#bdde38",
+  "logo": "</>",
+  "name": "AHMED IBRAHIM",
+  "subtitle": "WEB DEVELOPER · MOBILE DEVELOPER · AI AUTOMATION",
+  "pill": "CREATOR SERIES",
+  "line1": "BUILDING DIGITAL",
+  "line2": "EXPERIENCES",
+  "radius": 28.0,
+  "border": 5.0,
+  "show_bg_shapes": true,
+  "show_dots": true,
+  "show_header": true,
+  "show_pill": true,
+  "show_headline": true,
+  "fonts": {
+   "headline": "/home/claude/work/selftest_golden/selftest_font.ttf",
+   "ui": "/home/claude/work/selftest_golden/selftest_font.ttf",
+   "arabic": "/home/claude/work/selftest_golden/selftest_font.ttf"
+  },
+  "chapters": [
+   {
+    "start": 0.0,
+    "end": 3.0,
+    "trigger": "",
+    "num": "01",
+    "label": "Intro",
+    "anim": "slide_up",
+    "anim_dur": 0.35
+   }
+  ],
+  "chapters_on": true,
+  "chapter_anim": "slide_up",
+  "chapter_anim_dur": 0.35,
+  "cards": [
+   {
+    "media": "assets/broll.mp4",
+    "label": "Development",
+    "icon": "code",
+    "icon_path": "",
+    "slot": 1,
+    "start": 0.3,
+    "trigger": "",
+    "hold": 2.5
+   }
+  ],
+  "cards_on": true,
+  "card_rot": 4.0,
+  "card_anim_dur": 0.5,
+  "about": [
+   {
+    "start": 0.0,
+    "end": 3.0,
+    "trigger": "",
+    "paragraph": "Building apps and teaching code.",
+    "title": "ABOUT ME",
+    "rows": [
+     {
+      "icon": "laptop",
+      "icon_path": "",
+      "text": "Web Development"
+     },
+     {
+      "icon": "phone",
+      "icon_path": "",
+      "text": "Mobile Development"
+     },
+     {
+      "icon": "gear",
+      "icon_path": "",
+      "text": "AI Automation"
+     }
+    ],
+    "anim": "",
+    "anim_dur": null
+   }
+  ],
+  "about_on": true,
+  "about_anim": "fade",
+  "about_anim_dur": 0.4,
+  "panel": {
+   "on": true,
+   "layers_title": "EDITING LAYERS",
+   "guide_title": "MOTION GUIDE",
+   "wave": true,
+   "dots": true,
+   "style": "editing",
+   "title": "EPISODE ROADMAP",
+   "now_label": "NOW",
+   "end": null,
+   "rows": [
+    {
+     "label": "Main Video Footage",
+     "start": 0.0,
+     "end": 1.0,
+     "color": "#4c95dc",
+     "segs": null,
+     "bar": true
+    },
+    {
+     "label": "Secondary B-Roll / Image",
+     "start": 0.209,
+     "end": 0.719,
+     "color": "#833b8f",
+     "segs": null,
+     "bar": true
+    },
+    {
+     "label": "Background Graphics",
+     "start": 0.0,
+     "end": 0.503,
+     "color": "#1b3c2d",
+     "segs": null,
+     "bar": true
+    },
+    {
+     "label": "Main Headline",
+     "start": 0.0,
+     "end": 0.96,
+     "color": "#accf42",
+     "segs": null,
+     "bar": true
+    },
+    {
+     "label": "Arabic Captions",
+     "start": 0.0,
+     "end": 0.838,
+     "color": "#d4c9b7",
+     "segs": [
+      [
+       0.0,
+       0.22
+      ],
+      [
+       0.25,
+       0.44
+      ],
+      [
+       0.47,
+       0.68
+      ],
+      [
+       0.71,
+       0.838
+      ]
+     ],
+     "bar": true
+    },
+    {
+     "label": "Active Word Highlight",
+     "start": 0.318,
+     "end": 0.616,
+     "color": "#92d30a",
+     "segs": null,
+     "bar": true
+    },
+    {
+     "label": "Supporting Text",
+     "start": 0.454,
+     "end": 0.752,
+     "color": "#878686",
+     "segs": [
+      [
+       0.454,
+       0.55
+      ],
+      [
+       0.58,
+       0.752
+      ]
+     ],
+     "bar": true
+    },
+    {
+     "label": "Motion Graphics",
+     "start": 0.0,
+     "end": 0.51,
+     "color": "#038d74",
+     "segs": null,
+     "bar": true
+    },
+    {
+     "label": "Sound Effects / Audio",
+     "start": 0.0,
+     "end": 0.0,
+     "color": "#6e7075",
+     "segs": null,
+     "bar": false
+    }
+   ],
+   "guide": [
+    "Headline: Slide Up + Fade In",
+    "Captions: Word-by-Word Reveal",
+    "Highlight: Scale + Color Change",
+    "B-Roll: Slide In",
+    "Support Text: Fade In",
+    "Transitions: Smooth Mask"
+   ]
+  },
+  "split": {
+   "on": false,
+   "left_pct": 50.0,
+   "gap_px": 24,
+   "margin": 26,
+   "bottom_px": 170,
+   "merge": 1.6,
+   "radius": 20.0,
+   "border": 4
+  }
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "template_id": 1,
+ "video": "/home/claude/s2/montage_project/selftest_golden_t2/assets/test.mp4",
+ "canvas": [
+  1080,
+  1920
+ ],
+ "video_box": {
+  "x": 238,
+  "y": 335,
+  "w": 604,
+  "h": 928,
+  "mode": "fill"
+ },
+ "background": {
+  "type": "tech",
+  "divider_pct": 79
+ },
+ "layers": [],
+ "captions": [
+  {
+   "font": "/home/claude/s2/montage_project/selftest_golden/selftest_font.ttf",
+   "color": "#ffffff",
+   "hl_color": "#00b8ff",
+   "stroke_color": "#000000",
+   "stroke_w": 0,
+   "shadow": true,
+   "mode": "phrase",
+   "max_words": 8,
+   "anim": "fade",
+   "anim_dur": 0.25,
+   "srt": "/home/claude/s2/montage_project/selftest_golden_t2/assets/ar.srt",
+   "size": 42,
+   "keywords": "",
+   "ref": "box",
+   "y_pct": 86
+  },
+  {
+   "font": "/home/claude/s2/montage_project/selftest_golden/selftest_font.ttf",
+   "color": "#ffffff",
+   "hl_color": "#00b8ff",
+   "stroke_color": "#000000",
+   "stroke_w": 0,
+   "shadow": true,
+   "mode": "phrase",
+   "max_words": 8,
+   "anim": "fade",
+   "anim_dur": 0.25,
+   "srt": "/home/claude/s2/montage_project/selftest_golden_t2/assets/en.srt",
+   "size": 36,
+   "keywords": "Flutter",
+   "ref": "canvas",
+   "y_pct": 72
+  }
+ ],
+ "texts": [
+  {
+   "text": "Hello مرحبا",
+   "start": 0.0,
+   "end": 2.8,
+   "pos": "top",
+   "font": "/home/claude/s2/montage_project/selftest_golden/selftest_font.ttf",
+   "size": 90,
+   "color": "#ffffff",
+   "stroke_color": "#000000",
+   "stroke_w": 0,
+   "anim": "fade",
+   "anim_dur": 0.5
+  }
+ ],
+ "cards": [
+  {
+   "l1": "WEB",
+   "l2": "DEVELOPER",
+   "icon": "code",
+   "icon_path": null,
+   "slot": 1,
+   "start": 0.3,
+   "hold": 2.5,
+   "anim": "pop",
+   "anim_dur": 0.45,
+   "font": "/home/claude/s2/montage_project/selftest_golden/selftest_font.ttf"
+  }
+ ],
+ "elements": [
+  {
+   "path": "/home/claude/s2/montage_project/selftest_golden_t2/assets/element.png",
+   "start": 0.5,
+   "end": 2.8,
+   "pos": "bottom-right",
+   "width": "20%",
+   "opacity": 100,
+   "anim": "pop",
+   "anim_dur": 0.5
+  }
+ ],
+ "video_layers": [],
+ "output": "/tmp/q1/t1_job_out.mp4",
+ "preview": 3.0
+}

@@ -1,0 +1,76 @@
+"""mt.templates.t4 - Template 4 "Overlay Studio" (registry id 5): hooks. Config namespace cfg["t4"] (see cfg.py).
+T4-0: only the plain video on a solid backdrop; the design modules (frame, nameplate, tiles, ...) arrive in later tasks."""
+import os
+
+from mt.templates.t4.captions import t4_caption_items, t4_caption_style  # noqa: F401  (t4_caption_style = registry hook)
+from mt.common import D, IMAGE_EXTS, ask, ask_choice, c_color, c_existing_file, c_int, probe
+from mt.templates.t4.base import t4_apply_backdrop
+from mt.templates.t4.warn import t4_warn_reset
+from mt.templates.t4.cfg import CANVAS_REELS, T4_DEFAULTS, T4_MODULES, t4_canvas, t4_cfg  # noqa: F401
+
+
+def _full_box(canvas, fit):
+    return {"x": 0, "y": 0, "w": int(canvas[0]), "h": int(canvas[1]), "mode": fit}
+
+
+def t4_ask_config(video_info):
+    """Canvas (auto / reels / youtube), fill or fit, letterbox colour (fit only). -> tpl dict; video_box = the whole canvas."""
+    print("\n=== Template 4 - Overlay Studio ===")
+    cm = ask_choice("Canvas:", ["Auto (by the video shape)", "Reels / Shorts 1080x1920", "YouTube 1920x1080"], default=1,
+                    key="t4_canvas")
+    mode = ("auto", "reels", "youtube")[cm - 1]
+    canvas = t4_canvas(mode, video_info)
+    print(f"   -> canvas {canvas[0]}x{canvas[1]}")
+    ft = ask_choice("Video inside the canvas:", ["Fill (crop to the canvas)", "Fit (whole video, letterboxed)"], default=1,
+                    key="t4_fit")
+    fit = "fill" if ft == 1 else "fit"
+    t4 = {"canvas_mode": mode, "fit": fit}
+    if fit == "fit":
+        t4["backdrop"] = _ask_backdrop()
+    t4 = t4_cfg(t4)
+    return {"template_id": 5, "canvas": canvas, "video_box": _full_box(canvas, fit), "background": {"type": "color", "value": t4["backdrop"]["value"]},
+            "layers": [], "t4": t4}
+
+
+def _ask_backdrop():
+    """What shows around a 'fit' video: solid colour / image / blurred copy of the video. -> backdrop dict (t4_cfg normalises it)."""
+    kind = ask_choice("Around the video (backdrop):", ["Solid colour (black by default)", "Image", "Blurred copy of the video"],
+                      default=1, key="t4_backdrop_type")
+    if kind == 2:
+        return {"type": "image", "path": ask("Backdrop image (PNG/JPG...)", cast=c_existing_file(IMAGE_EXTS))}
+    if kind == 3:
+        return {"type": "blur", "strength": ask("Blur strength 1-10", default=5, key="t4_blur", cast=c_int)}
+    return {"type": "color", "value": ask("Backdrop colour (hex or name)", default="#000000", key="t4_backdrop", cast=c_color)}
+
+
+def t4_ask_cards(cues):
+    return []                      # Template 4 has no generic cards; its card modules come later (cfg["t4"]["cards"])
+
+
+def _canvas_ok(c):
+    try:
+        return len(c) == 2 and all(int(v) > 0 for v in c)
+    except (TypeError, ValueError):
+        return False
+
+
+def t4_build_static_layers(cfg, tmp):
+    """Hook build_background: solid backdrop only. The video is the base, so video_box is forced to the full canvas
+    (fill / fit from cfg["t4"]); a job without a usable canvas gets one from canvas_mode + the video shape."""
+    t4_warn_reset()
+    t4 = t4_cfg(cfg.get("t4"))
+    cfg["t4"] = t4
+    if not _canvas_ok(cfg.get("canvas")):
+        info = None
+        try:
+            info = probe(cfg["video"]) if cfg.get("video") and os.path.isfile(str(cfg["video"])) else None
+        except Exception:
+            info = None
+        cfg["canvas"] = t4_canvas(t4["canvas_mode"], info)
+    cfg["canvas"] = [int(cfg["canvas"][0]), int(cfg["canvas"][1])]
+    cfg["video_box"] = _full_box(cfg["canvas"], t4["fit"])
+    t4_apply_backdrop(cfg, t4)
+
+
+def t4_build_items(cfg, duration, splits, lbox, rbox):
+    return t4_caption_items(cfg, duration)          # pill captions (render.py skips t4_style streams); other modules come later

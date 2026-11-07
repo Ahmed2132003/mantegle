@@ -1,0 +1,18 @@
+usage: montage.py [-h] [--job JOB] [--preview PREVIEW]
+                  [--arabic-mode {auto,raqm,reshape}] [--still]
+                  [--still-out STILL_OUT] [--selftest]
+
+Interactive montage builder (Pillow + FFmpeg)
+
+options:
+  -h, --help            show this help message and exit
+  --job JOB             re-render from a saved *_job.json (no questions)
+  --preview PREVIEW     render only the first N seconds
+  --arabic-mode {auto,raqm,reshape}
+  --still               render ONE png of the final composite at t=0.5s (no
+                        video encoding) to check the design
+  --still-out STILL_OUT
+                        where to save the --still png (default: next to the
+                        output file)
+  --selftest            run the built-in checks on synthetic assets (no
+                        questions) and exit

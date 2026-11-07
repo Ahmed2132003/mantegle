@@ -1,0 +1,3 @@
+montage.py lines: 6947  bytes: 338239
+selftest wall time: 2m42s (first run), see baseline/selftest_output.txt
+python 3.13, Pillow 12.3.0, ffmpeg ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers

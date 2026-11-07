@@ -1,0 +1,23 @@
+--- montage.py	2026-11-01 17:00:05.212602134 +0200
++++ movetest/montage.py	2026-11-01 17:04:59.720528174 +0200
+@@ -199,11 +199,7 @@
+ NO = {"n", "no", "لا", "لأ", "لاا", "0"}
+ 
+ 
+-def clean_path(s):
+-    s = s.strip()
+-    if s.startswith("& "):
+-        s = s[2:].strip()
+-    return os.path.abspath(os.path.expanduser(s.strip('"').strip("'").strip()))
++from mt.common import clean_path  # moved by mt_move (compat re-export)
+ 
+ 
+ def ask(prompt, default=None, key=None, cast=None, allow_empty=False):
+@@ -5016,7 +5012,6 @@
+     return items
+ 
+ 
+-
+ def t2_panel_bake(cfg, fg_path, tmp):
+     """Composite the panel onto the foreground plate and write the playhead sprite.  Sets / clears cfg['_t2_playhead']."""
+     cfg["_t2_playhead"] = None

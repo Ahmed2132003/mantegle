@@ -1,0 +1,74 @@
+[fonts] Template 2 arabic: recommended font not found, using 'DejaVuSans-Bold.ttf'. For the poster look put Cairo-Bold.ttf (or Tajawal-Bold.ttf / IBMPlexSansArabic-Bold.ttf) in the fonts/ folder.
+
+==============================================================================
+ SELFTEST                                  RESULT  DETAIL
+------------------------------------------------------------------------------
+ 1 syntax + imports + ffmpeg               PASS    ffmpeg=/usr/local/bin/ffmpeg
+ 2 template selector (1/2/saved)           PASS    ids={'1': 1, '2': 2, '3': 3} saved_ok=True flow_ok=True
+ 3 Template 1 render                       PASS    1080x1920 3.00s audio=True
+ 4 Template 1 frames vs golden             SKIP    selftest_golden/ not found next to the script
+ 5 Template 2 render                       PASS    1080x1920 3.00s audio=True
+ 6 old job (no template_id) = Template 1   PASS    renders as Template 1; golden compare SKIP (selftest_golden/ not found next to the script)
+ 7 --job re-render (Template 2)            PASS    rc=0 1080x1920 3.00s
+ 8 T2 static plate 1080x1920               PASS    bg (1080, 1920) RGB, fg (1080, 1920) RGBA, 20 elements
+ 9 T2 pixel checks                         PASS    bg corner (5, 8, 11) ok=True; bar (184, 216, 55) ok=True; window centre alpha 0 (want 0); window corner alpha 255 (want 255)
+ 10 T2 stress (long/empty/Arabic/accent)   PASS    9 cases, accent bar (249, 50, 99) ok=True, no-font fallback ok=True 
+ 11 T2 render 3s (size/duration/audio)     PASS    1080x1920 3.00s audio=True
+ 11b T2 video visible + rounded corners    PASS    centre stddev 126 mean 126 (video ok=True); corner diff vs design [1.0, 2.3, 1.7, 1.3]
+ 12 --still png                            PASS    (1080, 1920), placeholder window centre (128, 128, 128)
+ 13 T2 save / load template (no questions) PASS    saved=True questions on first run=17, on load=1, same cfg=True
+ 14 T2 job JSON reproduces the design      PASS    identical foreground=True
+ 15 T2 captions (box/bar/lines/highlight)  PASS    short AR: 300x91 1L size 50; long AR: 617x88 2L size 22; mixed AR+EN: 616x155 2L size 50; hl lime px=2404
+ 16 T2 chapter tag (3 chapters, 6 s)       PASS    own diff [2.02, 2.45, 2.39] vs best-other [13.72, 13.91, 15.75]; pairwise [13.17, 15.72, 15.07]; empty-before 0.00; lime px [801, 971, 949]
+ 17 T2 render chapters + AR/EN captions    PASS    1080x1920 3.00s audio=True; caption bar lime px=87, tag lime px=811, 5 items @1.0s
+ 18 T2 chapter questions + job JSON        PASS    questions ok=True none ok=True idempotent=True job same=True disabled ok=True
+ 19 T2 still with tag + caption            PASS    (1080, 1920) tag lime px=826 caption bar px=90
+ 20 T2 floating card: image + video        PASS    border hits hold img=4/4 vid=4/4, after hold 0/0; left border inside window=True (x=795); bbox ok=True; picture green=True
+ 21 T2 cards replace in the same slot      PASS    first=(18, 209, 38) second=(224, 29, 204) mid-swap cream px=731 ok=True old card ends 1.65s (new starts 1.40s)
+ 22 T2 parity render (all features)        PASS    1080x1920 4.00s audio=True; card border 4/4, tag lime px=760, element orange px=5308, layer centre (255, 255, 255)
+ 23 --job: T2 with card / old T1 job       PASS    T2 job rc=0 1080x1920 3.00s card border 4/4; old T1 job rc=0 golden SKIP (selftest_golden/ not found next to the script)
+ 24 T2 card questions + job JSON           PASS    answers ok=True T2 wording=True 'no' ok=True idempotent=True job same=True
+ 25 T2 still: tag + caption + card         PASS    (1080, 1920) card border 4/4 tag lime px=826 caption bar px=90
+ 26 timing T1 vs T2 (5 s clip)             FAIL    T1 4.4s   T2 5.9s   ratio 1.35x (target <= 1.3x)   runs T1=['4.5', '4.4'] T2=['5.9', '6.0']
+ 29 about block default (still)            PASS    bbox (98, 1326, 979, 1463) inside=True below frame (1284)=True; lime px at 3 icons [166, 166, 416]
+ 30 about two states differ (3 s clip)     PASS    states [0.0, 1.7]  region diff state1 vs state2 11.74  (same state 0.00)
+ 31 about long/Arabic text fits            PASS    long EN: lines=3 scale=0.55; Arabic: lines=3 scale=0.55; one giant word: lines=1 scale=1.00; empty: lines=0 scale=1.00
+ 32 T2 render 3 s (block+captions) + T1    PASS    1080x1920 3.00s audio=True; golden SKIP: selftest_golden/ not found next to the script
+ 33 panel static image                     PASS    bbox (25, 1496, 1054, 1844) inside canvas=True; bar colours matched 8/8; row 09 empty with waveform off / waveform drawn when on=True
+ 34 playhead sync (4 s clip)               PASS    x at t=0.5/2.0/3.5: 394.5/524.5/653.5; progress 0.125/0.500/0.872 vs t/dur 0.125/0.500/0.875 (dur 4.00s)
+ 35 panel disabled                         PASS    render ok=True 1080x1920; bar colours in region 0/8; white playhead px 0; plate None=True
+ 36 T2 3 s render panel+captions+about + T1PASS    1080x1920 3.00s audio=True; bars in video frame 8/8; golden SKIP: selftest_golden/ not found next to the script; T2 3 s render 2.8s with panel vs 2.8s without (diff +0.1s)
+ 37 waveform row 09 (audio / no audio / missing)PASS    audio: src=audio distinct peaks=196 distinct pixel column heights=8 max/min=10.8; noaudio: src=procedural distinct peaks=229 distinct pixel column heights=9 max/min=7.6; missing: src=procedural distinct peaks=229 distinct pixel column heights=9 max/min=7.6
+ 38 pagination dots follow chapters        PASS    lime dot x: chapter1 t=1 952.0, chapter2 t=3 981.0, decorative (no chapters) 1009.5 (last dot expected ~1010.0)
+ 39 T2 split mode (inside vs outside segment)PASS    lime border px hit (of 4): t=0.4 -> 0, t=2.0 -> 4, t=3.6 -> 0; element px in right box 6848; boxes L136,378,362x736 R522,378,364x736
+ 40 T2 everything on 4 s via --job         PASS    rc=0 1080x1920 4.00s audio=True split border visible at t=2: True
+ 41 T1 golden + T1 split render            PASS    golden SKIP: selftest_golden/ not found next to the script; T1 split render 1080x1920 3.00s audio=True, blue frame at right box edge: True
+ 42 T2 Enter-through (defaults) -> 2 s renderPASS    1080x1920 2.00s audio=True order_ok=True headers_ok=True | Template 2 - Lime Creator Series  |  ON: header, headline, captions x1, about, bottom panel  |  off: chapters, cards, split, texts, elements
+ 43 selector: 1 / 2 / saved T2 / saved CustomPASS    routes={'1': (1, ''), '2': (2, ''), '3': (3, ''), '4': (2, 'a_t2.json'), '5': (3, 'b_custom.json')} labels_ok=True saved_T2_not_reasked=True loaded_ok=True
+ 44 T1 missing element path                PASS    1080x1920 1.50s msg='gone.png'
+ 44 T1 invalid element file                PASS    1080x1920 1.50s msg='bad.png'
+ 44 T2 missing element path                PASS    1080x1920 1.50s msg='gone.png'
+ 44 T2 invalid element file                PASS    1080x1920 1.50s msg='bad.png'
+ 44 T2 missing card / about icon path      PASS    1080x1920 1.50s msg='icon'
+ 44 T1 missing font (message names the file)PASS    1080x1920 1.50s msg='fonts/'
+ 44 T2 missing font (message names the file)PASS    1080x1920 1.50s msg='fonts/'
+ 44 T2 numpy missing (fallback + message)  PASS    1080x1920 1.50s msg='numpy is not installed'
+ 44 ffmpeg missing (PATH empty) -> clean exitPASS    rc=1 '    Linux   : sudo apt install ffmpeg'
+ 44 T1 video without audio                 PASS    1080x1920 2.00s
+ 44 T2 video without audio                 PASS    1080x1920 2.00s
+ 44 T1 very short video (1.5 s)            PASS    1080x1920 1.50s
+ 44 T2 very short video (1.5 s)            PASS    1080x1920 1.50s
+ 44 T1 very long caption text (584 chars)  PASS    1080x1920 1.50s
+ 44 T2 very long caption text (584 chars)  PASS    1080x1920 1.50s
+ 44 SRT with BOM / CRLF / empty lines      PASS    cues=['Hello', 'World second line', 'End'] 1080x1920 1.50s
+ 44 missing video in a job -> clean exit   PASS    rc=1
+ 44 corrupt job json -> clean exit         PASS    rc=1
+ 44 robustness cases (summary)             PASS    18/18 cases passed
+ 45 non-9:16 (1920x1080, 1080x1080) T1+T2 fit/fillPASS    wide/T1/fit:ok wide/T1/fill:ok wide/T2/fit:ok wide/T2/fill:ok square/T1/fit:ok square/T1/fill:ok square/T2/fit:ok square/T2/fill:ok
+ 46 py_compile + --help + docstring        PASS    py_compile rc=0, --help rc=0, docstring_complete=True
+==============================================================================
+ 62 ok/skipped, 1 failed -> FAILED
+
+real	2m42.357s
+user	3m27.898s
+sys	0m23.045s

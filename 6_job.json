@@ -1,0 +1,301 @@
+{
+ "template_id": 3,
+ "video": "D:\\no montag real\\6.mp4",
+ "canvas": [
+  1080,
+  1920
+ ],
+ "video_box": {
+  "x": 25,
+  "y": 209,
+  "w": 694,
+  "h": 887,
+  "mode": "fill"
+ },
+ "background": {
+  "type": "t3"
+ },
+ "layers": [],
+ "captions": [
+  {
+   "srt": "C:\\Users\\HP\\Downloads\\6.srt",
+   "t3_style": "box",
+   "ref": "box",
+   "font": "C:\\Users\\HP\\Downloads\\Cairo,Kanit,Rajdhani\\Cairo\\static\\Cairo-ExtraBold.ttf",
+   "size": 42,
+   "color": "#ffffff",
+   "hl_color": "",
+   "keywords": "صفحة المنتج, Cavallo, والسعر, والتوافر, الأنشطة التجارية, Business, اكتشاف المنتج, تجربة المستخدم",
+   "stroke_color": "#000000",
+   "stroke_w": 0,
+   "shadow": false,
+   "mode": "phrase",
+   "max_words": 5,
+   "y_pct": null,
+   "anim": "fade",
+   "anim_dur": 0.25
+  },
+  {
+   "srt": "C:\\Users\\HP\\Downloads\\en_phrases_6.srt",
+   "t3_style": "sub",
+   "ref": "box",
+   "font": "C:\\Users\\HP\\Downloads\\Cairo,Kanit,Rajdhani\\Rajdhani\\Rajdhani-SemiBold.ttf",
+   "size": 30,
+   "color": "#ffffff",
+   "hl_color": "",
+   "keywords": "product page, Cavallo, price, availability, business message, discovering the product, user experience",
+   "stroke_color": "#000000",
+   "stroke_w": 0,
+   "shadow": true,
+   "mode": "phrase",
+   "max_words": 8,
+   "y_pct": null,
+   "anim": "fade",
+   "anim_dur": 0.25
+  }
+ ],
+ "texts": [],
+ "cards": [],
+ "elements": [
+  {
+   "path": "D:\\no montag real\\screens\\6_product.png",
+   "start": 1.0,
+   "end": 11.1,
+   "pos": [
+    372,
+    915
+   ],
+   "width": "560",
+   "opacity": 100,
+   "anim": "pop",
+   "anim_dur": 0.4,
+   "style": "card",
+   "fit": "contain",
+   "radius": 28,
+   "border": 3,
+   "place": "side"
+  },
+  {
+   "path": "D:\\no montag real\\screens\\6_home.png",
+   "start": 11.1,
+   "end": 15.6,
+   "pos": [
+    372,
+    915
+   ],
+   "width": "560",
+   "opacity": 100,
+   "anim": "pop",
+   "anim_dur": 0.4,
+   "style": "card",
+   "fit": "contain",
+   "radius": 28,
+   "border": 3,
+   "place": "side"
+  },
+  {
+   "path": "D:\\no montag real\\screens\\6_chat.png",
+   "start": 15.6,
+   "end": 24.8,
+   "pos": [
+    372,
+    915
+   ],
+   "width": "560",
+   "opacity": 100,
+   "anim": "pop",
+   "anim_dur": 0.4,
+   "style": "card",
+   "fit": "contain",
+   "radius": 28,
+   "border": 3,
+   "place": "side"
+  }
+ ],
+ "video_layers": [],
+ "t3": {
+  "accent": "#F56D1F",
+  "show_bg": true,
+  "watermark": true,
+  "show_header": true,
+  "name1": "Ahmed",
+  "name2": "Ibrahim",
+  "roles": [
+   "Web Developer",
+   "Mobile App Developer",
+   "AI Automation"
+  ],
+  "tagline": "BUILD • INNOVATE • AUTOMATE",
+  "show_footer": true,
+  "footer": "DREAM • DEVELOP • DELIVER",
+  "signature": "Ahmed Ibrahim",
+  "show_headline": true,
+  "headline": [
+   "SHOP",
+   "THEN",
+   "CHAT."
+  ],
+  "headline_colors": [
+   "cream",
+   "cream",
+   "accent"
+  ],
+  "headline_underline": true,
+  "tag_lines": [
+   "DISCOVER",
+   "REACH THE BUSINESS",
+   "START THE CHAT"
+  ],
+  "frame_style": "skewed",
+  "frame_skew": 1.0,
+  "video_fit": "fill",
+  "fonts": {
+   "serif": "C:\\Users\\HP\\Downloads\\Playfair_Display\\static\\PlayfairDisplay-Bold.ttf",
+   "head": "C:\\Users\\HP\\Downloads\\Cairo,Kanit,Rajdhani\\Kanit\\Kanit-BlackItalic.ttf",
+   "caps": "C:\\Users\\HP\\Downloads\\Cairo,Kanit,Rajdhani\\Rajdhani\\Rajdhani-SemiBold.ttf",
+   "light": "C:\\Users\\HP\\Downloads\\Cairo,Kanit,Rajdhani\\Rajdhani\\Rajdhani-Medium.ttf",
+   "script": "C:\\Users\\HP\\Downloads\\Mrs_Saint_Delafield\\MrsSaintDelafield-Regular.ttf"
+  },
+  "chapters_on": true,
+  "chapter_anim": "slide_up",
+  "chapter_anim_dur": 0.35,
+  "chapters": [
+   {
+    "start": 0.0,
+    "label": "PRODUCT PAGE"
+   },
+   {
+    "start": 6.17,
+    "label": "WHAT THE USER SEES"
+   },
+   {
+    "start": 11.09,
+    "label": "THE QUESTION"
+   },
+   {
+    "start": 15.6,
+    "label": "MAIN FLOW"
+   },
+   {
+    "start": 24.71,
+    "label": "THE FOCUS"
+   },
+   {
+    "start": 32.45,
+    "label": "DESIGN DECISION"
+   },
+   {
+    "start": 39.94,
+    "label": "NEXT EPISODE"
+   }
+  ],
+  "cards_on": false,
+  "cards": [],
+  "layout": {
+   "on": true,
+   "mode": "auto",
+   "start": "S0",
+   "trans": 0.5,
+   "events": []
+  },
+  "strip": {
+   "on": true,
+   "stagger": 0.12,
+   "anim": "tile_up",
+   "anim_dur": 0.4,
+   "set_trans": "slide",
+   "slant": 3.0,
+   "sets": [
+    {
+     "start": 25.1,
+     "hold": 6.9,
+     "tiles": [
+      {
+       "image": "D:\\no montag real\\screens\\6_home.png",
+       "label": "DISCOVER",
+       "icon": "globe"
+      },
+      {
+       "image": "D:\\no montag real\\screens\\6_product.png",
+       "label": "BUSINESS",
+       "icon": "phone"
+      },
+      {
+       "image": "D:\\no montag real\\screens\\6_chat.png",
+       "label": "CONTACT",
+       "icon": "chip"
+      }
+     ]
+    }
+   ],
+   "fit": "contain"
+  },
+  "panel": {
+   "on": true,
+   "start": 33.0,
+   "end": 39.9,
+   "left_title": "THE SCREENS",
+   "thumbs": [
+    {
+     "image": "D:\\no montag real\\screens\\6_home.png",
+     "caption": "Discover"
+    },
+    {
+     "image": "D:\\no montag real\\screens\\6_product.png",
+     "caption": "Business"
+    },
+    {
+     "image": "D:\\no montag real\\screens\\6_chat.png",
+     "caption": "Contact"
+    }
+   ],
+   "right_title": "DESIGN RULES",
+   "rows": [
+    "Tie every screen to a goal",
+    "Focus on the user journey",
+    "Not just more buttons"
+   ],
+   "reveal": "stagger",
+   "stagger": 1.2,
+   "anim": "fade",
+   "anim_dur": 0.3
+  },
+  "slot": {
+   "on": true,
+   "title": "KEY POINTS",
+   "icon": "bulb",
+   "anim": "fade",
+   "anim_dur": 0.35,
+   "blocks": [
+    {
+     "type": "chips",
+     "start": 33.6,
+     "chips": [
+      "Discover",
+      "Business page",
+      "Message",
+      "Save",
+      "Share"
+     ]
+    }
+   ]
+  },
+  "split": {
+   "on": false,
+   "merge": 0.3,
+   "segments": []
+  },
+  "outro": {
+   "on": true,
+   "start": 40.2,
+   "end": 45.08,
+   "title_ar": "تابع الحلقة الجاية",
+   "title_en": "NEXT EPISODE",
+   "next_number": "07",
+   "anim": "tile_up",
+   "anim_dur": 0.4
+  }
+ },
+ "output": "D:\\no montag real\\6_edited.mp4",
+ "preview": null
+}

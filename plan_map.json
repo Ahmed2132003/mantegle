@@ -1,0 +1,9587 @@
+{
+ "items": [
+  {
+   "kind": "Expr",
+   "names": [],
+   "start": 3,
+   "end": 61,
+   "n": 59,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "montage(docstring)",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "os"
+   ],
+   "start": 62,
+   "end": 62,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "sys"
+   ],
+   "start": 63,
+   "end": 63,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "re"
+   ],
+   "start": 64,
+   "end": 64,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "json"
+   ],
+   "start": 65,
+   "end": 65,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "math"
+   ],
+   "start": 66,
+   "end": 66,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "shutil"
+   ],
+   "start": 67,
+   "end": 67,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "argparse"
+   ],
+   "start": 68,
+   "end": 68,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "subprocess"
+   ],
+   "start": 69,
+   "end": 69,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "tempfile"
+   ],
+   "start": 70,
+   "end": 70,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "time"
+   ],
+   "start": 71,
+   "end": 71,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "Fraction"
+   ],
+   "start": 72,
+   "end": 72,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "Path"
+   ],
+   "start": 73,
+   "end": 73,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "unicodedata"
+   ],
+   "start": 74,
+   "end": 74,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "try",
+   "names": [],
+   "start": 76,
+   "end": 80,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "sys"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "BASE"
+   ],
+   "start": 82,
+   "end": 82,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    82
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path"
+   ],
+   "doc": "",
+   "src": "BASE = Path(__file__).resolve().parent",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "TEMPLATES_DIR"
+   ],
+   "start": 83,
+   "end": 83,
+   "n": 1,
+   "refs": [
+    "BASE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    83
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "TEMPLATES_DIR = BASE / \"templates\"",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "FONTS_DIR"
+   ],
+   "start": 84,
+   "end": 84,
+   "n": 1,
+   "refs": [
+    "BASE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    84
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "FONTS_DIR = BASE / \"fonts\"",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "DEFAULTS_FILE"
+   ],
+   "start": 85,
+   "end": 85,
+   "n": 1,
+   "refs": [
+    "BASE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    85
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "DEFAULTS_FILE = BASE / \"montage_defaults.json\"",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "VIDEO_EXTS"
+   ],
+   "start": 87,
+   "end": 87,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "VIDEO_EXTS = (\".mp4\", \".mov\", \".mkv\", \".avi\", \".webm\", \".m4v\")",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "IMAGE_EXTS"
+   ],
+   "start": 88,
+   "end": 88,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "IMAGE_EXTS = (\".png\", \".ico\", \".webp\", \".jpg\", \".jpeg\", \".bmp\", \".gif\")",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_ensure_python_packages"
+   ],
+   "start": 94,
+   "end": 126,
+   "n": 33,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "subprocess",
+    "sys"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "Expr",
+   "names": [],
+   "start": 129,
+   "end": 129,
+   "n": 1,
+   "refs": [
+    "_ensure_python_packages"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "Image",
+    "ImageChops",
+    "ImageColor",
+    "ImageDraw",
+    "ImageFilter",
+    "ImageFont",
+    "features"
+   ],
+   "start": 131,
+   "end": 131,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "import",
+   "names": [
+    "arabic_reshaper"
+   ],
+   "start": 132,
+   "end": 132,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "try",
+   "names": [
+    "get_display",
+    "get_display"
+   ],
+   "start": 134,
+   "end": 137,
+   "n": 4,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_find_tool"
+   ],
+   "start": 140,
+   "end": 148,
+   "n": 9,
+   "refs": [
+    "BASE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    145
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os",
+    "shutil"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "FFMPEG"
+   ],
+   "start": 151,
+   "end": 151,
+   "n": 1,
+   "refs": [
+    "_find_tool"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "FFMPEG = _find_tool(\"ffmpeg\")",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "FFPROBE"
+   ],
+   "start": 152,
+   "end": 152,
+   "n": 1,
+   "refs": [
+    "_find_tool"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "FFPROBE = _find_tool(\"ffprobe\")",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_require_ffmpeg"
+   ],
+   "start": 155,
+   "end": 162,
+   "n": 8,
+   "refs": [
+    "FFMPEG",
+    "FFPROBE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "sys"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_load_defaults"
+   ],
+   "start": 168,
+   "end": 172,
+   "n": 5,
+   "refs": [
+    "DEFAULTS_FILE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "json"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "D"
+   ],
+   "start": 175,
+   "end": 175,
+   "n": 1,
+   "refs": [
+    "_load_defaults"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "D = _load_defaults()",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_save_defaults"
+   ],
+   "start": 178,
+   "end": 182,
+   "n": 5,
+   "refs": [
+    "D",
+    "DEFAULTS_FILE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "json"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "AR_DIGITS"
+   ],
+   "start": 188,
+   "end": 188,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "AR_DIGITS = str.maketrans(\"\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669\u066b\", \"0123456789.\")",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "AR_COLORS"
+   ],
+   "start": 190,
+   "end": 196,
+   "n": 7,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "AR_COLORS = {",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "YES"
+   ],
+   "start": 198,
+   "end": 198,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "YES = {\"y\", \"yes\", \"\u064a\", \"\u0627\u064a\u0648\u0647\", \"\u0623\u064a\u0648\u0647\", \"\u0627\u0647\", \"\u0623\u0647\", \"\u0622\u0647\", \"\u0646\u0639\u0645\", \"\u0627\u064a\u0648\u0627\", \"\u0623\u064a\u0648\u0627\", \"1\"}",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "NO"
+   ],
+   "start": 199,
+   "end": 199,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "NO = {\"n\", \"no\", \"\u0644\u0627\", \"\u0644\u0623\", \"\u0644\u0627\u0627\", \"0\"}",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "clean_path"
+   ],
+   "start": 202,
+   "end": 206,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask"
+   ],
+   "start": 209,
+   "end": 233,
+   "n": 25,
+   "refs": [
+    "D"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "yn"
+   ],
+   "start": 236,
+   "end": 249,
+   "n": 14,
+   "refs": [
+    "NO",
+    "YES"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_float"
+   ],
+   "start": 252,
+   "end": 253,
+   "n": 2,
+   "refs": [
+    "AR_DIGITS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_int"
+   ],
+   "start": 256,
+   "end": 257,
+   "n": 2,
+   "refs": [
+    "AR_DIGITS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_time"
+   ],
+   "start": 260,
+   "end": 269,
+   "n": 10,
+   "refs": [
+    "AR_DIGITS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_color"
+   ],
+   "start": 272,
+   "end": 285,
+   "n": 14,
+   "refs": [
+    "AR_COLORS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "ImageColor",
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_size_wh"
+   ],
+   "start": 288,
+   "end": 295,
+   "n": 8,
+   "refs": [
+    "AR_DIGITS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_existing_file"
+   ],
+   "start": 298,
+   "end": 306,
+   "n": 9,
+   "refs": [
+    "clean_path"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_text"
+   ],
+   "start": 309,
+   "end": 315,
+   "n": 7,
+   "refs": [
+    "clean_path"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_percent"
+   ],
+   "start": 318,
+   "end": 322,
+   "n": 5,
+   "refs": [
+    "AR_DIGITS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_time"
+   ],
+   "start": 325,
+   "end": 326,
+   "n": 2,
+   "refs": [
+    "ask",
+    "c_time"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_choice"
+   ],
+   "start": 329,
+   "end": 339,
+   "n": 11,
+   "refs": [
+    "AR_DIGITS",
+    "ask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "ARABIC_RE"
+   ],
+   "start": 345,
+   "end": 345,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "ARABIC_RE = re.compile(\"[\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF]\")",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "ARABIC_MODE"
+   ],
+   "start": 346,
+   "end": 346,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "ARABIC_MODE = \"reshape\"",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_reshaper"
+   ],
+   "start": 347,
+   "end": 347,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "arabic_reshaper"
+   ],
+   "doc": "",
+   "src": "_reshaper = arabic_reshaper.ArabicReshaper()",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "has_arabic"
+   ],
+   "start": 350,
+   "end": 351,
+   "n": 2,
+   "refs": [
+    "ARABIC_RE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "is_rtl_text"
+   ],
+   "start": 354,
+   "end": 357,
+   "n": 4,
+   "refs": [
+    "ARABIC_RE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "setup_arabic_mode"
+   ],
+   "start": 360,
+   "end": 373,
+   "n": 14,
+   "refs": [
+    "ARABIC_MODE"
+   ],
+   "globals_stmt": [
+    "ARABIC_MODE"
+   ],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "features"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_CUR_FONT"
+   ],
+   "start": 376,
+   "end": 376,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_CUR_FONT = {\"path\": None}",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_cmap_cache"
+   ],
+   "start": 377,
+   "end": 377,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_cmap_cache = {}",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_font_cmap"
+   ],
+   "start": 380,
+   "end": 387,
+   "n": 8,
+   "refs": [
+    "_cmap_cache"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_fix_missing"
+   ],
+   "start": 390,
+   "end": 404,
+   "n": 15,
+   "refs": [
+    "_CUR_FONT",
+    "_font_cmap"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "unicodedata"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "shape"
+   ],
+   "start": 407,
+   "end": 411,
+   "n": 5,
+   "refs": [
+    "ARABIC_MODE",
+    "_fix_missing",
+    "_reshaper",
+    "get_display",
+    "has_arabic"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Return the string in the form that must be handed to Pillow for drawing.",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_font_cache"
+   ],
+   "start": 414,
+   "end": 414,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_font_cache = {}",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "load_font"
+   ],
+   "start": 417,
+   "end": 425,
+   "n": 9,
+   "refs": [
+    "ARABIC_MODE",
+    "_CUR_FONT",
+    "_font_cache"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "ImageFont"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "font_supports_arabic"
+   ],
+   "start": 427,
+   "end": 435,
+   "n": 9,
+   "refs": [
+    "ARABIC_MODE",
+    "load_font"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_system_font_dirs"
+   ],
+   "start": 438,
+   "end": 449,
+   "n": 12,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os",
+    "sys"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_font_index"
+   ],
+   "start": 452,
+   "end": 452,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_font_index = None",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_build_font_index"
+   ],
+   "start": 455,
+   "end": 467,
+   "n": 13,
+   "refs": [
+    "FONTS_DIR",
+    "_font_index",
+    "_system_font_dirs"
+   ],
+   "globals_stmt": [
+    "_font_index"
+   ],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "list_local_fonts"
+   ],
+   "start": 470,
+   "end": 477,
+   "n": 8,
+   "refs": [
+    "FONTS_DIR"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "find_font"
+   ],
+   "start": 480,
+   "end": 490,
+   "n": 11,
+   "refs": [
+    "_build_font_index",
+    "clean_path"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "default_font"
+   ],
+   "start": 493,
+   "end": 514,
+   "n": 22,
+   "refs": [
+    "_build_font_index",
+    "list_local_fonts"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os",
+    "sys"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_font"
+   ],
+   "start": 517,
+   "end": 538,
+   "n": 22,
+   "refs": [
+    "D",
+    "ask",
+    "default_font",
+    "find_font",
+    "font_supports_arabic",
+    "list_local_fonts"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "ANIMS"
+   ],
+   "start": 544,
+   "end": 545,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "ANIMS = [\"fade\", \"slide_up\", \"slide_down\", \"slide_left\", \"slide_right\",",
+   "target": "anim",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "ANIM_LINE"
+   ],
+   "start": 546,
+   "end": 547,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "ANIM_LINE = (\"0=none  1=fade  2=slide_up  3=slide_down  4=slide_left  5=slide_right  \"",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_out_cubic"
+   ],
+   "start": 550,
+   "end": 551,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "anim",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_out_back"
+   ],
+   "start": 554,
+   "end": 556,
+   "n": 3,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "anim",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_out_bounce"
+   ],
+   "start": 559,
+   "end": 570,
+   "n": 12,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "anim",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "anim_state"
+   ],
+   "start": 573,
+   "end": 605,
+   "n": 33,
+   "refs": [
+    "_out_back",
+    "_out_bounce",
+    "_out_cubic"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "p: 0 (hidden) -> 1 (fully shown). Returns alpha, dx, dy, scale, rotation, reveal.",
+   "src": "",
+   "target": "anim",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_anim"
+   ],
+   "start": 608,
+   "end": 619,
+   "n": 12,
+   "refs": [
+    "ANIMS",
+    "AR_DIGITS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_anim"
+   ],
+   "start": 622,
+   "end": 624,
+   "n": 3,
+   "refs": [
+    "ANIM_LINE",
+    "ask",
+    "c_anim"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "PRESETS"
+   ],
+   "start": 630,
+   "end": 634,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "PRESETS = {",
+   "target": "anim",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "POS_LINE"
+   ],
+   "start": 635,
+   "end": 636,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "POS_LINE = (\"1=top-left 2=top 3=top-right 4=left 5=center 6=right 7=bottom-left 8=bottom 9=bottom-right\"",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_pos"
+   ],
+   "start": 639,
+   "end": 648,
+   "n": 10,
+   "refs": [
+    "AR_DIGITS",
+    "PRESETS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_pos"
+   ],
+   "start": 651,
+   "end": 654,
+   "n": 4,
+   "refs": [
+    "POS_LINE",
+    "ask",
+    "c_pos"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "resolve_pos"
+   ],
+   "start": 657,
+   "end": 676,
+   "n": 20,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Return the sprite CENTER (cx, cy) on the canvas.",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "wrap_lines"
+   ],
+   "start": 682,
+   "end": 698,
+   "n": 17,
+   "refs": [
+    "shape"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "make_text_sprite"
+   ],
+   "start": 701,
+   "end": 726,
+   "n": 26,
+   "refs": [
+    "load_font",
+    "shape",
+    "wrap_lines"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "load_image_sprite"
+   ],
+   "start": 729,
+   "end": 745,
+   "n": 17,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_TASH"
+   ],
+   "start": 751,
+   "end": 751,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "_TASH = re.compile(\"[\u064b-\u065f\u0670\u0640]\")",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "norm_tok"
+   ],
+   "start": 754,
+   "end": 759,
+   "n": 6,
+   "refs": [
+    "_TASH"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "parse_markup"
+   ],
+   "start": 762,
+   "end": 773,
+   "n": 12,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "'a *b c* d' -> [[a,False],[b,True],[c,True],[d,False]]",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "split_keywords"
+   ],
+   "start": 776,
+   "end": 777,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "kw_sequences"
+   ],
+   "start": 780,
+   "end": 786,
+   "n": 7,
+   "refs": [
+    "norm_tok"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "find_sequences"
+   ],
+   "start": 789,
+   "end": 796,
+   "n": 8,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "apply_keywords"
+   ],
+   "start": 799,
+   "end": 804,
+   "n": 6,
+   "refs": [
+    "find_sequences",
+    "norm_tok"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "flatten_tokens"
+   ],
+   "start": 807,
+   "end": 821,
+   "n": 15,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "[(word, start, end)] - words of sentence cues share the cue time by length.",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "phrase_groups"
+   ],
+   "start": 824,
+   "end": 849,
+   "n": 26,
+   "refs": [
+    "flatten_tokens"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "Phrases for 'whole sentence' captions. Sentence-level SRTs are kept as they are;",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_tok_dir"
+   ],
+   "start": 852,
+   "end": 857,
+   "n": 6,
+   "refs": [
+    "ARABIC_RE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "visual_order"
+   ],
+   "start": 860,
+   "end": 880,
+   "n": 21,
+   "refs": [
+    "_tok_dir"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Word-level bidi: returns items in left-to-right drawing order.",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "make_rich_sprite"
+   ],
+   "start": 883,
+   "end": 951,
+   "n": 69,
+   "refs": [
+    "is_rtl_text",
+    "load_font",
+    "shape",
+    "visual_order"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "ImageFilter"
+   ],
+   "doc": "tokens: [[text, highlighted_bool], ...]  ->  centered multi-line RGBA sprite.",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "CYAN"
+   ],
+   "start": 957,
+   "end": 957,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "CYAN = (30, 170, 255)",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "CYAN_TXT"
+   ],
+   "start": 958,
+   "end": 958,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "CYAN_TXT = (0, 184, 255)",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_draw_icon"
+   ],
+   "start": 961,
+   "end": 997,
+   "n": 37,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "make_card_sprite"
+   ],
+   "start": 1000,
+   "end": 1073,
+   "n": 74,
+   "refs": [
+    "CYAN",
+    "CYAN_TXT",
+    "_draw_icon",
+    "load_font",
+    "shape"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "ImageFilter"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_chamfer"
+   ],
+   "start": 1079,
+   "end": 1081,
+   "n": 3,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "make_tech_background"
+   ],
+   "start": 1084,
+   "end": 1196,
+   "n": 113,
+   "refs": [
+    "_chamfer"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "ImageFilter"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "class",
+   "names": [
+    "Item"
+   ],
+   "start": 1202,
+   "end": 1219,
+   "n": 18,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_paste"
+   ],
+   "start": 1222,
+   "end": 1230,
+   "n": 9,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "draw_item"
+   ],
+   "start": 1233,
+   "end": 1266,
+   "n": 34,
+   "refs": [
+    "_paste"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "TIME_RE"
+   ],
+   "start": 1272,
+   "end": 1272,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "TIME_RE = re.compile(r\"(\\d+):(\\d+):(\\d+)[,.](\\d+)\\s*-->\\s*(\\d+):(\\d+):(\\d+)[,.](\\d+)\")",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_ts"
+   ],
+   "start": 1275,
+   "end": 1276,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "parse_srt"
+   ],
+   "start": 1279,
+   "end": 1306,
+   "n": 28,
+   "refs": [
+    "TIME_RE",
+    "_ts"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "caption_groups"
+   ],
+   "start": 1309,
+   "end": 1322,
+   "n": 14,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "probe"
+   ],
+   "start": 1328,
+   "end": 1365,
+   "n": 38,
+   "refs": [
+    "FFPROBE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Fraction",
+    "json",
+    "subprocess"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_caption_style"
+   ],
+   "start": 1371,
+   "end": 1403,
+   "n": 33,
+   "refs": [
+    "ask",
+    "ask_anim",
+    "ask_choice",
+    "ask_font",
+    "c_color",
+    "c_float",
+    "c_int",
+    "c_percent",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "list_templates"
+   ],
+   "start": 1406,
+   "end": 1409,
+   "n": 4,
+   "refs": [
+    "TEMPLATES_DIR"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_layers"
+   ],
+   "start": 1412,
+   "end": 1425,
+   "n": 14,
+   "refs": [
+    "IMAGE_EXTS",
+    "ask",
+    "ask_anim",
+    "ask_pos",
+    "c_existing_file",
+    "c_percent",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "maybe_save_template"
+   ],
+   "start": 1428,
+   "end": 1436,
+   "n": 9,
+   "refs": [
+    "TEMPLATES_DIR",
+    "ask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "json",
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_hud_template"
+   ],
+   "start": 1439,
+   "end": 1453,
+   "n": 15,
+   "refs": [
+    "ask",
+    "ask_choice",
+    "ask_layers",
+    "c_int",
+    "c_percent",
+    "c_size_wh",
+    "maybe_save_template"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_PRESET"
+   ],
+   "start": 1456,
+   "end": 1456,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_PRESET = {}",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_saved_templates"
+   ],
+   "start": 1459,
+   "end": 1464,
+   "n": 6,
+   "refs": [
+    "_tpl_template_id",
+    "list_templates"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "[(path, registry_id)] for every templates/*.json: Template 2 designs -> 2, everything else",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "choose_template"
+   ],
+   "start": 1467,
+   "end": 1501,
+   "n": 35,
+   "refs": [
+    "AR_DIGITS",
+    "D",
+    "TEMPLATE_REGISTRY",
+    "_PRESET",
+    "_saved_templates",
+    "ask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "FIRST question of the program: which template (or one of your saved templates).",
+   "src": "",
+   "target": "templates/__init__",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_template"
+   ],
+   "start": 1504,
+   "end": 1573,
+   "n": 70,
+   "refs": [
+    "AR_DIGITS",
+    "IMAGE_EXTS",
+    "VIDEO_EXTS",
+    "_PRESET",
+    "_tpl_template_id",
+    "ask",
+    "ask_choice",
+    "ask_layers",
+    "c_color",
+    "c_existing_file",
+    "c_size_wh",
+    "list_templates",
+    "maybe_save_template"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "json",
+    "os",
+    "re"
+   ],
+   "doc": "Custom flow: saved templates (templates/*.json) or a brand-new custom template.",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_texts"
+   ],
+   "start": 1576,
+   "end": 1597,
+   "n": 22,
+   "refs": [
+    "ask",
+    "ask_anim",
+    "ask_font",
+    "ask_pos",
+    "ask_time",
+    "c_color",
+    "c_float",
+    "c_int",
+    "c_text",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_elements"
+   ],
+   "start": 1600,
+   "end": 1618,
+   "n": 19,
+   "refs": [
+    "IMAGE_EXTS",
+    "ask",
+    "ask_anim",
+    "ask_pos",
+    "ask_time",
+    "c_existing_file",
+    "c_float",
+    "c_percent",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_video_layers"
+   ],
+   "start": 1621,
+   "end": 1639,
+   "n": 19,
+   "refs": [
+    "VIDEO_EXTS",
+    "ask",
+    "ask_choice",
+    "ask_time",
+    "c_existing_file",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "ICON_LINE"
+   ],
+   "start": 1642,
+   "end": 1642,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "ICON_LINE = \"1=code  2=phone  3=chip/AI  4=none  or a path to a PNG/ICO\"",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "SLOT_LINE"
+   ],
+   "start": 1643,
+   "end": 1643,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "SLOT_LINE = \"1=top-left  2=left  3=right\"",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "SLOTS"
+   ],
+   "start": 1644,
+   "end": 1646,
+   "n": 3,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "SLOTS = {1: (0.25, 0.1255, \"h\", \"h-right-down\"),",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "find_trigger"
+   ],
+   "start": 1649,
+   "end": 1653,
+   "n": 5,
+   "refs": [
+    "find_sequences",
+    "flatten_tokens",
+    "kw_sequences",
+    "norm_tok"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "ask_cards"
+   ],
+   "start": 1656,
+   "end": 1704,
+   "n": 49,
+   "refs": [
+    "AR_DIGITS",
+    "ICON_LINE",
+    "SLOT_LINE",
+    "ask",
+    "ask_anim",
+    "ask_font",
+    "c_float",
+    "c_time",
+    "clean_path",
+    "find_trigger",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_interactive_core"
+   ],
+   "start": 1707,
+   "end": 1766,
+   "n": 60,
+   "refs": [
+    "VIDEO_EXTS",
+    "_interactive_t2",
+    "ask",
+    "ask_elements",
+    "ask_layers",
+    "ask_texts",
+    "ask_video_layers",
+    "c_existing_file",
+    "c_float",
+    "choose_template",
+    "clean_path",
+    "parse_srt",
+    "probe",
+    "t2_ask_about",
+    "t2_ask_cards_cfg",
+    "t2_ask_chapters",
+    "t2_ask_panel",
+    "t2_ask_split",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "templates/__init__",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "interactive"
+   ],
+   "start": 1769,
+   "end": 1773,
+   "n": 5,
+   "refs": [
+    "_PRESET",
+    "_interactive_core"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/__init__",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_WARNED"
+   ],
+   "start": 1779,
+   "end": 1779,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_WARNED = set()",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_warn"
+   ],
+   "start": 1782,
+   "end": 1785,
+   "n": 4,
+   "refs": [
+    "_WARNED"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_font_ok"
+   ],
+   "start": 1788,
+   "end": 1792,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "ImageFont",
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_font_or_fallback"
+   ],
+   "start": 1795,
+   "end": 1806,
+   "n": 12,
+   "refs": [
+    "_font_ok",
+    "_warn",
+    "default_font"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path"
+   ],
+   "doc": "Usable font path: the given one, or the default font + a message naming the file to put in",
+   "src": "",
+   "target": "fonts",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_img_ok"
+   ],
+   "start": 1809,
+   "end": 1818,
+   "n": 10,
+   "refs": [
+    "_warn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "Path",
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_vid_ok"
+   ],
+   "start": 1821,
+   "end": 1825,
+   "n": 5,
+   "refs": [
+    "_warn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "preflight_cfg"
+   ],
+   "start": 1828,
+   "end": 1882,
+   "n": 55,
+   "refs": [
+    "_WARNED",
+    "_font_ok",
+    "_font_or_fallback",
+    "_img_ok",
+    "_vid_ok",
+    "_warn",
+    "default_font",
+    "get_template"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os"
+   ],
+   "doc": "Deep copy of cfg with every missing / unreadable asset dropped or replaced (one-line [!] m",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_load_job"
+   ],
+   "start": 1885,
+   "end": 1891,
+   "n": 7,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "json"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "stream_groups"
+   ],
+   "start": 1897,
+   "end": 1947,
+   "n": 51,
+   "refs": [
+    "find_sequences",
+    "kw_sequences",
+    "norm_tok",
+    "parse_markup",
+    "split_keywords"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "Caption groups for one SRT: [(start, end, [[word, highlighted], ...]), ...]",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "caption_streams"
+   ],
+   "start": 1950,
+   "end": 1960,
+   "n": 11,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "captions",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "SPLIT_T"
+   ],
+   "start": 1965,
+   "end": 1965,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "SPLIT_T = 0.4",
+   "target": "split",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "split_boxes"
+   ],
+   "start": 1968,
+   "end": 1981,
+   "n": 14,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "split",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "compute_splits"
+   ],
+   "start": 1984,
+   "end": 1998,
+   "n": 15,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "split",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "split_at"
+   ],
+   "start": 2001,
+   "end": 2002,
+   "n": 2,
+   "refs": [
+    "SPLIT_T"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "split",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_draw_frame"
+   ],
+   "start": 2005,
+   "end": 2031,
+   "n": 27,
+   "refs": [
+    "_chamfer"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "ImageFilter"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "make_split_background"
+   ],
+   "start": 2034,
+   "end": 2039,
+   "n": 6,
+   "refs": [
+    "_draw_frame",
+    "make_tech_background"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t1_build_items"
+   ],
+   "start": 2041,
+   "end": 2073,
+   "n": 33,
+   "refs": [
+    "Item",
+    "SLOTS",
+    "SPLIT_T",
+    "make_card_sprite",
+    "split_at"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Template 1 (Tech HUD) hook: template-specific timeline items = the HUD cards.",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "build_items"
+   ],
+   "start": 2076,
+   "end": 2140,
+   "n": 65,
+   "refs": [
+    "Item",
+    "SPLIT_T",
+    "caption_streams",
+    "compute_splits",
+    "get_template",
+    "is_rtl_text",
+    "load_image_sprite",
+    "make_rich_sprite",
+    "make_text_sprite",
+    "parse_srt",
+    "resolve_pos",
+    "split_at",
+    "split_boxes",
+    "stream_groups",
+    "t2_caption_items"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_hex0x"
+   ],
+   "start": 2143,
+   "end": 2144,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "build_ffmpeg_cmd"
+   ],
+   "start": 2147,
+   "end": 2292,
+   "n": 146,
+   "refs": [
+    "FFMPEG",
+    "SPLIT_T",
+    "_hex0x",
+    "compute_splits",
+    "split_boxes"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "video_layer_area"
+   ],
+   "start": 2295,
+   "end": 2303,
+   "n": 9,
+   "refs": [
+    "split_boxes"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "prepare_video_layers"
+   ],
+   "start": 2306,
+   "end": 2333,
+   "n": 28,
+   "refs": [
+    "FFMPEG",
+    "video_layer_area"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os",
+    "subprocess"
+   ],
+   "doc": "Pre-render every video layer (screen recording / b-roll) into a small, already",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "render"
+   ],
+   "start": 2336,
+   "end": 2354,
+   "n": 19,
+   "refs": [
+    "_render",
+    "_require_ffmpeg",
+    "get_template",
+    "preflight_cfg",
+    "prepare_video_layers",
+    "probe",
+    "t2_prepare_card_layers"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "shutil",
+    "tempfile"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_render"
+   ],
+   "start": 2357,
+   "end": 2454,
+   "n": 98,
+   "refs": [
+    "FFMPEG",
+    "_require_ffmpeg",
+    "anim_state",
+    "build_ffmpeg_cmd",
+    "build_items",
+    "draw_item",
+    "probe"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "Path",
+    "math",
+    "os",
+    "shutil",
+    "subprocess",
+    "tempfile",
+    "time"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "PALETTES"
+   ],
+   "start": 2472,
+   "end": 2477,
+   "n": 6,
+   "refs": [
+    "CYAN",
+    "CYAN_TXT"
+   ],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "PALETTES = {",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t1_build_background"
+   ],
+   "start": 2480,
+   "end": 2490,
+   "n": 11,
+   "refs": [
+    "make_split_background",
+    "make_tech_background",
+    "split_boxes"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "Template 1 (Tech HUD) static layers: procedural background (+ split background).",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t1_ask_config"
+   ],
+   "start": 2493,
+   "end": 2494,
+   "n": 2,
+   "refs": [
+    "ask_hud_template"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t1_tech",
+   "tpl": "T1"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_POSTER_W",
+    "T2_POSTER_H"
+   ],
+   "start": 2510,
+   "end": 2510,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_POSTER_W, T2_POSTER_H = 941.0, 1672.0",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_ACCENT"
+   ],
+   "start": 2511,
+   "end": 2511,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_ACCENT = \"#BDDE38\"",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_SS"
+   ],
+   "start": 2512,
+   "end": 2512,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_SS = 4",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_BG0",
+    "T2_BG1"
+   ],
+   "start": 2513,
+   "end": 2513,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_BG0, T2_BG1 = (5, 8, 11), (11, 12, 17)",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_DEFAULT_BOX"
+   ],
+   "start": 2514,
+   "end": 2514,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_DEFAULT_BOX = {\"x\": 110, \"y\": 352, \"w\": 802, \"h\": 932, \"mode\": \"fill\"}",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_DEFAULTS"
+   ],
+   "start": 2515,
+   "end": 2535,
+   "n": 21,
+   "refs": [
+    "T2_ACCENT"
+   ],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_DEFAULTS = {",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_TEXT_KEYS"
+   ],
+   "start": 2536,
+   "end": 2536,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_TEXT_KEYS = (\"logo\", \"name\", \"subtitle\", \"pill\", \"line1\", \"line2\")",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_BOOL_KEYS"
+   ],
+   "start": 2537,
+   "end": 2537,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_BOOL_KEYS = (\"show_bg_shapes\", \"show_dots\", \"show_header\", \"show_pill\", \"show_headline\", \"chapters_on\", \"cards_on\", \"about_on\")",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_rgb"
+   ],
+   "start": 2541,
+   "end": 2548,
+   "n": 8,
+   "refs": [
+    "T2_ACCENT"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "ImageColor"
+   ],
+   "doc": "'#rrggbb' / name / (r,g,b[,a]) -> (r,g,b). Unknown values fall back to the poster lime.",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_mix"
+   ],
+   "start": 2551,
+   "end": 2552,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_lighten"
+   ],
+   "start": 2555,
+   "end": 2556,
+   "n": 2,
+   "refs": [
+    "t2_mix"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_darken"
+   ],
+   "start": 2559,
+   "end": 2560,
+   "n": 2,
+   "refs": [
+    "t2_mix"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_cfg"
+   ],
+   "start": 2563,
+   "end": 2605,
+   "n": 43,
+   "refs": [
+    "ANIMS",
+    "T2_BOOL_KEYS",
+    "T2_DEFAULTS",
+    "T2_TEXT_KEYS",
+    "t2_norm_about",
+    "t2_norm_cards",
+    "t2_norm_chapters",
+    "t2_norm_panel",
+    "t2_norm_split",
+    "t2_rgb"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Complete, validated cfg[\"t2\"]: every key present (unknown keys are kept for Parts 3-4).",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_norm_split"
+   ],
+   "start": 2608,
+   "end": 2619,
+   "n": 12,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Validated cfg['t2']['split'] (see T2_DEFAULTS).  raw may be None / True / False / dict.",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_split_params"
+   ],
+   "start": 2622,
+   "end": 2632,
+   "n": 11,
+   "refs": [
+    "T2_DEFAULT_BOX",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "cfg['t2']['split'] -> the dict split_boxes()/compute_splits() (Template 1's split logic) u",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_make_split_ring"
+   ],
+   "start": 2635,
+   "end": 2671,
+   "n": 37,
+   "refs": [
+    "T2_SS",
+    "split_boxes",
+    "t2_cfg",
+    "t2_rgb"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageChops",
+    "ImageDraw",
+    "ImageFilter"
+   ],
+   "doc": "Transparent full-canvas png: lime rounded border (+ soft glow) around both split boxes, an",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_num_or_none"
+   ],
+   "start": 2674,
+   "end": 2678,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_norm_chapters"
+   ],
+   "start": 2681,
+   "end": 2696,
+   "n": 16,
+   "refs": [
+    "ANIMS",
+    "_t2_num_or_none"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Chapter list -> clean list (idempotent). Entry: start (s) | trigger (SRT phrase), num (''=",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_norm_cards"
+   ],
+   "start": 2699,
+   "end": 2720,
+   "n": 22,
+   "refs": [
+    "_t2_num_or_none"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Floating-card list -> clean list (idempotent). Entry: media (image/video path), label, ico",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_FONTS"
+   ],
+   "start": 2726,
+   "end": 2753,
+   "n": 28,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_FONTS = {",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_t2_font_idx"
+   ],
+   "start": 2754,
+   "end": 2754,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_t2_font_idx = None",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_T2_WARNED"
+   ],
+   "start": 2755,
+   "end": 2755,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_T2_WARNED = set()",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_norm"
+   ],
+   "start": 2758,
+   "end": 2759,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "re"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_lookup"
+   ],
+   "start": 2762,
+   "end": 2775,
+   "n": 14,
+   "refs": [
+    "_build_font_index",
+    "_t2_font_idx",
+    "_t2_norm"
+   ],
+   "globals_stmt": [
+    "_t2_font_idx"
+   ],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Path of an installed/local font whose letters-only name is `norm` (or starts with it: vari",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_font"
+   ],
+   "start": 2778,
+   "end": 2803,
+   "n": 26,
+   "refs": [
+    "T2_FONTS",
+    "_T2_WARNED",
+    "_t2_lookup",
+    "default_font",
+    "font_supports_arabic",
+    "has_arabic"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os"
+   ],
+   "doc": "-> (font_path, needs_fake_italic). Arabic text always uses the Arabic role. Never raises.",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_size_for_cap"
+   ],
+   "start": 2806,
+   "end": 2814,
+   "n": 9,
+   "refs": [
+    "load_font"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Font size (px) whose capital letters are `cap_px` tall.",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_draw_mask"
+   ],
+   "start": 2819,
+   "end": 2828,
+   "n": 10,
+   "refs": [
+    "T2_SS"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "math"
+   ],
+   "doc": "Generic 4x-supersampled mask. draw_fn(draw, L, ss): L(x, y) maps canvas px to the big mask",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_rrect_mask"
+   ],
+   "start": 2831,
+   "end": 2838,
+   "n": 8,
+   "refs": [
+    "T2_SS",
+    "t2_draw_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Rounded rectangle (x0, y0, x1, y1) - float coordinates allowed, clean anti-aliased corners",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_poly_mask"
+   ],
+   "start": 2841,
+   "end": 2851,
+   "n": 11,
+   "refs": [
+    "T2_SS",
+    "t2_draw_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "ImageFilter"
+   ],
+   "doc": "Polygon mask; round_r > 0 rounds the corners (blur + threshold at 4x).",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_polys_mask"
+   ],
+   "start": 2854,
+   "end": 2862,
+   "n": 9,
+   "refs": [
+    "T2_SS",
+    "t2_draw_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Several polygons in one mask (hatch stripes...).",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_line_mask"
+   ],
+   "start": 2865,
+   "end": 2876,
+   "n": 12,
+   "refs": [
+    "T2_SS",
+    "t2_draw_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Poly-line with round joints (and round caps).",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_dots_mask"
+   ],
+   "start": 2879,
+   "end": 2885,
+   "n": 7,
+   "refs": [
+    "T2_SS",
+    "t2_draw_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_mask_sub"
+   ],
+   "start": 2888,
+   "end": 2894,
+   "n": 7,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageChops"
+   ],
+   "doc": "a minus b (result lives in a's frame).",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_mask_full"
+   ],
+   "start": 2897,
+   "end": 2902,
+   "n": 6,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "Mask -> full-canvas 'L' image.",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_place"
+   ],
+   "start": 2905,
+   "end": 2909,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Put a 1x mask on the canvas: left edge x (or right edge `right`), vertically centred on cy",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_ramp"
+   ],
+   "start": 2912,
+   "end": 2932,
+   "n": 21,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "stops [(pos 0..1, (r,g,b[,a]))...] -> RGBA image n x 2 (two identical rows).",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_gradient"
+   ],
+   "start": 2935,
+   "end": 2947,
+   "n": 13,
+   "refs": [
+    "t2_ramp"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "math"
+   ],
+   "doc": "Linear gradient image (RGBA). angle: 0 = left->right, 90 = top->bottom, 135 = top-right->b",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_grad"
+   ],
+   "start": 2950,
+   "end": 2955,
+   "n": 6,
+   "refs": [
+    "t2_gradient"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Callable fill for t2_paint: a gradient defined in CANVAS coordinates (box) - or the mask's",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_alpha_paste"
+   ],
+   "start": 2958,
+   "end": 2964,
+   "n": 7,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_paint"
+   ],
+   "start": 2967,
+   "end": 2986,
+   "n": 20,
+   "refs": [
+    "_t2_alpha_paste"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageChops"
+   ],
+   "doc": "Paint `fill` through `mask` onto the RGBA `base` (in place).",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_glow"
+   ],
+   "start": 2989,
+   "end": 2996,
+   "n": 8,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageFilter"
+   ],
+   "doc": "Soft glow mask around a mask (paint it with the glow colour).",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_shear_mask"
+   ],
+   "start": 3000,
+   "end": 3004,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "math"
+   ],
+   "doc": "Fake italic: lean the top of the glyphs to the right by tan = k (works on 'L' / RGBA image",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_text_mask"
+   ],
+   "start": 3007,
+   "end": 3039,
+   "n": 33,
+   "refs": [
+    "T2_SS",
+    "has_arabic",
+    "load_font",
+    "shape",
+    "t2_shear_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw"
+   ],
+   "doc": "Ink-cropped 1x 'L' mask of one line of text (4x supersampled). Arabic is shaped as a whole",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_fit_text"
+   ],
+   "start": 3042,
+   "end": 3059,
+   "n": 18,
+   "refs": [
+    "t2_size_for_cap",
+    "t2_text_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Auto-fit: shrink the font until the ink fits max_w (never below min_scale); as a last reso",
+   "src": "",
+   "target": "draw",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_T2_CACHE"
+   ],
+   "start": 3063,
+   "end": 3063,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_T2_CACHE = {}",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_T2_CACHE_DIR"
+   ],
+   "start": 3064,
+   "end": 3064,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_T2_CACHE_DIR = None",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "make_t2_static"
+   ],
+   "start": 3067,
+   "end": 3274,
+   "n": 208,
+   "refs": [
+    "T2_BG0",
+    "T2_BG1",
+    "T2_DEFAULT_BOX",
+    "T2_POSTER_H",
+    "T2_POSTER_W",
+    "_T2_CACHE",
+    "_T2_CACHE_DIR",
+    "t2_cfg",
+    "t2_darken",
+    "t2_dots_mask",
+    "t2_draw_mask",
+    "t2_fit_text",
+    "t2_font",
+    "t2_glow",
+    "t2_grad",
+    "t2_gradient",
+    "t2_lighten",
+    "t2_line_mask",
+    "t2_mask_full",
+    "t2_mask_sub",
+    "t2_mix",
+    "t2_paint",
+    "t2_place",
+    "t2_poly_mask",
+    "t2_polys_mask",
+    "t2_rgb",
+    "t2_rrect_mask"
+   ],
+   "globals_stmt": [
+    "_T2_CACHE_DIR"
+   ],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "ImageChops",
+    "json",
+    "os",
+    "shutil",
+    "tempfile"
+   ],
+   "doc": "Draw Template 2's static design and save it:",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_build_static_layers"
+   ],
+   "start": 3277,
+   "end": 3296,
+   "n": 20,
+   "refs": [
+    "make_t2_static",
+    "t2_cfg",
+    "t2_make_split_ring",
+    "t2_panel_bake",
+    "t2_split_params",
+    "t2_wave_data"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "Template 2 'build_background' hook: writes the BACKGROUND + FOREGROUND plates into tmp and",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_c_t2_text"
+   ],
+   "start": 3300,
+   "end": 3302,
+   "n": 3,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_tpl_template_id"
+   ],
+   "start": 3305,
+   "end": 3309,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "json"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "ask",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_ask_config"
+   ],
+   "start": 3312,
+   "end": 3367,
+   "n": 56,
+   "refs": [
+    "D",
+    "T2_ACCENT",
+    "T2_DEFAULTS",
+    "T2_DEFAULT_BOX",
+    "_PRESET",
+    "_c_t2_text",
+    "_tpl_template_id",
+    "ask",
+    "ask_choice",
+    "c_color",
+    "c_int",
+    "c_size_wh",
+    "list_templates",
+    "maybe_save_template",
+    "t2_cfg",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "json",
+    "os"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_first_frame"
+   ],
+   "start": 3371,
+   "end": 3387,
+   "n": 17,
+   "refs": [
+    "FFMPEG"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "os",
+    "subprocess",
+    "tempfile"
+   ],
+   "doc": "First frame of the video as an RGB PIL image (None if it cannot be read).",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "render_still"
+   ],
+   "start": 3390,
+   "end": 3443,
+   "n": 54,
+   "refs": [
+    "_first_frame",
+    "anim_state",
+    "build_items",
+    "draw_item",
+    "get_template",
+    "preflight_cfg",
+    "probe"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "Path",
+    "os",
+    "shutil",
+    "tempfile"
+   ],
+   "doc": "ONE png of the final composite at time t (default 0.5 s), in about a second - no video enc",
+   "src": "",
+   "target": "render",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_TAG"
+   ],
+   "start": 3449,
+   "end": 3450,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_TAG = {\"dx\": 18, \"dy\": 42, \"w\": 233, \"h\": 86, \"radius\": 14, \"pad\": 15, \"num_cap\": 33, \"label_cap\": 16,",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_tag_pos"
+   ],
+   "start": 3453,
+   "end": 3456,
+   "n": 4,
+   "refs": [
+    "T2_DEFAULT_BOX",
+    "T2_TAG"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Top-left canvas position of the chapter-tag plate (relative to the video window).",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_chapter_sprite"
+   ],
+   "start": 3459,
+   "end": 3492,
+   "n": 34,
+   "refs": [
+    "T2_ACCENT",
+    "T2_TAG",
+    "t2_font",
+    "t2_paint",
+    "t2_rgb",
+    "t2_rrect_mask",
+    "t2_size_for_cap",
+    "t2_text_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "Chapter tag: dark translucent rounded plate, big italic accent number (+ thin fading light",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_resolve_chapters"
+   ],
+   "start": 3495,
+   "end": 3531,
+   "n": 37,
+   "refs": [
+    "caption_streams",
+    "find_trigger",
+    "parse_srt",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Chapters -> [{\"start\",\"end\",\"num\",\"label\",\"anim\",\"dur\"}] sorted by start.",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_chapter_items"
+   ],
+   "start": 3534,
+   "end": 3544,
+   "n": 11,
+   "refs": [
+    "Item",
+    "t2_cfg",
+    "t2_chapter_sprite",
+    "t2_resolve_chapters",
+    "t2_tag_pos"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_ask_chapters"
+   ],
+   "start": 3547,
+   "end": 3580,
+   "n": 34,
+   "refs": [
+    "D",
+    "ask",
+    "ask_anim",
+    "c_float",
+    "c_time",
+    "find_trigger",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Questions for the chapter tags. Returns the t2 keys to merge into cfg['t2'] ({} = none / k",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_CAP"
+   ],
+   "start": 3586,
+   "end": 3588,
+   "n": 3,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_CAP = {\"radius\": 20, \"alpha\": 0.70, \"bar_x\": 13, \"bar_w\": 9, \"bar_h\": 0.72, \"text_l\": 38, \"text_r\": 24,",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_caption_layout"
+   ],
+   "start": 3591,
+   "end": 3600,
+   "n": 10,
+   "refs": [
+    "T2_CAP",
+    "T2_DEFAULT_BOX",
+    "caption_streams"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Geometry shared by the Template 2 caption streams (frame = the video window).",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_caption_sprite"
+   ],
+   "start": 3603,
+   "end": 3695,
+   "n": 93,
+   "refs": [
+    "T2_ACCENT",
+    "T2_CAP",
+    "is_rtl_text",
+    "load_font",
+    "shape",
+    "t2_paint",
+    "t2_rgb",
+    "t2_rrect_mask",
+    "visual_order"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw"
+   ],
+   "doc": "The Template 2 caption: dark translucent (70 % black) rounded box + accent vertical bar on",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_subline_sprite"
+   ],
+   "start": 3698,
+   "end": 3717,
+   "n": 20,
+   "refs": [
+    "T2_ACCENT",
+    "make_rich_sprite"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Small ONE-line caption (the English line under the Arabic box): white, accent highlight, s",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_caption_items"
+   ],
+   "start": 3720,
+   "end": 3745,
+   "n": 26,
+   "refs": [
+    "Item",
+    "T2_CAP",
+    "is_rtl_text",
+    "t2_caption_layout",
+    "t2_caption_sprite",
+    "t2_cfg",
+    "t2_font",
+    "t2_subline_sprite"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "Template 2 caption items for one stream (c['t2_style'] = 'box' | 'sub').",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_caption_style"
+   ],
+   "start": 3748,
+   "end": 3782,
+   "n": 35,
+   "refs": [
+    "D",
+    "T2_CAP",
+    "ask",
+    "ask_anim",
+    "ask_choice",
+    "ask_font",
+    "c_color",
+    "c_float",
+    "c_int",
+    "c_percent",
+    "t2_font"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os"
+   ],
+   "doc": "Questions for one Template 2 caption stream: stream 1 = the Arabic box, further streams = ",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_CARD"
+   ],
+   "start": 3794,
+   "end": 3798,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_CARD = {\"w\": 258, \"h\": 350, \"radius\": 26, \"border\": 5, \"border_col\": (244, 241, 232),",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "_T2_CARD_PARTS"
+   ],
+   "start": 3799,
+   "end": 3799,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "_T2_CARD_PARTS = {}",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_card_icon"
+   ],
+   "start": 3802,
+   "end": 3810,
+   "n": 9,
+   "refs": [
+    "AR_DIGITS",
+    "clean_path"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "Answer of the card-icon question -> 'code' | 'phone' | 'chip' | 'none' | path of a PNG/ICO",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_card_center"
+   ],
+   "start": 3813,
+   "end": 3824,
+   "n": 12,
+   "refs": [
+    "T2_CARD",
+    "T2_DEFAULT_BOX"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Centre (cx, cy) of floating-card slot 1 (right-upper, poster) / 2 (left-upper) / 3 (right-",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_card_parts"
+   ],
+   "start": 3827,
+   "end": 3886,
+   "n": 60,
+   "refs": [
+    "T2_ACCENT",
+    "T2_CARD",
+    "_T2_CARD_PARTS",
+    "_draw_icon",
+    "t2_fit_text",
+    "t2_font",
+    "t2_glow",
+    "t2_paint",
+    "t2_rgb",
+    "t2_rrect_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "json"
+   ],
+   "doc": "Everything about a card that does not change between frames, drawn at 2x (supersampled; th",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_CARD_BLEED"
+   ],
+   "start": 3889,
+   "end": 3889,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_CARD_BLEED = 3",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_card_media_size"
+   ],
+   "start": 3892,
+   "end": 3895,
+   "n": 4,
+   "refs": [
+    "T2_CARD_BLEED"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Size (px) the media is scaled to before it goes into the card (window size at 1x + a small",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_card_static"
+   ],
+   "start": 3898,
+   "end": 3908,
+   "n": 11,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "The parts of a card that never change (shadow + border plate, bar + strip + label, window ",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_card_assemble"
+   ],
+   "start": 3911,
+   "end": 3944,
+   "n": 34,
+   "refs": [
+    "_t2_card_static",
+    "t2_card_media_size"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageChops",
+    "math"
+   ],
+   "doc": "One finished card sprite (RGBA, tilted by `angle` degrees = counter-clockwise, padded for ",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_resolve_cards"
+   ],
+   "start": 3947,
+   "end": 3999,
+   "n": 53,
+   "refs": [
+    "VIDEO_EXTS",
+    "caption_streams",
+    "find_trigger",
+    "parse_srt",
+    "t2_card_center",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os"
+   ],
+   "doc": "Cards -> [{..card keys.., \"start\",\"end\",\"kind\",\"angle\",\"cx\",\"cy\",\"anim\",\"dur\"}] sorted by ",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_card_parts_for"
+   ],
+   "start": 4002,
+   "end": 4004,
+   "n": 3,
+   "refs": [
+    "t2_card_parts",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_card_items"
+   ],
+   "start": 4007,
+   "end": 4023,
+   "n": 17,
+   "refs": [
+    "Item",
+    "_first_frame",
+    "_t2_card_parts_for",
+    "t2_card_assemble",
+    "t2_resolve_cards"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "Timeline Items of the floating cards. Image cards always; video cards only when with_video",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_read_exact"
+   ],
+   "start": 4026,
+   "end": 4033,
+   "n": 8,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_prepare_card_layers"
+   ],
+   "start": 4036,
+   "end": 4106,
+   "n": 71,
+   "refs": [
+    "FFMPEG",
+    "Item",
+    "_read_exact",
+    "_t2_card_parts_for",
+    "anim_state",
+    "draw_item",
+    "t2_card_assemble",
+    "t2_card_media_size",
+    "t2_resolve_cards"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "Path",
+    "math",
+    "os",
+    "subprocess"
+   ],
+   "doc": "Video floating cards -> video layers (same mechanism as ask_video_layers' b-roll).  For ea",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_build_items"
+   ],
+   "start": 4109,
+   "end": 4114,
+   "n": 6,
+   "refs": [
+    "t1_build_items",
+    "t2_about_items",
+    "t2_card_items",
+    "t2_chapter_items",
+    "t2_dots_items",
+    "t2_roadmap_items"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_ask_cards_cfg"
+   ],
+   "start": 4117,
+   "end": 4161,
+   "n": 45,
+   "refs": [
+    "AR_DIGITS",
+    "D",
+    "ICON_LINE",
+    "IMAGE_EXTS",
+    "VIDEO_EXTS",
+    "ask",
+    "c_card_icon",
+    "c_existing_file",
+    "c_float",
+    "c_time",
+    "find_trigger",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Floating B-roll card questions (Template 2 wording). Returns the t2 keys to merge into cfg",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_ask_cards"
+   ],
+   "start": 4164,
+   "end": 4166,
+   "n": 3,
+   "refs": [
+    "t2_ask_cards_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Registry hook: the list of floating cards (interactive() stores it, with the style keys, i",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_ABOUT"
+   ],
+   "start": 4174,
+   "end": 4179,
+   "n": 6,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_ABOUT = {\"x_left\": 98, \"col_w\": 450, \"div_x\": 570, \"div_y0\": 6, \"div_y1\": 143, \"sq\": 15, \"sq_y\": 10,",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_ABOUT_DEFAULT_STATE"
+   ],
+   "start": 4180,
+   "end": 4184,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_ABOUT_DEFAULT_STATE = {",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_ABOUT_ICONS"
+   ],
+   "start": 4185,
+   "end": 4185,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_ABOUT_ICONS = (\"laptop\", \"phone\", \"gear\", \"code\", \"chip\", \"image\", \"none\")",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_ABOUT_ICON_LINE"
+   ],
+   "start": 4186,
+   "end": 4186,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_ABOUT_ICON_LINE = \"1=laptop  2=phone  3=gear/AI  4=code  5=chip  6=none  or a path to a PNG/ICO\"",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_about_icon_spec"
+   ],
+   "start": 4189,
+   "end": 4198,
+   "n": 10,
+   "refs": [
+    "AR_DIGITS",
+    "T2_ABOUT_ICONS",
+    "clean_path"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "Icon answer ('laptop' | number 1-6 | path of a PNG/ICO) -> (kind, icon_path). Unknown -> (",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "c_about_icon"
+   ],
+   "start": 4201,
+   "end": 4205,
+   "n": 5,
+   "refs": [
+    "AR_DIGITS",
+    "t2_about_icon_spec"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_norm_about"
+   ],
+   "start": 4208,
+   "end": 4234,
+   "n": 27,
+   "refs": [
+    "ANIMS",
+    "T2_ABOUT",
+    "T2_ABOUT_DEFAULT_STATE",
+    "_t2_num_or_none",
+    "t2_about_icon_spec"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "About states -> clean list (idempotent). State: start (s) | trigger (SRT phrase), end (s),",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_about_geometry"
+   ],
+   "start": 4237,
+   "end": 4253,
+   "n": 17,
+   "refs": [
+    "T2_ABOUT",
+    "T2_DEFAULT_BOX"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Pixel geometry of the block (canvas px): y_base, sprite origin/size, column rect, per-row ",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_about_icon"
+   ],
+   "start": 4256,
+   "end": 4286,
+   "n": 31,
+   "refs": [
+    "T2_ACCENT",
+    "_draw_icon",
+    "t2_rgb"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "math"
+   ],
+   "doc": "Lime line icon (RGBA, size x size).  Kinds: laptop, phone, gear, code, chip (drawn 4x, dow",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_about_wrap"
+   ],
+   "start": 4289,
+   "end": 4301,
+   "n": 13,
+   "refs": [
+    "load_font",
+    "shape"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_about_fit_paragraph"
+   ],
+   "start": 4304,
+   "end": 4328,
+   "n": 25,
+   "refs": [
+    "_t2_about_wrap",
+    "t2_size_for_cap"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Auto-fit a paragraph into max_lines x col_w: shrink the font (down to min_scale), re-wrap;",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_about_sprite"
+   ],
+   "start": 4331,
+   "end": 4385,
+   "n": 55,
+   "refs": [
+    "T2_ABOUT",
+    "has_arabic",
+    "is_rtl_text",
+    "t2_about_fit_paragraph",
+    "t2_about_geometry",
+    "t2_about_icon",
+    "t2_cfg",
+    "t2_fit_text",
+    "t2_font",
+    "t2_paint",
+    "t2_rgb",
+    "t2_rrect_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image"
+   ],
+   "doc": "One block STATE as an RGBA sprite (origin = geometry ox/oy).  meta = {\"ink\": {\"title\",\"par",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_resolve_about"
+   ],
+   "start": 4388,
+   "end": 4428,
+   "n": 41,
+   "refs": [
+    "T2_ABOUT_DEFAULT_STATE",
+    "caption_streams",
+    "find_trigger",
+    "parse_srt",
+    "t2_cfg",
+    "t2_norm_about"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "About states -> [{\"start\",\"end\",\"anim\",\"dur\", + state keys}] sorted by start (trigger phra",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_about_items"
+   ],
+   "start": 4431,
+   "end": 4440,
+   "n": 10,
+   "refs": [
+    "Item",
+    "t2_about_geometry",
+    "t2_about_sprite",
+    "t2_resolve_about"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_ask_about"
+   ],
+   "start": 4443,
+   "end": 4493,
+   "n": 51,
+   "refs": [
+    "D",
+    "T2_ABOUT",
+    "T2_ABOUT_DEFAULT_STATE",
+    "T2_ABOUT_ICON_LINE",
+    "ask",
+    "ask_anim",
+    "c_about_icon",
+    "c_float",
+    "c_time",
+    "find_trigger",
+    "t2_about_icon_spec",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "ABOUT ME + FEATURES block questions. Returns the t2 keys to merge into cfg['t2']:",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_PANEL"
+   ],
+   "start": 4500,
+   "end": 4506,
+   "n": 7,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_PANEL = {\"x0\": 22, \"y0\": 1303, \"x1\": 918, \"y1\": 1605, \"radius\": 24, \"outline\": (84, 90, 72), \"fill\": (9, 11, 15),",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_PANEL_ROWS"
+   ],
+   "start": 4507,
+   "end": 4517,
+   "n": 11,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_PANEL_ROWS = [",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_PANEL_GUIDE"
+   ],
+   "start": 4518,
+   "end": 4519,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_PANEL_GUIDE = [\"Headline: Slide Up + Fade In\", \"Captions: Word-by-Word Reveal\", \"Highlight: Scale + Color Change\",",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_frac"
+   ],
+   "start": 4522,
+   "end": 4526,
+   "n": 5,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "common",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_norm_panel"
+   ],
+   "start": 4529,
+   "end": 4570,
+   "n": 42,
+   "refs": [
+    "T2_PANEL",
+    "T2_PANEL_GUIDE",
+    "T2_PANEL_ROWS",
+    "_t2_frac",
+    "_t2_num_or_none",
+    "t2_rgb"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Validated cfg['t2']['panel'] = {on, layers_title, guide_title, rows:[{label,start,end,colo",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_panel_icon"
+   ],
+   "start": 4573,
+   "end": 4591,
+   "n": 19,
+   "refs": [
+    "T2_ACCENT",
+    "t2_rgb"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw"
+   ],
+   "doc": "Lime 'layers' / 'bolt' icon (RGBA, size x size), drawn 4x and downsampled.",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_panel_geometry"
+   ],
+   "start": 4594,
+   "end": 4602,
+   "n": 9,
+   "refs": [
+    "T2_PANEL",
+    "T2_POSTER_H",
+    "T2_POSTER_W"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_panel_playhead_sprite"
+   ],
+   "start": 4605,
+   "end": 4622,
+   "n": 18,
+   "refs": [
+    "T2_PANEL",
+    "T2_SS",
+    "t2_panel_geometry"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "math"
+   ],
+   "doc": "White vertical line + small triangle on top.  Odd width so the line is centred on the midd",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_WAVE_N"
+   ],
+   "start": 4625,
+   "end": 4625,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_WAVE_N = 250",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_DOTS"
+   ],
+   "start": 4626,
+   "end": 4626,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_DOTS = {\"x_last\": 880, \"y\": 1581, \"pitch\": 25.0, \"r\": 4.8, \"grey\": (122, 125, 124)}",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_dot_plan"
+   ],
+   "start": 4629,
+   "end": 4633,
+   "n": 5,
+   "refs": [
+    "t2_cfg",
+    "t2_resolve_chapters"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "-> (n_dots, resolved chapters).  n = min(chapters, 5), at least 3.  No chapters = decorati",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_dot_index"
+   ],
+   "start": 4636,
+   "end": 4638,
+   "n": 3,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Chapter i of `total` -> which of the n dots is lime.",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_dots_sprite"
+   ],
+   "start": 4641,
+   "end": 4658,
+   "n": 18,
+   "refs": [
+    "T2_DOTS",
+    "T2_SS",
+    "t2_cfg",
+    "t2_panel_geometry",
+    "t2_rgb"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "math"
+   ],
+   "doc": "-> (RGBA sprite, (x, y) canvas position of its top-left).  n dots, dot `active` lime, the ",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_dots_items"
+   ],
+   "start": 4661,
+   "end": 4676,
+   "n": 16,
+   "refs": [
+    "Item",
+    "t2_dot_index",
+    "t2_dot_plan",
+    "t2_dots_sprite"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "One tiny sprite per chapter; the lime dot follows the current chapter (Items = the mechani",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_wave_procedural"
+   ],
+   "start": 4679,
+   "end": 4688,
+   "n": 10,
+   "refs": [
+    "T2_WAVE_N"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "math"
+   ],
+   "doc": "Deterministic fake waveform (used when the video has no audio / the extraction failed).",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_peaks_from_pcm"
+   ],
+   "start": 4691,
+   "end": 4718,
+   "n": 28,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "sys"
+   ],
+   "doc": "raw s16le mono bytes -> n normalised peaks (0..1).  numpy when available, else array().",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_wave_peaks"
+   ],
+   "start": 4721,
+   "end": 4730,
+   "n": 10,
+   "refs": [
+    "FFMPEG",
+    "T2_WAVE_N",
+    "_t2_peaks_from_pcm"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "subprocess"
+   ],
+   "doc": "Audio of `path` -> n peaks via ffmpeg (raw mono PCM at a low sample rate).  None on any fa",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_wave_data"
+   ],
+   "start": 4733,
+   "end": 4743,
+   "n": 11,
+   "refs": [
+    "t2_cfg",
+    "t2_wave_peaks",
+    "t2_wave_procedural"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "os"
+   ],
+   "doc": "{\"src\": \"audio\"|\"procedural\", \"peaks\": [...]} for row 09, or None when the panel / wavefor",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_panel_plate"
+   ],
+   "start": 4746,
+   "end": 4856,
+   "n": 111,
+   "refs": [
+    "T2_PANEL",
+    "T2_SS",
+    "has_arabic",
+    "is_rtl_text",
+    "t2_cfg",
+    "t2_dot_plan",
+    "t2_dots_sprite",
+    "t2_fit_text",
+    "t2_font",
+    "t2_paint",
+    "t2_panel_geometry",
+    "t2_panel_icon",
+    "t2_rgb",
+    "t2_rrect_mask",
+    "t2_size_for_cap",
+    "t2_text_mask",
+    "t2_wave_procedural"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "math"
+   ],
+   "doc": "Draw the static panel.  -> None when disabled, else (RGBA plate image, (ox, oy), info) wit",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "T2_ROADMAP"
+   ],
+   "start": 4860,
+   "end": 4862,
+   "n": 3,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "T2_ROADMAP = {\"x0\": 25, \"x1\": 1055, \"gap_below_about\": 26, \"bottom_margin\": 82, \"radius\": 24, \"pad\": 24, \"head_cy\": 26,",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_roadmap_on"
+   ],
+   "start": 4865,
+   "end": 4867,
+   "n": 3,
+   "refs": [
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_roadmap_zone"
+   ],
+   "start": 4870,
+   "end": 4883,
+   "n": 14,
+   "refs": [
+    "T2_DEFAULT_BOX",
+    "T2_ROADMAP",
+    "t2_about_geometry",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "-> ((x0, y0, x1, y1) canvas px, k).  Starts under the about block (or the video window), e",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_rm_mix"
+   ],
+   "start": 4886,
+   "end": 4887,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_roadmap_sprite"
+   ],
+   "start": 4890,
+   "end": 4989,
+   "n": 100,
+   "refs": [
+    "T2_ROADMAP",
+    "_t2_rm_mix",
+    "has_arabic",
+    "t2_cfg",
+    "t2_draw_mask",
+    "t2_fit_text",
+    "t2_font",
+    "t2_glow",
+    "t2_paint",
+    "t2_rgb",
+    "t2_roadmap_zone",
+    "t2_rrect_mask",
+    "t2_size_for_cap",
+    "t2_text_mask"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "math"
+   ],
+   "doc": "RGBA sprite of the whole panel with chapter `active` lit, the earlier ones ticked, the lat",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_roadmap_items"
+   ],
+   "start": 4992,
+   "end": 5016,
+   "n": 25,
+   "refs": [
+    "Item",
+    "T2_ROADMAP",
+    "t2_cfg",
+    "t2_resolve_chapters",
+    "t2_roadmap_on",
+    "t2_roadmap_sprite"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "One full-panel sprite per chapter.  A later state is drawn over the previous one (which st",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_panel_bake"
+   ],
+   "start": 5020,
+   "end": 5035,
+   "n": 16,
+   "refs": [
+    "t2_panel_plate",
+    "t2_panel_playhead_sprite"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "os"
+   ],
+   "doc": "Composite the panel onto the foreground plate and write the playhead sprite.  Sets / clear",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_ask_split"
+   ],
+   "start": 5038,
+   "end": 5046,
+   "n": 9,
+   "refs": [
+    "D",
+    "ask",
+    "c_percent",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Split-screen questions -> {\"split\": {...}} for cfg['t2'].  Asked only when an element / bo",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "t2_ask_panel"
+   ],
+   "start": 5049,
+   "end": 5072,
+   "n": 24,
+   "refs": [
+    "D",
+    "T2_PANEL_GUIDE",
+    "T2_PANEL_ROWS",
+    "_c_t2_text",
+    "ask",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Bottom info panel questions -> {\"panel\": {...}} for cfg['t2'].  Default yes (as in the pos",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_hdr"
+   ],
+   "start": 5075,
+   "end": 5076,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_t2_ask_on"
+   ],
+   "start": 5079,
+   "end": 5082,
+   "n": 4,
+   "refs": [
+    "D",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_interactive_t2"
+   ],
+   "start": 5085,
+   "end": 5166,
+   "n": 82,
+   "refs": [
+    "VIDEO_EXTS",
+    "_PRESET",
+    "_hdr",
+    "_t2_ask_on",
+    "ask",
+    "ask_elements",
+    "ask_layers",
+    "ask_texts",
+    "ask_video_layers",
+    "c_existing_file",
+    "c_float",
+    "clean_path",
+    "parse_srt",
+    "probe",
+    "t2_ask_about",
+    "t2_ask_cards_cfg",
+    "t2_ask_chapters",
+    "t2_ask_panel",
+    "t2_ask_split",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path"
+   ],
+   "doc": "Template 2 question flow, grouped under headers:",
+   "src": "",
+   "target": "templates/t2_lime",
+   "tpl": "T2"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "recap_line"
+   ],
+   "start": 5169,
+   "end": 5186,
+   "n": 18,
+   "refs": [
+    "get_template"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "One line: template name + which Template 2 modules are on.",
+   "src": "",
+   "target": "templates/__init__",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "TEMPLATE_REGISTRY"
+   ],
+   "start": 5189,
+   "end": 5199,
+   "n": 11,
+   "refs": [
+    "ask_caption_style",
+    "ask_cards",
+    "ask_template",
+    "t1_ask_config",
+    "t1_build_background",
+    "t1_build_items",
+    "t2_ask_cards",
+    "t2_ask_config",
+    "t2_build_items",
+    "t2_build_static_layers",
+    "t2_caption_style"
+   ],
+   "globals_stmt": [],
+   "mutable": true,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "TEMPLATE_REGISTRY = {",
+   "target": "templates/__init__",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "get_template"
+   ],
+   "start": 5202,
+   "end": 5208,
+   "n": 7,
+   "refs": [
+    "TEMPLATE_REGISTRY"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "Registry entry for a cfg / job. Missing or unknown template_id -> Template 1.",
+   "src": "",
+   "target": "templates/__init__",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "GOLDEN_DIR"
+   ],
+   "start": 5214,
+   "end": 5214,
+   "n": 1,
+   "refs": [
+    "BASE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    5214
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "GOLDEN_DIR = BASE / \"selftest_golden\"",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "global",
+   "names": [
+    "GOLDEN_TIMES"
+   ],
+   "start": 5215,
+   "end": 5215,
+   "n": 1,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "GOLDEN_TIMES = (\"0.5\", \"1.5\", \"2.5\")",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_make_assets"
+   ],
+   "start": 5218,
+   "end": 5244,
+   "n": 27,
+   "refs": [
+    "FFMPEG"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageDraw",
+    "Path",
+    "subprocess"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_font"
+   ],
+   "start": 5247,
+   "end": 5250,
+   "n": 4,
+   "refs": [
+    "GOLDEN_DIR",
+    "default_font"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "The golden frames were made with DejaVuSans-Bold; a copy lives in selftest_golden/.",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_job"
+   ],
+   "start": 5253,
+   "end": 5277,
+   "n": 25,
+   "refs": [
+    "T2_DEFAULT_BOX",
+    "_st_font",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_info"
+   ],
+   "start": 5280,
+   "end": 5286,
+   "n": 7,
+   "refs": [
+    "FFPROBE"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "json",
+    "subprocess"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_frame_diffs"
+   ],
+   "start": 5289,
+   "end": 5303,
+   "n": 15,
+   "refs": [
+    "FFMPEG",
+    "GOLDEN_DIR",
+    "GOLDEN_TIMES"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageChops",
+    "Path",
+    "subprocess"
+   ],
+   "doc": "Mean absolute pixel difference (0-255) between the video's frames and selftest_golden/.",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_golden_status"
+   ],
+   "start": 5306,
+   "end": 5319,
+   "n": 14,
+   "refs": [
+    "ARABIC_MODE",
+    "GOLDEN_DIR",
+    "GOLDEN_TIMES"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "json"
+   ],
+   "doc": "None if golden comparison is possible, else a SKIP reason.",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "run_selftest"
+   ],
+   "start": 5322,
+   "end": 5495,
+   "n": 174,
+   "refs": [
+    "D",
+    "FFMPEG",
+    "FFPROBE",
+    "T2_DEFAULT_BOX",
+    "TEMPLATE_REGISTRY",
+    "_StopSelftest",
+    "_selftest_4d",
+    "_selftest_t2",
+    "_selftest_t2_4c",
+    "_selftest_t2_about",
+    "_selftest_t2_cards",
+    "_selftest_t2_dynamic",
+    "_selftest_t2_panel",
+    "_st_frame_diffs",
+    "_st_golden_status",
+    "_st_info",
+    "_st_job",
+    "_st_make_assets",
+    "_st_report",
+    "choose_template",
+    "get_template",
+    "interactive",
+    "render",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    5343,
+    5470
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "json",
+    "shutil",
+    "subprocess",
+    "sys",
+    "tempfile"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_selftest_t2"
+   ],
+   "start": 5498,
+   "end": 5676,
+   "n": 179,
+   "refs": [
+    "FFMPEG",
+    "T2_DEFAULT_BOX",
+    "_st_info",
+    "_st_job",
+    "make_t2_static",
+    "render",
+    "render_still",
+    "t2_ask_config",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "json",
+    "subprocess"
+   ],
+   "doc": "Template 2 static design checks (8-14).",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_lime"
+   ],
+   "start": 5679,
+   "end": 5682,
+   "n": 4,
+   "refs": [
+    "T2_ACCENT",
+    "t2_rgb"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "True for pixels close to the Template 2 accent lime.",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_grab"
+   ],
+   "start": 5685,
+   "end": 5688,
+   "n": 4,
+   "refs": [
+    "FFMPEG"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "subprocess"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_selftest_t2_dynamic"
+   ],
+   "start": 5691,
+   "end": 5884,
+   "n": 194,
+   "refs": [
+    "D",
+    "FFMPEG",
+    "T2_ACCENT",
+    "T2_CAP",
+    "_st_grab",
+    "_st_info",
+    "_st_job",
+    "_st_lime",
+    "build_items",
+    "parse_srt",
+    "render",
+    "render_still",
+    "t2_ask_chapters",
+    "t2_caption_items",
+    "t2_caption_layout",
+    "t2_caption_sprite",
+    "t2_cfg",
+    "t2_chapter_sprite",
+    "t2_font",
+    "t2_resolve_chapters",
+    "t2_tag_pos"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageChops",
+    "json",
+    "subprocess"
+   ],
+   "doc": "Template 2 dynamic features, Part 3A: caption style (15), chapter tag (16), full render (1",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_cream"
+   ],
+   "start": 5887,
+   "end": 5889,
+   "n": 3,
+   "refs": [
+    "T2_CARD"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_card_points"
+   ],
+   "start": 5892,
+   "end": 5899,
+   "n": 8,
+   "refs": [
+    "T2_CARD"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "math"
+   ],
+   "doc": "Canvas points on the card's four border edges (rotated by the card's angle about its centr",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_card_hits"
+   ],
+   "start": 5902,
+   "end": 5910,
+   "n": 9,
+   "refs": [
+    "_st_card_points",
+    "_st_cream"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "How many of the 4 expected border points show the cream border (3x3 neighbourhood).",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_time_render"
+   ],
+   "start": 5913,
+   "end": 5919,
+   "n": 7,
+   "refs": [
+    "render"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "time"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_selftest_t2_cards"
+   ],
+   "start": 5922,
+   "end": 6147,
+   "n": 226,
+   "refs": [
+    "D",
+    "FFMPEG",
+    "T2_CARD",
+    "_st_card_hits",
+    "_st_card_points",
+    "_st_cream",
+    "_st_frame_diffs",
+    "_st_golden_status",
+    "_st_grab",
+    "_st_info",
+    "_st_job",
+    "_st_lime",
+    "_st_time_render",
+    "build_items",
+    "load_image_sprite",
+    "parse_srt",
+    "render",
+    "render_still",
+    "resolve_pos",
+    "t2_ask_cards_cfg",
+    "t2_cfg",
+    "t2_font",
+    "t2_resolve_cards",
+    "t2_tag_pos"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    6048,
+    6057
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "Path",
+    "json",
+    "math",
+    "subprocess",
+    "sys"
+   ],
+   "doc": "Part 3B: floating B-roll card (20-23), parity render (24), --job with card / old T1 job (2",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_selftest_t2_about"
+   ],
+   "start": 6150,
+   "end": 6271,
+   "n": 122,
+   "refs": [
+    "T2_ABOUT",
+    "_st_frame_diffs",
+    "_st_golden_status",
+    "_st_grab",
+    "_st_info",
+    "_st_job",
+    "_st_lime",
+    "render",
+    "render_still",
+    "t2_about_geometry",
+    "t2_about_sprite",
+    "t2_cfg",
+    "t2_font",
+    "t2_norm_about",
+    "t2_resolve_about"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "ImageChops"
+   ],
+   "doc": "Part 4A: ABOUT + FEATURES block. 29 default block in a still (inside canvas, below the vid",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_selftest_t2_panel"
+   ],
+   "start": 6274,
+   "end": 6407,
+   "n": 134,
+   "refs": [
+    "FFMPEG",
+    "_st_frame_diffs",
+    "_st_golden_status",
+    "_st_grab",
+    "_st_info",
+    "_st_job",
+    "_st_time_render",
+    "render",
+    "render_still",
+    "t2_cfg",
+    "t2_font",
+    "t2_panel_plate",
+    "t2_rgb"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "subprocess"
+   ],
+   "doc": "Part 4B: bottom info panel.  33 static plate (bbox + bar colours), 34 playhead sync on a 4",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_selftest_t2_4c"
+   ],
+   "start": 6410,
+   "end": 6543,
+   "n": 134,
+   "refs": [
+    "FFMPEG",
+    "T2_ACCENT",
+    "T2_DOTS",
+    "T2_POSTER_H",
+    "T2_POSTER_W",
+    "_st_frame_diffs",
+    "_st_golden_status",
+    "_st_grab",
+    "_st_info",
+    "_st_job",
+    "render",
+    "render_still",
+    "split_boxes",
+    "t2_build_static_layers",
+    "t2_cfg",
+    "t2_font",
+    "t2_panel_plate",
+    "t2_rgb",
+    "t2_split_params"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    6506
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Image",
+    "Path",
+    "json",
+    "os",
+    "subprocess",
+    "sys"
+   ],
+   "doc": "Part 4C: 37 waveform, 38 pagination dots, 39 T2 split, 40 everything on via --job, 41 T1 g",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_selftest_4d"
+   ],
+   "start": 6546,
+   "end": 6820,
+   "n": 275,
+   "refs": [
+    "BASE",
+    "FFMPEG",
+    "T2_DEFAULT_BOX",
+    "_PRESET",
+    "_st_grab",
+    "_st_info",
+    "_st_job",
+    "choose_template",
+    "interactive",
+    "parse_srt",
+    "recap_line",
+    "render",
+    "t2_cfg"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [
+    6722,
+    6727,
+    6811
+   ],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "json",
+    "os",
+    "subprocess",
+    "sys"
+   ],
+   "doc": "Part 4D: 42 T2 Enter-through flow, 43 selector (1/2/saved T2/saved custom), 44 robustness ",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "class",
+   "names": [
+    "_StopSelftest"
+   ],
+   "start": 6823,
+   "end": 6824,
+   "n": 2,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_st_report"
+   ],
+   "start": 6827,
+   "end": 6836,
+   "n": 10,
+   "refs": [],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "selftest",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "main"
+   ],
+   "start": 6842,
+   "end": 6864,
+   "n": 23,
+   "refs": [
+    "_main"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "os",
+    "subprocess",
+    "sys"
+   ],
+   "doc": "Runs _main() and turns expected problems into one readable line instead of a traceback.",
+   "src": "",
+   "target": "montage",
+   "tpl": "generic"
+  },
+  {
+   "kind": "def",
+   "names": [
+    "_main"
+   ],
+   "start": 6867,
+   "end": 6944,
+   "n": 78,
+   "refs": [
+    "_load_job",
+    "_require_ffmpeg",
+    "_save_defaults",
+    "caption_streams",
+    "get_template",
+    "interactive",
+    "parse_srt",
+    "recap_line",
+    "render",
+    "render_still",
+    "run_selftest",
+    "setup_arabic_mode",
+    "stream_groups",
+    "yn"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [
+    "Path",
+    "argparse",
+    "json",
+    "sys"
+   ],
+   "doc": "",
+   "src": "",
+   "target": "montage",
+   "tpl": "generic"
+  },
+  {
+   "kind": "if",
+   "names": [],
+   "start": 6947,
+   "end": 6948,
+   "n": 2,
+   "refs": [
+    "main"
+   ],
+   "globals_stmt": [],
+   "mutable": false,
+   "path_lines": [],
+   "cwd_rel_lines": [],
+   "imports_used": [],
+   "doc": "",
+   "src": "",
+   "target": "montage",
+   "tpl": "generic"
+  }
+ ],
+ "edges": {
+  "fonts -> common": [
+   [
+    "_build_font_index",
+    "FONTS_DIR"
+   ],
+   [
+    "_font_or_fallback",
+    "_warn"
+   ],
+   [
+    "find_font",
+    "clean_path"
+   ],
+   [
+    "list_local_fonts",
+    "FONTS_DIR"
+   ],
+   [
+    "shape",
+    "get_display"
+   ]
+  ],
+  "ask -> common": [
+   [
+    "ask_anim",
+    "ask"
+   ],
+   [
+    "ask_caption_style",
+    "ask"
+   ],
+   [
+    "ask_caption_style",
+    "ask_choice"
+   ],
+   [
+    "ask_caption_style",
+    "c_color"
+   ],
+   [
+    "ask_caption_style",
+    "c_float"
+   ],
+   [
+    "ask_caption_style",
+    "c_int"
+   ],
+   [
+    "ask_caption_style",
+    "c_percent"
+   ],
+   [
+    "ask_caption_style",
+    "yn"
+   ],
+   [
+    "ask_elements",
+    "IMAGE_EXTS"
+   ],
+   [
+    "ask_elements",
+    "ask"
+   ],
+   [
+    "ask_elements",
+    "ask_time"
+   ],
+   [
+    "ask_elements",
+    "c_existing_file"
+   ],
+   [
+    "ask_elements",
+    "c_float"
+   ],
+   [
+    "ask_elements",
+    "c_percent"
+   ],
+   [
+    "ask_elements",
+    "yn"
+   ],
+   [
+    "ask_font",
+    "D"
+   ],
+   [
+    "ask_font",
+    "ask"
+   ],
+   [
+    "ask_layers",
+    "IMAGE_EXTS"
+   ],
+   [
+    "ask_layers",
+    "ask"
+   ],
+   [
+    "ask_layers",
+    "c_existing_file"
+   ],
+   [
+    "ask_layers",
+    "c_percent"
+   ],
+   [
+    "ask_layers",
+    "yn"
+   ],
+   [
+    "ask_pos",
+    "ask"
+   ],
+   [
+    "ask_texts",
+    "ask"
+   ],
+   [
+    "ask_texts",
+    "ask_time"
+   ],
+   [
+    "ask_texts",
+    "c_color"
+   ],
+   [
+    "ask_texts",
+    "c_float"
+   ],
+   [
+    "ask_texts",
+    "c_int"
+   ],
+   [
+    "ask_texts",
+    "c_text"
+   ],
+   [
+    "ask_texts",
+    "yn"
+   ],
+   [
+    "ask_video_layers",
+    "VIDEO_EXTS"
+   ],
+   [
+    "ask_video_layers",
+    "ask"
+   ],
+   [
+    "ask_video_layers",
+    "ask_choice"
+   ],
+   [
+    "ask_video_layers",
+    "ask_time"
+   ],
+   [
+    "ask_video_layers",
+    "c_existing_file"
+   ],
+   [
+    "ask_video_layers",
+    "yn"
+   ],
+   [
+    "c_anim",
+    "AR_DIGITS"
+   ],
+   [
+    "c_pos",
+    "AR_DIGITS"
+   ],
+   [
+    "list_templates",
+    "TEMPLATES_DIR"
+   ],
+   [
+    "maybe_save_template",
+    "TEMPLATES_DIR"
+   ],
+   [
+    "maybe_save_template",
+    "ask"
+   ]
+  ],
+  "ask -> fonts": [
+   [
+    "ask_font",
+    "default_font"
+   ],
+   [
+    "ask_font",
+    "find_font"
+   ],
+   [
+    "ask_font",
+    "font_supports_arabic"
+   ],
+   [
+    "ask_font",
+    "list_local_fonts"
+   ]
+  ],
+  "ask -> anim": [
+   [
+    "c_anim",
+    "ANIMS"
+   ],
+   [
+    "c_pos",
+    "PRESETS"
+   ]
+  ],
+  "draw -> fonts": [
+   [
+    "make_text_sprite",
+    "load_font"
+   ],
+   [
+    "make_text_sprite",
+    "shape"
+   ],
+   [
+    "make_text_sprite",
+    "wrap_lines"
+   ],
+   [
+    "t2_size_for_cap",
+    "load_font"
+   ],
+   [
+    "t2_text_mask",
+    "has_arabic"
+   ],
+   [
+    "t2_text_mask",
+    "load_font"
+   ],
+   [
+    "t2_text_mask",
+    "shape"
+   ]
+  ],
+  "captions -> fonts": [
+   [
+    "_tok_dir",
+    "ARABIC_RE"
+   ],
+   [
+    "make_rich_sprite",
+    "is_rtl_text"
+   ],
+   [
+    "make_rich_sprite",
+    "load_font"
+   ],
+   [
+    "make_rich_sprite",
+    "shape"
+   ]
+  ],
+  "templates/t1_tech -> draw": [
+   [
+    "PALETTES",
+    "CYAN"
+   ],
+   [
+    "PALETTES",
+    "CYAN_TXT"
+   ],
+   [
+    "make_card_sprite",
+    "CYAN"
+   ],
+   [
+    "make_card_sprite",
+    "CYAN_TXT"
+   ],
+   [
+    "make_card_sprite",
+    "_draw_icon"
+   ],
+   [
+    "make_tech_background",
+    "_chamfer"
+   ],
+   [
+    "t1_build_items",
+    "Item"
+   ]
+  ],
+  "templates/t1_tech -> fonts": [
+   [
+    "make_card_sprite",
+    "load_font"
+   ],
+   [
+    "make_card_sprite",
+    "shape"
+   ]
+  ],
+  "templates/t1_tech -> common": [
+   [
+    "ask_cards",
+    "AR_DIGITS"
+   ],
+   [
+    "ask_cards",
+    "ask"
+   ],
+   [
+    "ask_cards",
+    "c_float"
+   ],
+   [
+    "ask_cards",
+    "c_time"
+   ],
+   [
+    "ask_cards",
+    "clean_path"
+   ],
+   [
+    "ask_cards",
+    "yn"
+   ],
+   [
+    "ask_hud_template",
+    "ask"
+   ],
+   [
+    "ask_hud_template",
+    "ask_choice"
+   ],
+   [
+    "ask_hud_template",
+    "c_int"
+   ],
+   [
+    "ask_hud_template",
+    "c_percent"
+   ],
+   [
+    "ask_hud_template",
+    "c_size_wh"
+   ],
+   [
+    "ask_template",
+    "AR_DIGITS"
+   ],
+   [
+    "ask_template",
+    "IMAGE_EXTS"
+   ],
+   [
+    "ask_template",
+    "VIDEO_EXTS"
+   ],
+   [
+    "ask_template",
+    "ask"
+   ],
+   [
+    "ask_template",
+    "ask_choice"
+   ],
+   [
+    "ask_template",
+    "c_color"
+   ],
+   [
+    "ask_template",
+    "c_existing_file"
+   ],
+   [
+    "ask_template",
+    "c_size_wh"
+   ]
+  ],
+  "templates/t1_tech -> ask": [
+   [
+    "ask_cards",
+    "ICON_LINE"
+   ],
+   [
+    "ask_cards",
+    "ask_anim"
+   ],
+   [
+    "ask_cards",
+    "ask_font"
+   ],
+   [
+    "ask_cards",
+    "find_trigger"
+   ],
+   [
+    "ask_hud_template",
+    "ask_layers"
+   ],
+   [
+    "ask_hud_template",
+    "maybe_save_template"
+   ],
+   [
+    "ask_template",
+    "_PRESET"
+   ],
+   [
+    "ask_template",
+    "_tpl_template_id"
+   ],
+   [
+    "ask_template",
+    "ask_layers"
+   ],
+   [
+    "ask_template",
+    "list_templates"
+   ],
+   [
+    "ask_template",
+    "maybe_save_template"
+   ]
+  ],
+  "templates/__init__ -> common": [
+   [
+    "_interactive_core",
+    "VIDEO_EXTS"
+   ],
+   [
+    "_interactive_core",
+    "ask"
+   ],
+   [
+    "_interactive_core",
+    "c_existing_file"
+   ],
+   [
+    "_interactive_core",
+    "c_float"
+   ],
+   [
+    "_interactive_core",
+    "clean_path"
+   ],
+   [
+    "_interactive_core",
+    "probe"
+   ],
+   [
+    "choose_template",
+    "AR_DIGITS"
+   ],
+   [
+    "choose_template",
+    "D"
+   ],
+   [
+    "choose_template",
+    "ask"
+   ]
+  ],
+  "templates/__init__ -> ask": [
+   [
+    "TEMPLATE_REGISTRY",
+    "ask_caption_style"
+   ],
+   [
+    "_interactive_core",
+    "ask_elements"
+   ],
+   [
+    "_interactive_core",
+    "ask_layers"
+   ],
+   [
+    "_interactive_core",
+    "ask_texts"
+   ],
+   [
+    "_interactive_core",
+    "ask_video_layers"
+   ],
+   [
+    "choose_template",
+    "_PRESET"
+   ],
+   [
+    "choose_template",
+    "_saved_templates"
+   ],
+   [
+    "interactive",
+    "_PRESET"
+   ]
+  ],
+  "ask -> captions": [
+   [
+    "find_trigger",
+    "find_sequences"
+   ],
+   [
+    "find_trigger",
+    "flatten_tokens"
+   ],
+   [
+    "find_trigger",
+    "kw_sequences"
+   ],
+   [
+    "find_trigger",
+    "norm_tok"
+   ]
+  ],
+  "templates/__init__ -> templates/t2_lime": [
+   [
+    "TEMPLATE_REGISTRY",
+    "t2_ask_cards"
+   ],
+   [
+    "TEMPLATE_REGISTRY",
+    "t2_ask_config"
+   ],
+   [
+    "TEMPLATE_REGISTRY",
+    "t2_build_items"
+   ],
+   [
+    "TEMPLATE_REGISTRY",
+    "t2_build_static_layers"
+   ],
+   [
+    "TEMPLATE_REGISTRY",
+    "t2_caption_style"
+   ],
+   [
+    "_interactive_core",
+    "_interactive_t2"
+   ],
+   [
+    "_interactive_core",
+    "t2_ask_about"
+   ],
+   [
+    "_interactive_core",
+    "t2_ask_cards_cfg"
+   ],
+   [
+    "_interactive_core",
+    "t2_ask_chapters"
+   ],
+   [
+    "_interactive_core",
+    "t2_ask_panel"
+   ],
+   [
+    "_interactive_core",
+    "t2_ask_split"
+   ],
+   [
+    "_interactive_core",
+    "t2_cfg"
+   ]
+  ],
+  "templates/__init__ -> captions": [
+   [
+    "_interactive_core",
+    "parse_srt"
+   ]
+  ],
+  "render -> common": [
+   [
+    "_first_frame",
+    "FFMPEG"
+   ],
+   [
+    "_render",
+    "FFMPEG"
+   ],
+   [
+    "_render",
+    "_require_ffmpeg"
+   ],
+   [
+    "_render",
+    "probe"
+   ],
+   [
+    "build_ffmpeg_cmd",
+    "FFMPEG"
+   ],
+   [
+    "build_ffmpeg_cmd",
+    "_hex0x"
+   ],
+   [
+    "preflight_cfg",
+    "_WARNED"
+   ],
+   [
+    "preflight_cfg",
+    "_img_ok"
+   ],
+   [
+    "preflight_cfg",
+    "_vid_ok"
+   ],
+   [
+    "preflight_cfg",
+    "_warn"
+   ],
+   [
+    "prepare_video_layers",
+    "FFMPEG"
+   ],
+   [
+    "render",
+    "_require_ffmpeg"
+   ],
+   [
+    "render",
+    "probe"
+   ],
+   [
+    "render_still",
+    "probe"
+   ]
+  ],
+  "render -> fonts": [
+   [
+    "build_items",
+    "is_rtl_text"
+   ],
+   [
+    "preflight_cfg",
+    "_font_ok"
+   ],
+   [
+    "preflight_cfg",
+    "_font_or_fallback"
+   ],
+   [
+    "preflight_cfg",
+    "default_font"
+   ]
+  ],
+  "render -> templates/__init__": [
+   [
+    "build_items",
+    "get_template"
+   ],
+   [
+    "preflight_cfg",
+    "get_template"
+   ],
+   [
+    "render",
+    "get_template"
+   ],
+   [
+    "render_still",
+    "get_template"
+   ]
+  ],
+  "render -> draw": [
+   [
+    "_draw_frame",
+    "_chamfer"
+   ],
+   [
+    "_render",
+    "draw_item"
+   ],
+   [
+    "build_items",
+    "Item"
+   ],
+   [
+    "build_items",
+    "load_image_sprite"
+   ],
+   [
+    "build_items",
+    "make_text_sprite"
+   ],
+   [
+    "build_items",
+    "resolve_pos"
+   ],
+   [
+    "render_still",
+    "draw_item"
+   ]
+  ],
+  "templates/t1_tech -> render": [
+   [
+    "make_split_background",
+    "_draw_frame"
+   ]
+  ],
+  "templates/t1_tech -> split": [
+   [
+    "t1_build_background",
+    "split_boxes"
+   ],
+   [
+    "t1_build_items",
+    "SPLIT_T"
+   ],
+   [
+    "t1_build_items",
+    "split_at"
+   ]
+  ],
+  "render -> split": [
+   [
+    "build_ffmpeg_cmd",
+    "SPLIT_T"
+   ],
+   [
+    "build_ffmpeg_cmd",
+    "compute_splits"
+   ],
+   [
+    "build_ffmpeg_cmd",
+    "split_boxes"
+   ],
+   [
+    "build_items",
+    "SPLIT_T"
+   ],
+   [
+    "build_items",
+    "compute_splits"
+   ],
+   [
+    "build_items",
+    "split_at"
+   ],
+   [
+    "build_items",
+    "split_boxes"
+   ],
+   [
+    "video_layer_area",
+    "split_boxes"
+   ]
+  ],
+  "render -> captions": [
+   [
+    "build_items",
+    "caption_streams"
+   ],
+   [
+    "build_items",
+    "make_rich_sprite"
+   ],
+   [
+    "build_items",
+    "parse_srt"
+   ],
+   [
+    "build_items",
+    "stream_groups"
+   ]
+  ],
+  "render -> templates/t2_lime": [
+   [
+    "build_items",
+    "t2_caption_items"
+   ],
+   [
+    "render",
+    "t2_prepare_card_layers"
+   ]
+  ],
+  "render -> anim": [
+   [
+    "_render",
+    "anim_state"
+   ],
+   [
+    "render_still",
+    "anim_state"
+   ]
+  ],
+  "templates/t2_lime -> common": [
+   [
+    "T2_DEFAULTS",
+    "T2_ACCENT"
+   ],
+   [
+    "_interactive_t2",
+    "VIDEO_EXTS"
+   ],
+   [
+    "_interactive_t2",
+    "ask"
+   ],
+   [
+    "_interactive_t2",
+    "c_existing_file"
+   ],
+   [
+    "_interactive_t2",
+    "c_float"
+   ],
+   [
+    "_interactive_t2",
+    "clean_path"
+   ],
+   [
+    "_interactive_t2",
+    "probe"
+   ],
+   [
+    "_t2_ask_on",
+    "D"
+   ],
+   [
+    "_t2_ask_on",
+    "yn"
+   ],
+   [
+    "_t2_lookup",
+    "_t2_norm"
+   ],
+   [
+    "c_about_icon",
+    "AR_DIGITS"
+   ],
+   [
+    "c_card_icon",
+    "AR_DIGITS"
+   ],
+   [
+    "c_card_icon",
+    "clean_path"
+   ],
+   [
+    "t2_about_icon",
+    "T2_ACCENT"
+   ],
+   [
+    "t2_about_icon_spec",
+    "AR_DIGITS"
+   ],
+   [
+    "t2_about_icon_spec",
+    "clean_path"
+   ],
+   [
+    "t2_ask_about",
+    "D"
+   ],
+   [
+    "t2_ask_about",
+    "ask"
+   ],
+   [
+    "t2_ask_about",
+    "c_float"
+   ],
+   [
+    "t2_ask_about",
+    "c_time"
+   ],
+   [
+    "t2_ask_about",
+    "yn"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "AR_DIGITS"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "D"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "IMAGE_EXTS"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "VIDEO_EXTS"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "ask"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "c_existing_file"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "c_float"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "c_time"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "yn"
+   ],
+   [
+    "t2_ask_chapters",
+    "D"
+   ],
+   [
+    "t2_ask_chapters",
+    "ask"
+   ],
+   [
+    "t2_ask_chapters",
+    "c_float"
+   ],
+   [
+    "t2_ask_chapters",
+    "c_time"
+   ],
+   [
+    "t2_ask_chapters",
+    "yn"
+   ],
+   [
+    "t2_ask_config",
+    "D"
+   ],
+   [
+    "t2_ask_config",
+    "T2_ACCENT"
+   ],
+   [
+    "t2_ask_config",
+    "ask"
+   ],
+   [
+    "t2_ask_config",
+    "ask_choice"
+   ],
+   [
+    "t2_ask_config",
+    "c_color"
+   ],
+   [
+    "t2_ask_config",
+    "c_int"
+   ],
+   [
+    "t2_ask_config",
+    "c_size_wh"
+   ],
+   [
+    "t2_ask_config",
+    "yn"
+   ],
+   [
+    "t2_ask_panel",
+    "D"
+   ],
+   [
+    "t2_ask_panel",
+    "ask"
+   ],
+   [
+    "t2_ask_panel",
+    "yn"
+   ],
+   [
+    "t2_ask_split",
+    "D"
+   ],
+   [
+    "t2_ask_split",
+    "ask"
+   ],
+   [
+    "t2_ask_split",
+    "c_percent"
+   ],
+   [
+    "t2_ask_split",
+    "yn"
+   ],
+   [
+    "t2_caption_sprite",
+    "T2_ACCENT"
+   ],
+   [
+    "t2_caption_style",
+    "D"
+   ],
+   [
+    "t2_caption_style",
+    "ask"
+   ],
+   [
+    "t2_caption_style",
+    "ask_choice"
+   ],
+   [
+    "t2_caption_style",
+    "c_color"
+   ],
+   [
+    "t2_caption_style",
+    "c_float"
+   ],
+   [
+    "t2_caption_style",
+    "c_int"
+   ],
+   [
+    "t2_caption_style",
+    "c_percent"
+   ],
+   [
+    "t2_card_parts",
+    "T2_ACCENT"
+   ],
+   [
+    "t2_chapter_sprite",
+    "T2_ACCENT"
+   ],
+   [
+    "t2_norm_about",
+    "_t2_num_or_none"
+   ],
+   [
+    "t2_norm_cards",
+    "_t2_num_or_none"
+   ],
+   [
+    "t2_norm_chapters",
+    "_t2_num_or_none"
+   ],
+   [
+    "t2_norm_panel",
+    "_t2_frac"
+   ],
+   [
+    "t2_norm_panel",
+    "_t2_num_or_none"
+   ],
+   [
+    "t2_panel_icon",
+    "T2_ACCENT"
+   ],
+   [
+    "t2_prepare_card_layers",
+    "FFMPEG"
+   ],
+   [
+    "t2_prepare_card_layers",
+    "_read_exact"
+   ],
+   [
+    "t2_resolve_cards",
+    "VIDEO_EXTS"
+   ],
+   [
+    "t2_subline_sprite",
+    "T2_ACCENT"
+   ],
+   [
+    "t2_wave_peaks",
+    "FFMPEG"
+   ]
+  ],
+  "draw -> common": [
+   [
+    "t2_rgb",
+    "T2_ACCENT"
+   ]
+  ],
+  "templates/t2_lime -> anim": [
+   [
+    "t2_cfg",
+    "ANIMS"
+   ],
+   [
+    "t2_norm_about",
+    "ANIMS"
+   ],
+   [
+    "t2_norm_chapters",
+    "ANIMS"
+   ],
+   [
+    "t2_prepare_card_layers",
+    "anim_state"
+   ]
+  ],
+  "templates/t2_lime -> draw": [
+   [
+    "make_t2_static",
+    "t2_darken"
+   ],
+   [
+    "make_t2_static",
+    "t2_dots_mask"
+   ],
+   [
+    "make_t2_static",
+    "t2_draw_mask"
+   ],
+   [
+    "make_t2_static",
+    "t2_fit_text"
+   ],
+   [
+    "make_t2_static",
+    "t2_glow"
+   ],
+   [
+    "make_t2_static",
+    "t2_grad"
+   ],
+   [
+    "make_t2_static",
+    "t2_gradient"
+   ],
+   [
+    "make_t2_static",
+    "t2_lighten"
+   ],
+   [
+    "make_t2_static",
+    "t2_line_mask"
+   ],
+   [
+    "make_t2_static",
+    "t2_mask_full"
+   ],
+   [
+    "make_t2_static",
+    "t2_mask_sub"
+   ],
+   [
+    "make_t2_static",
+    "t2_mix"
+   ],
+   [
+    "make_t2_static",
+    "t2_paint"
+   ],
+   [
+    "make_t2_static",
+    "t2_place"
+   ],
+   [
+    "make_t2_static",
+    "t2_poly_mask"
+   ],
+   [
+    "make_t2_static",
+    "t2_polys_mask"
+   ],
+   [
+    "make_t2_static",
+    "t2_rgb"
+   ],
+   [
+    "make_t2_static",
+    "t2_rrect_mask"
+   ],
+   [
+    "t2_about_fit_paragraph",
+    "t2_size_for_cap"
+   ],
+   [
+    "t2_about_icon",
+    "_draw_icon"
+   ],
+   [
+    "t2_about_icon",
+    "t2_rgb"
+   ],
+   [
+    "t2_about_items",
+    "Item"
+   ],
+   [
+    "t2_about_sprite",
+    "t2_fit_text"
+   ],
+   [
+    "t2_about_sprite",
+    "t2_paint"
+   ],
+   [
+    "t2_about_sprite",
+    "t2_rgb"
+   ],
+   [
+    "t2_about_sprite",
+    "t2_rrect_mask"
+   ],
+   [
+    "t2_caption_items",
+    "Item"
+   ],
+   [
+    "t2_caption_sprite",
+    "t2_paint"
+   ],
+   [
+    "t2_caption_sprite",
+    "t2_rgb"
+   ],
+   [
+    "t2_caption_sprite",
+    "t2_rrect_mask"
+   ],
+   [
+    "t2_card_items",
+    "Item"
+   ],
+   [
+    "t2_card_parts",
+    "_draw_icon"
+   ],
+   [
+    "t2_card_parts",
+    "t2_fit_text"
+   ],
+   [
+    "t2_card_parts",
+    "t2_glow"
+   ],
+   [
+    "t2_card_parts",
+    "t2_paint"
+   ],
+   [
+    "t2_card_parts",
+    "t2_rgb"
+   ],
+   [
+    "t2_card_parts",
+    "t2_rrect_mask"
+   ],
+   [
+    "t2_cfg",
+    "t2_rgb"
+   ],
+   [
+    "t2_chapter_items",
+    "Item"
+   ],
+   [
+    "t2_chapter_sprite",
+    "t2_paint"
+   ],
+   [
+    "t2_chapter_sprite",
+    "t2_rgb"
+   ],
+   [
+    "t2_chapter_sprite",
+    "t2_rrect_mask"
+   ],
+   [
+    "t2_chapter_sprite",
+    "t2_size_for_cap"
+   ],
+   [
+    "t2_chapter_sprite",
+    "t2_text_mask"
+   ],
+   [
+    "t2_dots_items",
+    "Item"
+   ],
+   [
+    "t2_dots_sprite",
+    "T2_SS"
+   ],
+   [
+    "t2_dots_sprite",
+    "t2_rgb"
+   ],
+   [
+    "t2_make_split_ring",
+    "T2_SS"
+   ],
+   [
+    "t2_make_split_ring",
+    "t2_rgb"
+   ],
+   [
+    "t2_norm_panel",
+    "t2_rgb"
+   ],
+   [
+    "t2_panel_icon",
+    "t2_rgb"
+   ],
+   [
+    "t2_panel_plate",
+    "T2_SS"
+   ],
+   [
+    "t2_panel_plate",
+    "t2_fit_text"
+   ],
+   [
+    "t2_panel_plate",
+    "t2_paint"
+   ],
+   [
+    "t2_panel_plate",
+    "t2_rgb"
+   ],
+   [
+    "t2_panel_plate",
+    "t2_rrect_mask"
+   ],
+   [
+    "t2_panel_plate",
+    "t2_size_for_cap"
+   ],
+   [
+    "t2_panel_plate",
+    "t2_text_mask"
+   ],
+   [
+    "t2_panel_playhead_sprite",
+    "T2_SS"
+   ],
+   [
+    "t2_prepare_card_layers",
+    "Item"
+   ],
+   [
+    "t2_prepare_card_layers",
+    "draw_item"
+   ],
+   [
+    "t2_roadmap_items",
+    "Item"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "t2_draw_mask"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "t2_fit_text"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "t2_glow"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "t2_paint"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "t2_rgb"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "t2_rrect_mask"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "t2_size_for_cap"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "t2_text_mask"
+   ]
+  ],
+  "templates/t2_lime -> split": [
+   [
+    "t2_make_split_ring",
+    "split_boxes"
+   ]
+  ],
+  "templates/t2_lime -> fonts": [
+   [
+    "_t2_about_wrap",
+    "load_font"
+   ],
+   [
+    "_t2_about_wrap",
+    "shape"
+   ],
+   [
+    "_t2_lookup",
+    "_build_font_index"
+   ],
+   [
+    "t2_about_sprite",
+    "has_arabic"
+   ],
+   [
+    "t2_about_sprite",
+    "is_rtl_text"
+   ],
+   [
+    "t2_caption_items",
+    "is_rtl_text"
+   ],
+   [
+    "t2_caption_sprite",
+    "is_rtl_text"
+   ],
+   [
+    "t2_caption_sprite",
+    "load_font"
+   ],
+   [
+    "t2_caption_sprite",
+    "shape"
+   ],
+   [
+    "t2_font",
+    "default_font"
+   ],
+   [
+    "t2_font",
+    "font_supports_arabic"
+   ],
+   [
+    "t2_font",
+    "has_arabic"
+   ],
+   [
+    "t2_panel_plate",
+    "has_arabic"
+   ],
+   [
+    "t2_panel_plate",
+    "is_rtl_text"
+   ],
+   [
+    "t2_roadmap_sprite",
+    "has_arabic"
+   ]
+  ],
+  "templates/t2_lime -> ask": [
+   [
+    "_interactive_t2",
+    "_PRESET"
+   ],
+   [
+    "_interactive_t2",
+    "ask_elements"
+   ],
+   [
+    "_interactive_t2",
+    "ask_layers"
+   ],
+   [
+    "_interactive_t2",
+    "ask_texts"
+   ],
+   [
+    "_interactive_t2",
+    "ask_video_layers"
+   ],
+   [
+    "t2_ask_about",
+    "ask_anim"
+   ],
+   [
+    "t2_ask_about",
+    "find_trigger"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "ICON_LINE"
+   ],
+   [
+    "t2_ask_cards_cfg",
+    "find_trigger"
+   ],
+   [
+    "t2_ask_chapters",
+    "ask_anim"
+   ],
+   [
+    "t2_ask_chapters",
+    "find_trigger"
+   ],
+   [
+    "t2_ask_config",
+    "_PRESET"
+   ],
+   [
+    "t2_ask_config",
+    "_tpl_template_id"
+   ],
+   [
+    "t2_ask_config",
+    "list_templates"
+   ],
+   [
+    "t2_ask_config",
+    "maybe_save_template"
+   ],
+   [
+    "t2_caption_style",
+    "ask_anim"
+   ],
+   [
+    "t2_caption_style",
+    "ask_font"
+   ],
+   [
+    "t2_resolve_about",
+    "find_trigger"
+   ],
+   [
+    "t2_resolve_cards",
+    "find_trigger"
+   ],
+   [
+    "t2_resolve_chapters",
+    "find_trigger"
+   ]
+  ],
+  "templates/t2_lime -> captions": [
+   [
+    "_interactive_t2",
+    "parse_srt"
+   ],
+   [
+    "t2_caption_layout",
+    "caption_streams"
+   ],
+   [
+    "t2_caption_sprite",
+    "visual_order"
+   ],
+   [
+    "t2_resolve_about",
+    "caption_streams"
+   ],
+   [
+    "t2_resolve_about",
+    "parse_srt"
+   ],
+   [
+    "t2_resolve_cards",
+    "caption_streams"
+   ],
+   [
+    "t2_resolve_cards",
+    "parse_srt"
+   ],
+   [
+    "t2_resolve_chapters",
+    "caption_streams"
+   ],
+   [
+    "t2_resolve_chapters",
+    "parse_srt"
+   ],
+   [
+    "t2_subline_sprite",
+    "make_rich_sprite"
+   ]
+  ],
+  "templates/t2_lime -> render": [
+   [
+    "t2_card_items",
+    "_first_frame"
+   ]
+  ],
+  "templates/t2_lime -> templates/t1_tech": [
+   [
+    "t2_build_items",
+    "t1_build_items"
+   ]
+  ],
+  "templates/__init__ -> templates/t1_tech": [
+   [
+    "TEMPLATE_REGISTRY",
+    "ask_cards"
+   ],
+   [
+    "TEMPLATE_REGISTRY",
+    "ask_template"
+   ],
+   [
+    "TEMPLATE_REGISTRY",
+    "t1_ask_config"
+   ],
+   [
+    "TEMPLATE_REGISTRY",
+    "t1_build_background"
+   ],
+   [
+    "TEMPLATE_REGISTRY",
+    "t1_build_items"
+   ]
+  ],
+  "selftest -> common": [
+   [
+    "GOLDEN_DIR",
+    "BASE"
+   ],
+   [
+    "_selftest_4d",
+    "BASE"
+   ],
+   [
+    "_selftest_4d",
+    "FFMPEG"
+   ],
+   [
+    "_selftest_t2",
+    "FFMPEG"
+   ],
+   [
+    "_selftest_t2_4c",
+    "FFMPEG"
+   ],
+   [
+    "_selftest_t2_4c",
+    "T2_ACCENT"
+   ],
+   [
+    "_selftest_t2_cards",
+    "D"
+   ],
+   [
+    "_selftest_t2_cards",
+    "FFMPEG"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "D"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "FFMPEG"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "T2_ACCENT"
+   ],
+   [
+    "_selftest_t2_panel",
+    "FFMPEG"
+   ],
+   [
+    "_st_frame_diffs",
+    "FFMPEG"
+   ],
+   [
+    "_st_grab",
+    "FFMPEG"
+   ],
+   [
+    "_st_info",
+    "FFPROBE"
+   ],
+   [
+    "_st_lime",
+    "T2_ACCENT"
+   ],
+   [
+    "_st_make_assets",
+    "FFMPEG"
+   ],
+   [
+    "run_selftest",
+    "D"
+   ],
+   [
+    "run_selftest",
+    "FFMPEG"
+   ],
+   [
+    "run_selftest",
+    "FFPROBE"
+   ]
+  ],
+  "selftest -> fonts": [
+   [
+    "_st_font",
+    "default_font"
+   ],
+   [
+    "_st_golden_status",
+    "ARABIC_MODE"
+   ]
+  ],
+  "selftest -> templates/t2_lime": [
+   [
+    "_selftest_4d",
+    "T2_DEFAULT_BOX"
+   ],
+   [
+    "_selftest_4d",
+    "t2_cfg"
+   ],
+   [
+    "_selftest_t2",
+    "T2_DEFAULT_BOX"
+   ],
+   [
+    "_selftest_t2",
+    "make_t2_static"
+   ],
+   [
+    "_selftest_t2",
+    "t2_ask_config"
+   ],
+   [
+    "_selftest_t2",
+    "t2_cfg"
+   ],
+   [
+    "_selftest_t2_4c",
+    "T2_DOTS"
+   ],
+   [
+    "_selftest_t2_4c",
+    "T2_POSTER_H"
+   ],
+   [
+    "_selftest_t2_4c",
+    "T2_POSTER_W"
+   ],
+   [
+    "_selftest_t2_4c",
+    "t2_build_static_layers"
+   ],
+   [
+    "_selftest_t2_4c",
+    "t2_cfg"
+   ],
+   [
+    "_selftest_t2_4c",
+    "t2_font"
+   ],
+   [
+    "_selftest_t2_4c",
+    "t2_panel_plate"
+   ],
+   [
+    "_selftest_t2_4c",
+    "t2_split_params"
+   ],
+   [
+    "_selftest_t2_about",
+    "T2_ABOUT"
+   ],
+   [
+    "_selftest_t2_about",
+    "t2_about_geometry"
+   ],
+   [
+    "_selftest_t2_about",
+    "t2_about_sprite"
+   ],
+   [
+    "_selftest_t2_about",
+    "t2_cfg"
+   ],
+   [
+    "_selftest_t2_about",
+    "t2_font"
+   ],
+   [
+    "_selftest_t2_about",
+    "t2_norm_about"
+   ],
+   [
+    "_selftest_t2_about",
+    "t2_resolve_about"
+   ],
+   [
+    "_selftest_t2_cards",
+    "T2_CARD"
+   ],
+   [
+    "_selftest_t2_cards",
+    "t2_ask_cards_cfg"
+   ],
+   [
+    "_selftest_t2_cards",
+    "t2_cfg"
+   ],
+   [
+    "_selftest_t2_cards",
+    "t2_font"
+   ],
+   [
+    "_selftest_t2_cards",
+    "t2_resolve_cards"
+   ],
+   [
+    "_selftest_t2_cards",
+    "t2_tag_pos"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "T2_CAP"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_ask_chapters"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_caption_items"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_caption_layout"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_caption_sprite"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_cfg"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_chapter_sprite"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_font"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_resolve_chapters"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "t2_tag_pos"
+   ],
+   [
+    "_selftest_t2_panel",
+    "t2_cfg"
+   ],
+   [
+    "_selftest_t2_panel",
+    "t2_font"
+   ],
+   [
+    "_selftest_t2_panel",
+    "t2_panel_plate"
+   ],
+   [
+    "_st_card_points",
+    "T2_CARD"
+   ],
+   [
+    "_st_cream",
+    "T2_CARD"
+   ],
+   [
+    "_st_job",
+    "T2_DEFAULT_BOX"
+   ],
+   [
+    "_st_job",
+    "t2_cfg"
+   ],
+   [
+    "run_selftest",
+    "T2_DEFAULT_BOX"
+   ],
+   [
+    "run_selftest",
+    "t2_cfg"
+   ]
+  ],
+  "selftest -> templates/__init__": [
+   [
+    "_selftest_4d",
+    "choose_template"
+   ],
+   [
+    "_selftest_4d",
+    "interactive"
+   ],
+   [
+    "_selftest_4d",
+    "recap_line"
+   ],
+   [
+    "run_selftest",
+    "TEMPLATE_REGISTRY"
+   ],
+   [
+    "run_selftest",
+    "choose_template"
+   ],
+   [
+    "run_selftest",
+    "get_template"
+   ],
+   [
+    "run_selftest",
+    "interactive"
+   ]
+  ],
+  "selftest -> render": [
+   [
+    "_selftest_4d",
+    "render"
+   ],
+   [
+    "_selftest_t2",
+    "render"
+   ],
+   [
+    "_selftest_t2",
+    "render_still"
+   ],
+   [
+    "_selftest_t2_4c",
+    "render"
+   ],
+   [
+    "_selftest_t2_4c",
+    "render_still"
+   ],
+   [
+    "_selftest_t2_about",
+    "render"
+   ],
+   [
+    "_selftest_t2_about",
+    "render_still"
+   ],
+   [
+    "_selftest_t2_cards",
+    "build_items"
+   ],
+   [
+    "_selftest_t2_cards",
+    "render"
+   ],
+   [
+    "_selftest_t2_cards",
+    "render_still"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "build_items"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "render"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "render_still"
+   ],
+   [
+    "_selftest_t2_panel",
+    "render"
+   ],
+   [
+    "_selftest_t2_panel",
+    "render_still"
+   ],
+   [
+    "_st_time_render",
+    "render"
+   ],
+   [
+    "run_selftest",
+    "render"
+   ]
+  ],
+  "selftest -> draw": [
+   [
+    "_selftest_t2_4c",
+    "t2_rgb"
+   ],
+   [
+    "_selftest_t2_cards",
+    "load_image_sprite"
+   ],
+   [
+    "_selftest_t2_cards",
+    "resolve_pos"
+   ],
+   [
+    "_selftest_t2_panel",
+    "t2_rgb"
+   ],
+   [
+    "_st_lime",
+    "t2_rgb"
+   ]
+  ],
+  "selftest -> captions": [
+   [
+    "_selftest_4d",
+    "parse_srt"
+   ],
+   [
+    "_selftest_t2_cards",
+    "parse_srt"
+   ],
+   [
+    "_selftest_t2_dynamic",
+    "parse_srt"
+   ]
+  ],
+  "selftest -> split": [
+   [
+    "_selftest_t2_4c",
+    "split_boxes"
+   ]
+  ],
+  "selftest -> ask": [
+   [
+    "_selftest_4d",
+    "_PRESET"
+   ]
+  ],
+  "montage -> render": [
+   [
+    "_main",
+    "_load_job"
+   ],
+   [
+    "_main",
+    "render"
+   ],
+   [
+    "_main",
+    "render_still"
+   ]
+  ],
+  "montage -> common": [
+   [
+    "_main",
+    "_require_ffmpeg"
+   ],
+   [
+    "_main",
+    "_save_defaults"
+   ],
+   [
+    "_main",
+    "yn"
+   ]
+  ],
+  "montage -> captions": [
+   [
+    "_main",
+    "caption_streams"
+   ],
+   [
+    "_main",
+    "parse_srt"
+   ],
+   [
+    "_main",
+    "stream_groups"
+   ]
+  ],
+  "montage -> templates/__init__": [
+   [
+    "_main",
+    "get_template"
+   ],
+   [
+    "_main",
+    "interactive"
+   ],
+   [
+    "_main",
+    "recap_line"
+   ]
+  ],
+  "montage -> selftest": [
+   [
+    "_main",
+    "run_selftest"
+   ]
+  ],
+  "montage -> fonts": [
+   [
+    "_main",
+    "setup_arabic_mode"
+   ]
+  ]
+ }
+}

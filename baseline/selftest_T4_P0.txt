@@ -1,0 +1,10 @@
+Missing Python packages: arabic-reshaper, python-bidi
+Install them now with pip? [Y/n]: Please run:  pip install arabic-reshaper python-bidi
+
+=== P0 NOTE (added by recon, not program output) ===
+--selftest did NOT run: the import-time check in mt/common.py (_ensure_python_packages) aborts because
+arabic-reshaper and python-bidi are not installed, and package installs are blocked in this container (no network for pip).
+No golden comparison was made. Re-run P0 selftest where `pip install arabic-reshaper python-bidi` works and overwrite this file.
+UPDATE: a real P0 baseline was later produced with throw-away stub modules for arabic_reshaper / bidi (outside the project, identity
+shaping, --arabic-mode raqm path) on the UNTOUCHED zip copy: baseline/selftest_T4_P0_stubbed.txt -> 111 ok, 2 failed
+(check 26 timing 1.41x vs 1.3x = machine load; T3-6 frame-height pixel check 1533/1177 vs 1536/1254 = this container's missing fonts). Both pre-existing.

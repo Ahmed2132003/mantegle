@@ -1,0 +1,318 @@
+name,kind,start,end,lines,target,template,refs(defined-in-file),global_stmt,mutable_state,__file__/BASE_lines,cwd/relative_path_lines,imports_used
+Expr,Expr,3,61,59,montage(docstring),generic,,,,,,
+os,import,62,62,1,common,generic,,,,,,
+sys,import,63,63,1,common,generic,,,,,,
+re,import,64,64,1,common,generic,,,,,,
+json,import,65,65,1,common,generic,,,,,,
+math,import,66,66,1,common,generic,,,,,,
+shutil,import,67,67,1,common,generic,,,,,,
+argparse,import,68,68,1,common,generic,,,,,,
+subprocess,import,69,69,1,common,generic,,,,,,
+tempfile,import,70,70,1,common,generic,,,,,,
+time,import,71,71,1,common,generic,,,,,,
+Fraction,import,72,72,1,common,generic,,,,,,
+Path,import,73,73,1,common,generic,,,,,,
+unicodedata,import,74,74,1,common,generic,,,,,,
+try,try,76,80,5,common,generic,,,,,,sys
+BASE,global,82,82,1,common,generic,,,,82,,Path
+TEMPLATES_DIR,global,83,83,1,common,generic,BASE,,,83,,
+FONTS_DIR,global,84,84,1,common,generic,BASE,,,84,,
+DEFAULTS_FILE,global,85,85,1,common,generic,BASE,,,85,,
+VIDEO_EXTS,global,87,87,1,common,generic,,,,,,
+IMAGE_EXTS,global,88,88,1,common,generic,,,,,,
+_ensure_python_packages,def,94,126,33,common,generic,,,,,,subprocess sys
+Expr,Expr,129,129,1,common,generic,_ensure_python_packages,,,,,
+"Image,ImageChops,ImageColor,ImageDraw,ImageFilter,ImageFont,features",import,131,131,1,common,generic,,,,,,
+arabic_reshaper,import,132,132,1,common,generic,,,,,,
+"get_display,get_display",try,134,137,4,common,generic,,,,,,
+_find_tool,def,140,148,9,common,generic,BASE,,,145,,os shutil
+FFMPEG,global,151,151,1,common,generic,_find_tool,,,,,
+FFPROBE,global,152,152,1,common,generic,_find_tool,,,,,
+_require_ffmpeg,def,155,162,8,common,generic,FFMPEG FFPROBE,,,,,sys
+_load_defaults,def,168,172,5,common,generic,DEFAULTS_FILE,,,,,json
+D,global,175,175,1,common,generic,_load_defaults,,,,,
+_save_defaults,def,178,182,5,common,generic,D DEFAULTS_FILE,,,,,json
+AR_DIGITS,global,188,188,1,common,generic,,,,,,
+AR_COLORS,global,190,196,7,common,generic,,,yes,,,
+YES,global,198,198,1,common,generic,,,yes,,,
+NO,global,199,199,1,common,generic,,,yes,,,
+clean_path,def,202,206,5,common,generic,,,,,,os
+ask,def,209,233,25,common,generic,D,,,,,
+yn,def,236,249,14,common,generic,NO YES,,,,,
+c_float,def,252,253,2,common,generic,AR_DIGITS,,,,,
+c_int,def,256,257,2,common,generic,AR_DIGITS,,,,,
+c_time,def,260,269,10,common,generic,AR_DIGITS,,,,,
+c_color,def,272,285,14,common,generic,AR_COLORS,,,,,ImageColor re
+c_size_wh,def,288,295,8,common,generic,AR_DIGITS,,,,,re
+c_existing_file,def,298,306,9,common,generic,clean_path,,,,,os
+c_text,def,309,315,7,common,generic,clean_path,,,,,Path os
+c_percent,def,318,322,5,common,generic,AR_DIGITS,,,,,
+ask_time,def,325,326,2,common,generic,ask c_time,,,,,
+ask_choice,def,329,339,11,common,generic,AR_DIGITS ask,,,,,
+ARABIC_RE,global,345,345,1,fonts,generic,,,,,,re
+ARABIC_MODE,global,346,346,1,fonts,generic,,,,,,
+_reshaper,global,347,347,1,fonts,generic,,,,,,arabic_reshaper
+has_arabic,def,350,351,2,fonts,generic,ARABIC_RE,,,,,
+is_rtl_text,def,354,357,4,fonts,generic,ARABIC_RE,,,,,re
+setup_arabic_mode,def,360,373,14,fonts,generic,ARABIC_MODE,ARABIC_MODE,,,,features
+_CUR_FONT,global,376,376,1,fonts,generic,,,yes,,,
+_cmap_cache,global,377,377,1,fonts,generic,,,yes,,,
+_font_cmap,def,380,387,8,fonts,generic,_cmap_cache,,,,,
+_fix_missing,def,390,404,15,fonts,generic,_CUR_FONT _font_cmap,,,,,unicodedata
+shape,def,407,411,5,fonts,generic,ARABIC_MODE _fix_missing _reshaper get_display has_arabic,,,,,
+_font_cache,global,414,414,1,fonts,generic,,,yes,,,
+load_font,def,417,425,9,fonts,generic,ARABIC_MODE _CUR_FONT _font_cache,,,,,ImageFont
+font_supports_arabic,def,427,435,9,fonts,generic,ARABIC_MODE load_font,,,,,
+_system_font_dirs,def,438,449,12,fonts,generic,,,,,,os sys
+_font_index,global,452,452,1,fonts,generic,,,,,,
+_build_font_index,def,455,467,13,fonts,generic,FONTS_DIR _font_index _system_font_dirs,_font_index,,,,Path os
+list_local_fonts,def,470,477,8,fonts,generic,FONTS_DIR,,,,,
+find_font,def,480,490,11,fonts,generic,_build_font_index clean_path,,,,,os
+default_font,def,493,514,22,fonts,generic,_build_font_index list_local_fonts,,,,,os sys
+ask_font,def,517,538,22,ask,generic,D ask default_font find_font font_supports_arabic list_local_fonts,,,,,Path os
+ANIMS,global,544,545,2,anim,generic,,,yes,,,
+ANIM_LINE,global,546,547,2,ask,generic,,,,,,
+_out_cubic,def,550,551,2,anim,generic,,,,,,
+_out_back,def,554,556,3,anim,generic,,,,,,
+_out_bounce,def,559,570,12,anim,generic,,,,,,
+anim_state,def,573,605,33,anim,generic,_out_back _out_bounce _out_cubic,,,,,
+c_anim,def,608,619,12,ask,generic,ANIMS AR_DIGITS,,,,,
+ask_anim,def,622,624,3,ask,generic,ANIM_LINE ask c_anim,,,,,
+PRESETS,global,630,634,5,anim,generic,,,yes,,,
+POS_LINE,global,635,636,2,ask,generic,,,,,,
+c_pos,def,639,648,10,ask,generic,AR_DIGITS PRESETS,,,,,re
+ask_pos,def,651,654,4,ask,generic,POS_LINE ask c_pos,,,,,
+resolve_pos,def,657,676,20,draw,generic,,,,,,
+wrap_lines,def,682,698,17,fonts,generic,shape,,,,,
+make_text_sprite,def,701,726,26,draw,generic,load_font shape wrap_lines,,,,,Image ImageDraw
+load_image_sprite,def,729,745,17,draw,generic,,,,,,Image
+_TASH,global,751,751,1,captions,generic,,,,,,re
+norm_tok,def,754,759,6,captions,generic,_TASH,,,,,re
+parse_markup,def,762,773,12,captions,generic,,,,,,re
+split_keywords,def,776,777,2,captions,generic,,,,,,re
+kw_sequences,def,780,786,7,captions,generic,norm_tok,,,,,
+find_sequences,def,789,796,8,captions,generic,,,,,,
+apply_keywords,def,799,804,6,captions,generic,find_sequences norm_tok,,,,,
+flatten_tokens,def,807,821,15,captions,generic,,,,,,
+phrase_groups,def,824,849,26,captions,generic,flatten_tokens,,,,,re
+_tok_dir,def,852,857,6,captions,generic,ARABIC_RE,,,,,re
+visual_order,def,860,880,21,captions,generic,_tok_dir,,,,,
+make_rich_sprite,def,883,951,69,captions,generic,is_rtl_text load_font shape visual_order,,,,,Image ImageDraw ImageFilter
+CYAN,global,957,957,1,draw,generic,,,,,,
+CYAN_TXT,global,958,958,1,draw,generic,,,,,,
+_draw_icon,def,961,997,37,draw,generic,,,,,,Image ImageDraw
+make_card_sprite,def,1000,1073,74,templates/t1_tech,T1,CYAN CYAN_TXT _draw_icon load_font shape,,,,,Image ImageDraw ImageFilter
+_chamfer,def,1079,1081,3,draw,generic,,,,,,
+make_tech_background,def,1084,1196,113,templates/t1_tech,T1,_chamfer,,,,,Image ImageDraw ImageFilter
+Item,class,1202,1219,18,draw,generic,,,,,,
+_paste,def,1222,1230,9,draw,generic,,,,,,
+draw_item,def,1233,1266,34,draw,generic,_paste,,,,,Image
+TIME_RE,global,1272,1272,1,captions,generic,,,,,,re
+_ts,def,1275,1276,2,captions,generic,,,,,,
+parse_srt,def,1279,1306,28,captions,generic,TIME_RE _ts,,,,,Path re
+caption_groups,def,1309,1322,14,captions,generic,,,,,,
+probe,def,1328,1365,38,common,generic,FFPROBE,,,,,Fraction json subprocess
+ask_caption_style,def,1371,1403,33,ask,generic,ask ask_anim ask_choice ask_font c_color c_float c_int c_percent yn,,,,,Path
+list_templates,def,1406,1409,4,ask,generic,TEMPLATES_DIR,,,,,
+ask_layers,def,1412,1425,14,ask,generic,IMAGE_EXTS ask ask_anim ask_pos c_existing_file c_percent yn,,,,,
+maybe_save_template,def,1428,1436,9,ask,generic,TEMPLATES_DIR ask,,,,,json re
+ask_hud_template,def,1439,1453,15,templates/t1_tech,T1,ask ask_choice ask_layers c_int c_percent c_size_wh maybe_save_template,,,,,
+_PRESET,global,1456,1456,1,ask,generic,,,yes,,,
+_saved_templates,def,1459,1464,6,ask,generic,_tpl_template_id list_templates,,,,,
+choose_template,def,1467,1501,35,templates/__init__,generic,AR_DIGITS D TEMPLATE_REGISTRY _PRESET _saved_templates ask,,,,,
+ask_template,def,1504,1573,70,templates/t1_tech,T1,AR_DIGITS IMAGE_EXTS VIDEO_EXTS _PRESET _tpl_template_id ask ask_choice ask_layers c_color c_existing_file c_size_wh list_templates maybe_save_template,,,,,Path json os re
+ask_texts,def,1576,1597,22,ask,generic,ask ask_anim ask_font ask_pos ask_time c_color c_float c_int c_text yn,,,,,
+ask_elements,def,1600,1618,19,ask,generic,IMAGE_EXTS ask ask_anim ask_pos ask_time c_existing_file c_float c_percent yn,,,,,
+ask_video_layers,def,1621,1639,19,ask,generic,VIDEO_EXTS ask ask_choice ask_time c_existing_file yn,,,,,
+ICON_LINE,global,1642,1642,1,ask,generic,,,,,,
+SLOT_LINE,global,1643,1643,1,templates/t1_tech,T1,,,,,,
+SLOTS,global,1644,1646,3,templates/t1_tech,T1,,,yes,,,
+find_trigger,def,1649,1653,5,ask,generic,find_sequences flatten_tokens kw_sequences norm_tok,,,,,
+ask_cards,def,1656,1704,49,templates/t1_tech,T1,AR_DIGITS ICON_LINE SLOT_LINE ask ask_anim ask_font c_float c_time clean_path find_trigger yn,,,,,os
+_interactive_core,def,1707,1766,60,templates/__init__,generic,VIDEO_EXTS _interactive_t2 ask ask_elements ask_layers ask_texts ask_video_layers c_existing_file c_float choose_template clean_path parse_srt probe t2_ask_about t2_ask_cards_cfg t2_ask_chapters t2_ask_panel t2_ask_split t2_cfg,,,,,Path
+interactive,def,1769,1773,5,templates/__init__,generic,_PRESET _interactive_core,,,,,
+_WARNED,global,1779,1779,1,common,generic,,,yes,,,
+_warn,def,1782,1785,4,common,generic,_WARNED,,,,,
+_font_ok,def,1788,1792,5,fonts,generic,,,,,,ImageFont os
+_font_or_fallback,def,1795,1806,12,fonts,generic,_font_ok _warn default_font,,,,,Path
+_img_ok,def,1809,1818,10,common,generic,_warn,,,,,Image Path os
+_vid_ok,def,1821,1825,5,common,generic,_warn,,,,,Path os
+preflight_cfg,def,1828,1882,55,render,generic,_WARNED _font_ok _font_or_fallback _img_ok _vid_ok _warn default_font get_template,,,,,Path os
+_load_job,def,1885,1891,7,render,generic,,,,,,Path json
+stream_groups,def,1897,1947,51,captions,generic,find_sequences kw_sequences norm_tok parse_markup split_keywords,,,,,re
+caption_streams,def,1950,1960,11,captions,generic,,,,,,
+SPLIT_T,global,1965,1965,1,split,generic,,,,,,
+split_boxes,def,1968,1981,14,split,generic,,,,,,
+compute_splits,def,1984,1998,15,split,generic,,,,,,
+split_at,def,2001,2002,2,split,generic,SPLIT_T,,,,,
+_draw_frame,def,2005,2031,27,render,generic,_chamfer,,,,,Image ImageDraw ImageFilter
+make_split_background,def,2034,2039,6,templates/t1_tech,T1,_draw_frame make_tech_background,,,,,Image
+t1_build_items,def,2041,2073,33,templates/t1_tech,T1,Item SLOTS SPLIT_T make_card_sprite split_at,,,,,
+build_items,def,2076,2140,65,render,generic,Item SPLIT_T caption_streams compute_splits get_template is_rtl_text load_image_sprite make_rich_sprite make_text_sprite parse_srt resolve_pos split_at split_boxes stream_groups t2_caption_items,,,,,Image
+_hex0x,def,2143,2144,2,common,generic,,,,,,
+build_ffmpeg_cmd,def,2147,2292,146,render,generic,FFMPEG SPLIT_T _hex0x compute_splits split_boxes,,,,,
+video_layer_area,def,2295,2303,9,render,generic,split_boxes,,,,,
+prepare_video_layers,def,2306,2333,28,render,generic,FFMPEG video_layer_area,,,,,Path os subprocess
+render,def,2336,2354,19,render,generic,_render _require_ffmpeg get_template preflight_cfg prepare_video_layers probe t2_prepare_card_layers,,,,,Path shutil tempfile
+_render,def,2357,2454,98,render,generic,FFMPEG _require_ffmpeg anim_state build_ffmpeg_cmd build_items draw_item probe,,,,,Image Path math os shutil subprocess tempfile time
+PALETTES,global,2472,2477,6,templates/t1_tech,T1,CYAN CYAN_TXT,,yes,,,
+t1_build_background,def,2480,2490,11,templates/t1_tech,T1,make_split_background make_tech_background split_boxes,,,,,os
+t1_ask_config,def,2493,2494,2,templates/t1_tech,T1,ask_hud_template,,,,,
+"T2_POSTER_W,T2_POSTER_H",global,2510,2510,1,templates/t2_lime,T2,,,,,,
+T2_ACCENT,global,2511,2511,1,common,generic,,,,,,
+T2_SS,global,2512,2512,1,draw,generic,,,,,,
+"T2_BG0,T2_BG1",global,2513,2513,1,templates/t2_lime,T2,,,,,,
+T2_DEFAULT_BOX,global,2514,2514,1,templates/t2_lime,T2,,,yes,,,
+T2_DEFAULTS,global,2515,2535,21,templates/t2_lime,T2,T2_ACCENT,,yes,,,
+T2_TEXT_KEYS,global,2536,2536,1,templates/t2_lime,T2,,,,,,
+T2_BOOL_KEYS,global,2537,2537,1,templates/t2_lime,T2,,,,,,
+t2_rgb,def,2541,2548,8,draw,generic,T2_ACCENT,,,,,ImageColor
+t2_mix,def,2551,2552,2,draw,generic,,,,,,
+t2_lighten,def,2555,2556,2,draw,generic,t2_mix,,,,,
+t2_darken,def,2559,2560,2,draw,generic,t2_mix,,,,,
+t2_cfg,def,2563,2605,43,templates/t2_lime,T2,ANIMS T2_BOOL_KEYS T2_DEFAULTS T2_TEXT_KEYS t2_norm_about t2_norm_cards t2_norm_chapters t2_norm_panel t2_norm_split t2_rgb,,,,,
+t2_norm_split,def,2608,2619,12,templates/t2_lime,T2,,,,,,
+t2_split_params,def,2622,2632,11,templates/t2_lime,T2,T2_DEFAULT_BOX t2_cfg,,,,,
+t2_make_split_ring,def,2635,2671,37,templates/t2_lime,T2,T2_SS split_boxes t2_cfg t2_rgb,,,,,Image ImageChops ImageDraw ImageFilter
+_t2_num_or_none,def,2674,2678,5,common,generic,,,,,,
+t2_norm_chapters,def,2681,2696,16,templates/t2_lime,T2,ANIMS _t2_num_or_none,,,,,
+t2_norm_cards,def,2699,2720,22,templates/t2_lime,T2,_t2_num_or_none,,,,,
+T2_FONTS,global,2726,2753,28,templates/t2_lime,T2,,,yes,,,
+_t2_font_idx,global,2754,2754,1,templates/t2_lime,T2,,,,,,
+_T2_WARNED,global,2755,2755,1,templates/t2_lime,T2,,,yes,,,
+_t2_norm,def,2758,2759,2,common,generic,,,,,,re
+_t2_lookup,def,2762,2775,14,templates/t2_lime,T2,_build_font_index _t2_font_idx _t2_norm,_t2_font_idx,,,,
+t2_font,def,2778,2803,26,templates/t2_lime,T2,T2_FONTS _T2_WARNED _t2_lookup default_font font_supports_arabic has_arabic,,,,,Path os
+t2_size_for_cap,def,2806,2814,9,draw,generic,load_font,,,,,
+t2_draw_mask,def,2819,2828,10,draw,generic,T2_SS,,,,,Image ImageDraw math
+t2_rrect_mask,def,2831,2838,8,draw,generic,T2_SS t2_draw_mask,,,,,
+t2_poly_mask,def,2841,2851,11,draw,generic,T2_SS t2_draw_mask,,,,,ImageFilter
+t2_polys_mask,def,2854,2862,9,draw,generic,T2_SS t2_draw_mask,,,,,
+t2_line_mask,def,2865,2876,12,draw,generic,T2_SS t2_draw_mask,,,,,
+t2_dots_mask,def,2879,2885,7,draw,generic,T2_SS t2_draw_mask,,,,,
+t2_mask_sub,def,2888,2894,7,draw,generic,,,,,,Image ImageChops
+t2_mask_full,def,2897,2902,6,draw,generic,,,,,,Image
+t2_place,def,2905,2909,5,draw,generic,,,,,,
+t2_ramp,def,2912,2932,21,draw,generic,,,,,,Image
+t2_gradient,def,2935,2947,13,draw,generic,t2_ramp,,,,,Image math
+t2_grad,def,2950,2955,6,draw,generic,t2_gradient,,,,,
+_t2_alpha_paste,def,2958,2964,7,draw,generic,,,,,,
+t2_paint,def,2967,2986,20,draw,generic,_t2_alpha_paste,,,,,Image ImageChops
+t2_glow,def,2989,2996,8,draw,generic,,,,,,Image ImageFilter
+t2_shear_mask,def,3000,3004,5,draw,generic,,,,,,Image math
+t2_text_mask,def,3007,3039,33,draw,generic,T2_SS has_arabic load_font shape t2_shear_mask,,,,,Image ImageDraw
+t2_fit_text,def,3042,3059,18,draw,generic,t2_size_for_cap t2_text_mask,,,,,
+_T2_CACHE,global,3063,3063,1,templates/t2_lime,T2,,,yes,,,
+_T2_CACHE_DIR,global,3064,3064,1,templates/t2_lime,T2,,,,,,
+make_t2_static,def,3067,3274,208,templates/t2_lime,T2,T2_BG0 T2_BG1 T2_DEFAULT_BOX T2_POSTER_H T2_POSTER_W _T2_CACHE _T2_CACHE_DIR t2_cfg t2_darken t2_dots_mask t2_draw_mask t2_fit_text t2_font t2_glow t2_grad t2_gradient t2_lighten t2_line_mask t2_mask_full t2_mask_sub t2_mix t2_paint t2_place t2_poly_mask t2_polys_mask t2_rgb t2_rrect_mask,_T2_CACHE_DIR,,,,ImageChops json os shutil tempfile
+t2_build_static_layers,def,3277,3296,20,templates/t2_lime,T2,make_t2_static t2_cfg t2_make_split_ring t2_panel_bake t2_split_params t2_wave_data,,,,,os
+_c_t2_text,def,3300,3302,3,templates/t2_lime,T2,,,,,,
+_tpl_template_id,def,3305,3309,5,ask,generic,,,,,,Path json
+t2_ask_config,def,3312,3367,56,templates/t2_lime,T2,D T2_ACCENT T2_DEFAULTS T2_DEFAULT_BOX _PRESET _c_t2_text _tpl_template_id ask ask_choice c_color c_int c_size_wh list_templates maybe_save_template t2_cfg yn,,,,,Path json os
+_first_frame,def,3371,3387,17,render,generic,FFMPEG,,,,,Image os subprocess tempfile
+render_still,def,3390,3443,54,render,generic,_first_frame anim_state build_items draw_item get_template preflight_cfg probe,,,,,Image Path os shutil tempfile
+T2_TAG,global,3449,3450,2,templates/t2_lime,T2,,,yes,,,
+t2_tag_pos,def,3453,3456,4,templates/t2_lime,T2,T2_DEFAULT_BOX T2_TAG,,,,,
+t2_chapter_sprite,def,3459,3492,34,templates/t2_lime,T2,T2_ACCENT T2_TAG t2_font t2_paint t2_rgb t2_rrect_mask t2_size_for_cap t2_text_mask,,,,,Image
+t2_resolve_chapters,def,3495,3531,37,templates/t2_lime,T2,caption_streams find_trigger parse_srt t2_cfg,,,,,
+t2_chapter_items,def,3534,3544,11,templates/t2_lime,T2,Item t2_cfg t2_chapter_sprite t2_resolve_chapters t2_tag_pos,,,,,
+t2_ask_chapters,def,3547,3580,34,templates/t2_lime,T2,D ask ask_anim c_float c_time find_trigger yn,,,,,
+T2_CAP,global,3586,3588,3,templates/t2_lime,T2,,,yes,,,
+t2_caption_layout,def,3591,3600,10,templates/t2_lime,T2,T2_CAP T2_DEFAULT_BOX caption_streams,,,,,
+t2_caption_sprite,def,3603,3695,93,templates/t2_lime,T2,T2_ACCENT T2_CAP is_rtl_text load_font shape t2_paint t2_rgb t2_rrect_mask visual_order,,,,,Image ImageDraw
+t2_subline_sprite,def,3698,3717,20,templates/t2_lime,T2,T2_ACCENT make_rich_sprite,,,,,
+t2_caption_items,def,3720,3745,26,templates/t2_lime,T2,Item T2_CAP is_rtl_text t2_caption_layout t2_caption_sprite t2_cfg t2_font t2_subline_sprite,,,,,os
+t2_caption_style,def,3748,3782,35,templates/t2_lime,T2,D T2_CAP ask ask_anim ask_choice ask_font c_color c_float c_int c_percent t2_font,,,,,Path os
+T2_CARD,global,3794,3798,5,templates/t2_lime,T2,,,yes,,,
+_T2_CARD_PARTS,global,3799,3799,1,templates/t2_lime,T2,,,yes,,,
+c_card_icon,def,3802,3810,9,templates/t2_lime,T2,AR_DIGITS clean_path,,,,,os
+t2_card_center,def,3813,3824,12,templates/t2_lime,T2,T2_CARD T2_DEFAULT_BOX,,,,,
+t2_card_parts,def,3827,3886,60,templates/t2_lime,T2,T2_ACCENT T2_CARD _T2_CARD_PARTS _draw_icon t2_fit_text t2_font t2_glow t2_paint t2_rgb t2_rrect_mask,,,,,Image json
+T2_CARD_BLEED,global,3889,3889,1,templates/t2_lime,T2,,,,,,
+t2_card_media_size,def,3892,3895,4,templates/t2_lime,T2,T2_CARD_BLEED,,,,,
+_t2_card_static,def,3898,3908,11,templates/t2_lime,T2,,,,,,Image
+t2_card_assemble,def,3911,3944,34,templates/t2_lime,T2,_t2_card_static t2_card_media_size,,,,,Image ImageChops math
+t2_resolve_cards,def,3947,3999,53,templates/t2_lime,T2,VIDEO_EXTS caption_streams find_trigger parse_srt t2_card_center t2_cfg,,,,,Path os
+_t2_card_parts_for,def,4002,4004,3,templates/t2_lime,T2,t2_card_parts t2_cfg,,,,,
+t2_card_items,def,4007,4023,17,templates/t2_lime,T2,Item _first_frame _t2_card_parts_for t2_card_assemble t2_resolve_cards,,,,,Image
+_read_exact,def,4026,4033,8,common,generic,,,,,,
+t2_prepare_card_layers,def,4036,4106,71,templates/t2_lime,T2,FFMPEG Item _read_exact _t2_card_parts_for anim_state draw_item t2_card_assemble t2_card_media_size t2_resolve_cards,,,,,Image Path math os subprocess
+t2_build_items,def,4109,4114,6,templates/t2_lime,T2,t1_build_items t2_about_items t2_card_items t2_chapter_items t2_dots_items t2_roadmap_items,,,,,
+t2_ask_cards_cfg,def,4117,4161,45,templates/t2_lime,T2,AR_DIGITS D ICON_LINE IMAGE_EXTS VIDEO_EXTS ask c_card_icon c_existing_file c_float c_time find_trigger yn,,,,,
+t2_ask_cards,def,4164,4166,3,templates/t2_lime,T2,t2_ask_cards_cfg,,,,,
+T2_ABOUT,global,4174,4179,6,templates/t2_lime,T2,,,yes,,,
+T2_ABOUT_DEFAULT_STATE,global,4180,4184,5,templates/t2_lime,T2,,,yes,,,
+T2_ABOUT_ICONS,global,4185,4185,1,templates/t2_lime,T2,,,,,,
+T2_ABOUT_ICON_LINE,global,4186,4186,1,templates/t2_lime,T2,,,,,,
+t2_about_icon_spec,def,4189,4198,10,templates/t2_lime,T2,AR_DIGITS T2_ABOUT_ICONS clean_path,,,,,os
+c_about_icon,def,4201,4205,5,templates/t2_lime,T2,AR_DIGITS t2_about_icon_spec,,,,,
+t2_norm_about,def,4208,4234,27,templates/t2_lime,T2,ANIMS T2_ABOUT T2_ABOUT_DEFAULT_STATE _t2_num_or_none t2_about_icon_spec,,,,,
+t2_about_geometry,def,4237,4253,17,templates/t2_lime,T2,T2_ABOUT T2_DEFAULT_BOX,,,,,
+t2_about_icon,def,4256,4286,31,templates/t2_lime,T2,T2_ACCENT _draw_icon t2_rgb,,,,,Image ImageDraw math
+_t2_about_wrap,def,4289,4301,13,templates/t2_lime,T2,load_font shape,,,,,
+t2_about_fit_paragraph,def,4304,4328,25,templates/t2_lime,T2,_t2_about_wrap t2_size_for_cap,,,,,
+t2_about_sprite,def,4331,4385,55,templates/t2_lime,T2,T2_ABOUT has_arabic is_rtl_text t2_about_fit_paragraph t2_about_geometry t2_about_icon t2_cfg t2_fit_text t2_font t2_paint t2_rgb t2_rrect_mask,,,,,Image
+t2_resolve_about,def,4388,4428,41,templates/t2_lime,T2,T2_ABOUT_DEFAULT_STATE caption_streams find_trigger parse_srt t2_cfg t2_norm_about,,,,,
+t2_about_items,def,4431,4440,10,templates/t2_lime,T2,Item t2_about_geometry t2_about_sprite t2_resolve_about,,,,,
+t2_ask_about,def,4443,4493,51,templates/t2_lime,T2,D T2_ABOUT T2_ABOUT_DEFAULT_STATE T2_ABOUT_ICON_LINE ask ask_anim c_about_icon c_float c_time find_trigger t2_about_icon_spec yn,,,,,
+T2_PANEL,global,4500,4506,7,templates/t2_lime,T2,,,yes,,,
+T2_PANEL_ROWS,global,4507,4517,11,templates/t2_lime,T2,,,yes,,,
+T2_PANEL_GUIDE,global,4518,4519,2,templates/t2_lime,T2,,,yes,,,
+_t2_frac,def,4522,4526,5,common,generic,,,,,,
+t2_norm_panel,def,4529,4570,42,templates/t2_lime,T2,T2_PANEL T2_PANEL_GUIDE T2_PANEL_ROWS _t2_frac _t2_num_or_none t2_rgb,,,,,
+t2_panel_icon,def,4573,4591,19,templates/t2_lime,T2,T2_ACCENT t2_rgb,,,,,Image ImageDraw
+t2_panel_geometry,def,4594,4602,9,templates/t2_lime,T2,T2_PANEL T2_POSTER_H T2_POSTER_W,,,,,
+t2_panel_playhead_sprite,def,4605,4622,18,templates/t2_lime,T2,T2_PANEL T2_SS t2_panel_geometry,,,,,Image ImageDraw math
+T2_WAVE_N,global,4625,4625,1,templates/t2_lime,T2,,,,,,
+T2_DOTS,global,4626,4626,1,templates/t2_lime,T2,,,yes,,,
+t2_dot_plan,def,4629,4633,5,templates/t2_lime,T2,t2_cfg t2_resolve_chapters,,,,,
+t2_dot_index,def,4636,4638,3,templates/t2_lime,T2,,,,,,
+t2_dots_sprite,def,4641,4658,18,templates/t2_lime,T2,T2_DOTS T2_SS t2_cfg t2_panel_geometry t2_rgb,,,,,Image ImageDraw math
+t2_dots_items,def,4661,4676,16,templates/t2_lime,T2,Item t2_dot_index t2_dot_plan t2_dots_sprite,,,,,
+t2_wave_procedural,def,4679,4688,10,templates/t2_lime,T2,T2_WAVE_N,,,,,math
+_t2_peaks_from_pcm,def,4691,4718,28,templates/t2_lime,T2,,,,,,sys
+t2_wave_peaks,def,4721,4730,10,templates/t2_lime,T2,FFMPEG T2_WAVE_N _t2_peaks_from_pcm,,,,,subprocess
+t2_wave_data,def,4733,4743,11,templates/t2_lime,T2,t2_cfg t2_wave_peaks t2_wave_procedural,,,,,os
+t2_panel_plate,def,4746,4856,111,templates/t2_lime,T2,T2_PANEL T2_SS has_arabic is_rtl_text t2_cfg t2_dot_plan t2_dots_sprite t2_fit_text t2_font t2_paint t2_panel_geometry t2_panel_icon t2_rgb t2_rrect_mask t2_size_for_cap t2_text_mask t2_wave_procedural,,,,,Image ImageDraw math
+T2_ROADMAP,global,4860,4862,3,templates/t2_lime,T2,,,yes,,,
+t2_roadmap_on,def,4865,4867,3,templates/t2_lime,T2,t2_cfg,,,,,
+t2_roadmap_zone,def,4870,4883,14,templates/t2_lime,T2,T2_DEFAULT_BOX T2_ROADMAP t2_about_geometry t2_cfg,,,,,
+_t2_rm_mix,def,4886,4887,2,templates/t2_lime,T2,,,,,,
+t2_roadmap_sprite,def,4890,4989,100,templates/t2_lime,T2,T2_ROADMAP _t2_rm_mix has_arabic t2_cfg t2_draw_mask t2_fit_text t2_font t2_glow t2_paint t2_rgb t2_roadmap_zone t2_rrect_mask t2_size_for_cap t2_text_mask,,,,,Image math
+t2_roadmap_items,def,4992,5016,25,templates/t2_lime,T2,Item T2_ROADMAP t2_cfg t2_resolve_chapters t2_roadmap_on t2_roadmap_sprite,,,,,
+t2_panel_bake,def,5020,5035,16,templates/t2_lime,T2,t2_panel_plate t2_panel_playhead_sprite,,,,,Image os
+t2_ask_split,def,5038,5046,9,templates/t2_lime,T2,D ask c_percent yn,,,,,
+t2_ask_panel,def,5049,5072,24,templates/t2_lime,T2,D T2_PANEL_GUIDE T2_PANEL_ROWS _c_t2_text ask yn,,,,,
+_hdr,def,5075,5076,2,templates/t2_lime,T2,,,,,,
+_t2_ask_on,def,5079,5082,4,templates/t2_lime,T2,D yn,,,,,
+_interactive_t2,def,5085,5166,82,templates/t2_lime,T2,VIDEO_EXTS _PRESET _hdr _t2_ask_on ask ask_elements ask_layers ask_texts ask_video_layers c_existing_file c_float clean_path parse_srt probe t2_ask_about t2_ask_cards_cfg t2_ask_chapters t2_ask_panel t2_ask_split t2_cfg,,,,,Path
+recap_line,def,5169,5186,18,templates/__init__,generic,get_template,,,,,
+TEMPLATE_REGISTRY,global,5189,5199,11,templates/__init__,generic,ask_caption_style ask_cards ask_template t1_ask_config t1_build_background t1_build_items t2_ask_cards t2_ask_config t2_build_items t2_build_static_layers t2_caption_style,,yes,,,
+get_template,def,5202,5208,7,templates/__init__,generic,TEMPLATE_REGISTRY,,,,,
+GOLDEN_DIR,global,5214,5214,1,selftest,generic,BASE,,,5214,,
+GOLDEN_TIMES,global,5215,5215,1,selftest,generic,,,,,,
+_st_make_assets,def,5218,5244,27,selftest,generic,FFMPEG,,,,,Image ImageDraw Path subprocess
+_st_font,def,5247,5250,4,selftest,generic,GOLDEN_DIR default_font,,,,,
+_st_job,def,5253,5277,25,selftest,generic,T2_DEFAULT_BOX _st_font t2_cfg,,,,,Path
+_st_info,def,5280,5286,7,selftest,generic,FFPROBE,,,,,json subprocess
+_st_frame_diffs,def,5289,5303,15,selftest,generic,FFMPEG GOLDEN_DIR GOLDEN_TIMES,,,,,Image ImageChops Path subprocess
+_st_golden_status,def,5306,5319,14,selftest,generic,ARABIC_MODE GOLDEN_DIR GOLDEN_TIMES,,,,,json
+run_selftest,def,5322,5495,174,selftest,generic,D FFMPEG FFPROBE T2_DEFAULT_BOX TEMPLATE_REGISTRY _StopSelftest _selftest_4d _selftest_t2 _selftest_t2_4c _selftest_t2_about _selftest_t2_cards _selftest_t2_dynamic _selftest_t2_panel _st_frame_diffs _st_golden_status _st_info _st_job _st_make_assets _st_report choose_template get_template interactive render t2_cfg,,,5343 5470,,Path json shutil subprocess sys tempfile
+_selftest_t2,def,5498,5676,179,selftest,generic,FFMPEG T2_DEFAULT_BOX _st_info _st_job make_t2_static render render_still t2_ask_config t2_cfg,,,,,Image json subprocess
+_st_lime,def,5679,5682,4,selftest,generic,T2_ACCENT t2_rgb,,,,,
+_st_grab,def,5685,5688,4,selftest,generic,FFMPEG,,,,,Image subprocess
+_selftest_t2_dynamic,def,5691,5884,194,selftest,generic,D FFMPEG T2_ACCENT T2_CAP _st_grab _st_info _st_job _st_lime build_items parse_srt render render_still t2_ask_chapters t2_caption_items t2_caption_layout t2_caption_sprite t2_cfg t2_chapter_sprite t2_font t2_resolve_chapters t2_tag_pos,,,,,Image ImageChops json subprocess
+_st_cream,def,5887,5889,3,selftest,generic,T2_CARD,,,,,
+_st_card_points,def,5892,5899,8,selftest,generic,T2_CARD,,,,,math
+_st_card_hits,def,5902,5910,9,selftest,generic,_st_card_points _st_cream,,,,,
+_st_time_render,def,5913,5919,7,selftest,generic,render,,,,,time
+_selftest_t2_cards,def,5922,6147,226,selftest,generic,D FFMPEG T2_CARD _st_card_hits _st_card_points _st_cream _st_frame_diffs _st_golden_status _st_grab _st_info _st_job _st_lime _st_time_render build_items load_image_sprite parse_srt render render_still resolve_pos t2_ask_cards_cfg t2_cfg t2_font t2_resolve_cards t2_tag_pos,,,6048 6057,,Image Path json math subprocess sys
+_selftest_t2_about,def,6150,6271,122,selftest,generic,T2_ABOUT _st_frame_diffs _st_golden_status _st_grab _st_info _st_job _st_lime render render_still t2_about_geometry t2_about_sprite t2_cfg t2_font t2_norm_about t2_resolve_about,,,,,Image ImageChops
+_selftest_t2_panel,def,6274,6407,134,selftest,generic,FFMPEG _st_frame_diffs _st_golden_status _st_grab _st_info _st_job _st_time_render render render_still t2_cfg t2_font t2_panel_plate t2_rgb,,,,,Image subprocess
+_selftest_t2_4c,def,6410,6543,134,selftest,generic,FFMPEG T2_ACCENT T2_DOTS T2_POSTER_H T2_POSTER_W _st_frame_diffs _st_golden_status _st_grab _st_info _st_job render render_still split_boxes t2_build_static_layers t2_cfg t2_font t2_panel_plate t2_rgb t2_split_params,,,6506,,Image Path json os subprocess sys
+_selftest_4d,def,6546,6820,275,selftest,generic,BASE FFMPEG T2_DEFAULT_BOX _PRESET _st_grab _st_info _st_job choose_template interactive parse_srt recap_line render t2_cfg,,,6722 6727 6811,,Path json os subprocess sys
+_StopSelftest,class,6823,6824,2,selftest,generic,,,,,,
+_st_report,def,6827,6836,10,selftest,generic,,,,,,
+main,def,6842,6864,23,montage,generic,_main,,,,,Path os subprocess sys
+_main,def,6867,6944,78,montage,generic,_load_job _require_ffmpeg _save_defaults caption_streams get_template interactive parse_srt recap_line render render_still run_selftest setup_arabic_mode stream_groups yn,,,,,Path argparse json sys
+if,if,6947,6948,2,montage,generic,main,,,,,

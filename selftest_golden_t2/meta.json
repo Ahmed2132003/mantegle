@@ -1,0 +1,10 @@
+{
+ "arabic_mode": "reshape",
+ "font": "selftest_font.ttf (DejaVu Sans Bold) for headline/ui/arabic",
+ "note": "frames of a real --job render (3 s preview, 1080x1920) of the ORIGINAL Template 2 code: captions (box+sub), chapter tag, card, about block, panel",
+ "times": [
+  0.5,
+  1.5,
+  2.5
+ ]
+}

@@ -1,0 +1,134 @@
+[fonts] Template 2 arabic: recommended font not found, using 'DejaVuSans-Bold.ttf'. For the poster look put Cairo-Bold.ttf (or Tajawal-Bold.ttf / IBMPlexSansArabic-Bold.ttf) in the fonts/ folder.
+[fonts] Template 3 head: 'Kanit-BlackItalic.ttf (or Kanit-ExtraBoldItalic.ttf)' not found - put it in the fonts/ folder next to montage.py (using 'Poppins-BoldItalic.ttf' for now)
+[fonts] Template 3 light: 'Rajdhani-Light.ttf' not found - put it in the fonts/ folder next to montage.py (using 'DejaVuSans.ttf' for now)
+[fonts] Template 3 caps: 'Rajdhani-SemiBold.ttf' not found - put it in the fonts/ folder next to montage.py (using 'DejaVuSans-Bold.ttf' for now)
+      PASS  missing element / layer / video layer / icon / image / card paths  ((1080, 1920, 1.5, True))
+      PASS  missing font -> message names the file for fonts/  (6 message lines, names Kanit file=True)
+      PASS  numpy missing  (still with numpy blocked)
+      PASS  video without audio  ((1080, 1920, 1.5, False))
+      PASS  video shorter than the first band / split / trigger time  ((1080, 1920, 1.5, True))
+      PASS  very short video (1.5 s), every module on  ((1080, 1920, 1.5, True))
+      PASS  very long caption (514 chars)  ((1080, 1920, 1.5, True))
+      PASS  SRT with BOM / CRLF / empty lines  (cues=['Hello', 'World second'] (1080, 1920, 1.5, True))
+      PASS  trigger phrase not found -> warn and skip (all modules)  (9 'not found' warnings, no crash)
+      PASS  overlapping layout events  ((1080, 1920, 1.5, True))
+      PASS  parity: texts + elements + template layer + video layer, --job --preview, --still  (--job --preview 1.5 rc=0 (1080, 1920, 1.5); --still --job rc=0 png=True)
+
+==============================================================================
+ SELFTEST                                  RESULT  DETAIL
+------------------------------------------------------------------------------
+ 1 syntax + imports + ffmpeg               PASS    ffmpeg=/usr/local/bin/ffmpeg
+ 2 template selector (1/2/saved)           PASS    ids={'1': 1, '2': 2, '4': 4, '3': 3} saved_ok=True flow_ok=True
+ 3 Template 1 render                       PASS    1080x1920 3.00s audio=True
+ 4 Template 1 frames vs golden             PASS    diff @0.5/1.5/2.5 = 0.119 / 0.123 / 0.162
+ 5 Template 2 render                       PASS    1080x1920 3.00s audio=True
+ 6 old job (no template_id) = Template 1   PASS    diff @0.5/1.5/2.5 = 0.119 / 0.123 / 0.162
+ 7 --job re-render (Template 2)            PASS    rc=0 1080x1920 3.00s
+ 8 T2 static plate 1080x1920               PASS    bg (1080, 1920) RGB, fg (1080, 1920) RGBA, 20 elements
+ 9 T2 pixel checks                         PASS    bg corner (5, 8, 11) ok=True; bar (184, 216, 55) ok=True; window centre alpha 0 (want 0); window corner alpha 255 (want 255)
+ 10 T2 stress (long/empty/Arabic/accent)   PASS    9 cases, accent bar (249, 50, 99) ok=True, no-font fallback ok=True 
+ 11 T2 render 3s (size/duration/audio)     PASS    1080x1920 3.00s audio=True
+ 11b T2 video visible + rounded corners    PASS    centre stddev 126 mean 126 (video ok=True); corner diff vs design [1.0, 2.3, 1.7, 1.3]
+ 12 --still png                            PASS    (1080, 1920), placeholder window centre (128, 128, 128)
+ 13 T2 save / load template (no questions) PASS    saved=True questions on first run=17, on load=1, same cfg=True
+ 14 T2 job JSON reproduces the design      PASS    identical foreground=True
+ 15 T2 captions (box/bar/lines/highlight)  PASS    short AR: 300x91 1L size 50; long AR: 617x88 2L size 22; mixed AR+EN: 616x155 2L size 50; hl lime px=2404
+ 16 T2 chapter tag (3 chapters, 6 s)       PASS    own diff [2.02, 2.51, 2.44] vs best-other [13.71, 13.98, 15.8]; pairwise [13.17, 15.77, 15.09]; empty-before 0.00; lime px [804, 974, 952]
+ 17 T2 render chapters + AR/EN captions    PASS    1080x1920 3.00s audio=True; caption bar lime px=87, tag lime px=811, 5 items @1.0s
+ 18 T2 chapter questions + job JSON        PASS    questions ok=True none ok=True idempotent=True job same=True disabled ok=True
+ 19 T2 still with tag + caption            PASS    (1080, 1920) tag lime px=826 caption bar px=90
+ 20 T2 floating card: image + video        PASS    border hits hold img=4/4 vid=4/4, after hold 0/0; left border inside window=True (x=795); bbox ok=True; picture green=True
+ 21 T2 cards replace in the same slot      PASS    first=(18, 209, 38) second=(224, 29, 204) mid-swap cream px=725 ok=True old card ends 1.65s (new starts 1.40s)
+ 22 T2 parity render (all features)        PASS    1080x1920 4.00s audio=True; card border 4/4, tag lime px=759, element orange px=5308, layer centre (255, 255, 255)
+ 23 --job: T2 with card / old T1 job       PASS    T2 job rc=0 1080x1920 3.00s card border 4/4; old T1 job rc=0 golden diff 0.162
+ 24 T2 card questions + job JSON           PASS    answers ok=True T2 wording=True 'no' ok=True idempotent=True job same=True
+ 25 T2 still: tag + caption + card         PASS    (1080, 1920) card border 4/4 tag lime px=826 caption bar px=90
+ 26 timing T1 vs T2 (5 s clip)             FAIL    T1 8.1s   T2 10.8s   ratio 1.34x (target <= 1.3x)   runs T1=['8.1', '8.4'] T2=['11.2', '10.8']
+ 29 about block default (still)            PASS    bbox (98, 1326, 979, 1463) inside=True below frame (1284)=True; lime px at 3 icons [166, 166, 416]
+ 30 about two states differ (3 s clip)     PASS    states [0.0, 1.7]  region diff state1 vs state2 11.74  (same state 0.00)
+ 31 about long/Arabic text fits            PASS    long EN: lines=3 scale=0.55; Arabic: lines=3 scale=0.55; one giant word: lines=1 scale=1.00; empty: lines=0 scale=1.00
+ 32 T2 render 3 s (block+captions) + T1    PASS    1080x1920 3.00s audio=True; T1 golden diff 0.119 / 0.123 / 0.162
+ 33 panel static image                     PASS    bbox (25, 1496, 1054, 1844) inside canvas=True; bar colours matched 8/8; row 09 empty with waveform off / waveform drawn when on=True
+ 34 playhead sync (4 s clip)               PASS    x at t=0.5/2.0/3.5: 394.5/524.5/653.5; progress 0.125/0.500/0.872 vs t/dur 0.125/0.500/0.875 (dur 4.00s)
+ 35 panel disabled                         PASS    render ok=True 1080x1920; bar colours in region 0/8; white playhead px 0; plate None=True
+ 36 T2 3 s render panel+captions+about + T1PASS    1080x1920 3.00s audio=True; bars in video frame 8/8; T1 golden diff 0.119 / 0.123 / 0.162; T2 3 s render 5.5s with panel vs 5.4s without (diff +0.0s)
+ 37 waveform row 09 (audio / no audio / missing)PASS    audio: src=audio distinct peaks=196 distinct pixel column heights=8 max/min=10.8; noaudio: src=procedural distinct peaks=229 distinct pixel column heights=9 max/min=7.6; missing: src=procedural distinct peaks=229 distinct pixel column heights=9 max/min=7.6
+ 38 pagination dots follow chapters        PASS    lime dot x: chapter1 t=1 952.0, chapter2 t=3 981.0, decorative (no chapters) 1009.5 (last dot expected ~1010.0)
+ 39 T2 split mode (inside vs outside segment)PASS    lime border px hit (of 4): t=0.4 -> 0, t=2.0 -> 4, t=3.6 -> 0; element px in right box 6848; boxes L136,378,362x736 R522,378,364x736
+ 40 T2 everything on 4 s via --job         PASS    rc=0 1080x1920 4.00s audio=True split border visible at t=2: True
+ 41 T1 golden + T1 split render            PASS    T1 golden diff 0.119 / 0.123 / 0.162; T1 split render 1080x1920 3.00s audio=True, blue frame at right box edge: True
+ 42 T2 Enter-through (defaults) -> 2 s renderPASS    1080x1920 2.00s audio=True order_ok=True headers_ok=True | Template 2 - Lime Creator Series  |  ON: header, headline, captions x1, about, bottom panel  |  off: chapters, cards, split, texts, elements
+ 43 selector: 1 / 2 / 4 Custom / saved T2 / saved CustomFAIL    routes={'1': (1, ''), '2': (2, ''), '4': (4, ''), '5': (5, ''), '6': (2, 'a_t2.json')} labels_ok=True saved_T2_not_reasked=True loaded_ok=False
+ 44 T1 missing element path                PASS    1080x1920 1.50s msg='gone.png'
+ 44 T1 invalid element file                PASS    1080x1920 1.50s msg='bad.png'
+ 44 T2 missing element path                PASS    1080x1920 1.50s msg='gone.png'
+ 44 T2 invalid element file                PASS    1080x1920 1.50s msg='bad.png'
+ 44 T2 missing card / about icon path      PASS    1080x1920 1.50s msg='icon'
+ 44 T1 missing font (message names the file)PASS    1080x1920 1.50s msg='fonts/'
+ 44 T2 missing font (message names the file)PASS    1080x1920 1.50s msg='fonts/'
+ 44 T2 numpy missing (fallback + message)  PASS    1080x1920 1.50s msg='numpy is not installed'
+ 44 ffmpeg missing (PATH empty) -> clean exitPASS    rc=1 '    Linux   : sudo apt install ffmpeg'
+ 44 T1 video without audio                 PASS    1080x1920 2.00s
+ 44 T2 video without audio                 PASS    1080x1920 2.00s
+ 44 T1 very short video (1.5 s)            PASS    1080x1920 1.50s
+ 44 T2 very short video (1.5 s)            PASS    1080x1920 1.50s
+ 44 T1 very long caption text (584 chars)  PASS    1080x1920 1.50s
+ 44 T2 very long caption text (584 chars)  PASS    1080x1920 1.50s
+ 44 SRT with BOM / CRLF / empty lines      PASS    cues=['Hello', 'World second line', 'End'] 1080x1920 1.50s
+ 44 missing video in a job -> clean exit   PASS    rc=1
+ 44 corrupt job json -> clean exit         PASS    rc=1
+ 44 robustness cases (summary)             PASS    18/18 cases passed
+ 45 non-9:16 (1920x1080, 1080x1080) T1+T2 fit/fillPASS    wide/T1/fit:ok wide/T1/fill:ok wide/T2/fit:ok wide/T2/fill:ok square/T1/fit:ok square/T1/fill:ok square/T2/fit:ok square/T2/fill:ok
+ 46 py_compile + --help + docstring        PASS    py_compile rc=0, --help rc=0, docstring_complete=True
+ T3-1 static plate 1080x1920 + still + pixelsPASS    size=True dark=(20, 12, 12) orange_in_Ibrahim=True paper=(183, 152, 125) still=True watermark=True
+ T3-1 empty / very long text stress        PASS    empty_hidden=True inside_canvas=True limits=True elements=9
+ T3-1 missing-font fallback (no crash, names the file)PASS    message names PlayfairDisplay-Bold.ttf / Rajdhani / Allura
+ T3-1 questions (Enter=defaults, remembered) + selector 1/2/3/4PASS    defaults=True changed=True selector={'1': 1, '2': 2, '3': 3, '4': 4}
+ T3-1 job json + 2 s render (size, duration, audio) PASS    (1080, 1920, 2.0, True); job template_id=3
+ T3-2 t3_frame_quad corners for 2 boxes    PASS    poster_corners=True box2_inside=True straight=rect:True q2_TL=(110.7, 329.0)
+ T3-2 pixel inside quad = video, just outside = designPASS    inside got=(253, 253, 0) want~(253, 253, 0); outside px=(25, 13, 13) (video would be (254, 0, 253)); quad_TL=(40, 241)
+ T3-2 skewed vs straight both render       PASS    box-corner skewed=(104, 32, 40) straight=(245, 109, 31) differ=True
+ T3-2 headline stress (empty / very long / Arabic)PASS    empty_hidden=True long_inside_slots=True arabic_line2_hidden=True
+ T3-2 3 s render (1080x1920, duration, audio)PASS    (1080, 1920, 3.0, True); frame_style=None
+ T3-3 captions short / long / mixed AR+EN / highlightPASS    short:300x81 lines=1 bar=498; long:533x88 lines=2 bar=543; mixed:452x134 lines=2 bar=840; hl:559x85 lines=1 bar=525 hl=5700 nonhl=0
+ T3-3 3 chapters over 6 s show different tagsPASS    starts=[0.0, 2.0, 4.0] distinct_sprites=3 anchored_to_frame_TL=True stills_differ=[True, True, True]
+ T3-3 captions + tag follow the frame box  PASS    caption_rel_pos_same=True tag_rel_pos_same=True inside_frame=True,True caption_w 399->258 (smaller frame)
+ T3-3 3 s render: chapters + AR/EN captions, job jsonPASS    (1080, 1920, 3.0, True); job keeps t3_style+chapters=True
+ T3-3 questions: defaults (Enter), remembered keys, caption stylePASS    chapter_default=True caption_styles=True (box/sub, sizes 42/30)
+ T3-4 image card + video card: present during hold at the rotated bbox, absent afterPASS    image: diff_bbox=(689, 739, 1061, 1107) expected~(642, 691, 1108, 1155) center_ok=True absent_after=True ; video: diff_bbox=(689, 739, 1061, 1107) expected~(642, 691, 1108, 1155) center_ok=True absent_after=True
+ T3-4 two consecutive cards in one slot replace each otherPASS    first_ends_at_second_start+0.25=True t=1.0 centre=(220, 30, 30) (red) t=2.3 centre=(30, 120, 220) (blue)
+ T3-4 card not clipped by the video window PASS    px(995, 920)=(30, 120, 220) (box right edge x=719) py(875, 1020)=(30, 120, 220) border~(30, 120, 220)
+ T3-4 t3_anchor follows the frame box      PASS    slot1 box1=(876, 921) box2=(570, 791) offset_from_BR_scales=True 3_distinct_slots=True on_canvas=True
+ T3-4 3 s render: chapter + captions + video card (1080x1920, duration, audio)PASS    (1080, 1920, 3.0, True); card centre px t0=(17, 10, 10) t1.2=(1, 0, 246) t2.9=(17, 10, 10)
+ T3-5 geometry S0-S3: no overlaps, S3 = posterPASS    bottoms(poster px)={'S0': 1520, 'S1': 1275, 'S2': 1210, 'S3': 955} S3_frame_h=887.1 vs poster 887 strip_y=965.0 panel_y=1220.0 problems=[]
+ T3-5 interpolation monotonic              PASS    progress0..3 1745->1096 down=True; both-bands down=True; timeline S0->S3 down=True (1745->1096); S3->S0 up=True (1096->1745)
+ T3-5 4 s render S0->S3->S0: frame height, captions inside framePASS    (1080, 1920, 4.0, True); frame h measured/expected t0.4=1533/1536 t2.0=887/887 t3.8=1533/1536; item-frame checks=240 worst_overflow_px=0.00
+ T3-5 render time: layout vs static T3 clip (4 s)PASS    static 6.7s, layout (2 transitions = 30 plate frames) 11.3s, ratio 1.69x (limit 4x)
+ T3-5 stills S0 / S3, job json + defaults  PASS    stills differ=True strip area differs=True; job layout=manual/2 events; default on=False mode=auto
+ T3-6 strip still: 3 tiles at the strip rect, labels inside tiles, icons presentPASS    tile colours=[True, True, True] labels inside=[True, True, True] icons=[True, True, True] white px=[666, 777, 1001]; still t3_still_6.png (1080, 1920)
+ T3-6 two sets over 4 s: strip signature differs, band rangesPASS    sig1.8=b811ceaa sig3.4=aea7b576 ranges=[(0.0, 2.3), (1.8, 3.8)]
+ T3-6 tile sources: image path + frame from the videoPASS    image px=(200, 30, 30) frame px=(0, 219, 0) size=(360, 640); missing video -> gray fallback (64, 64)
+ T3-6 AUTO layout 4 s render: video frame shrinks when the set starts, grows backFAIL    frame h t0.4/2.0/3.8 = 1533/1177/1533 (expected S0 1536, S1 1254, S0); (1080, 1920, 4.0)
+ T3-6 cfg normaliser, questions (defaults remembered), job jsonPASS    normaliser=True questions=True remembered=True job roundtrip=True
+ T3-7 panel still: 3 columns, thumbnails inside, check icons orangePASS    dark=True dividers=[True, True] thumbs=[True, True, True] checks=[True, True, True, True] centre rect ok=True; still t3_still_7.png
+ T3-7 checklist stagger: visible rows grow over timePASS    reveal times=[0.55, 1.55, 2.55, 3.55] rows visible at 1.6/3.4 s=[2, 3] orange px=[124, 374]
+ T3-7 video-frame thumbnails auto-extracted (10/40/70 %)PASS    pixels=[(220, 0, 0), (0, 219, 0), (0, 0, 220)]
+ T3-7 AUTO layout: video shrinks when the panel starts, band rangesPASS    frame h at 0.5/3.0/5.5 s = 1536/1180/1536; panel range=[(1.5, 4.0)]
+ T3-7 panel off / questions: defaults, strip still unchangedPASS    strip still vs panel-off still mean diff=0.000 (grain); defaults titles/3 thumbs/6 rows ok=True
+ T3-8 slot: every block type renders inside the centre rectPASS    centre rect=(436,1414,390,331); points True bbox=(442, 1534, 698, 1667); stat True bbox=(454, 1535, 797, 1719); media True bbox=(440, 1462, 822, 1733); chips True bbox=(447, 1564, 814, 1637)
+ T3-8 slot: two blocks over 4 s change the centre signaturePASS    sig 0.8/2.0/3.6 s = 830731f8/ed578176/d465c898; blocks [(1.0, 2.5), (2.5, 3.95)]
+ T3-8 slot: Arabic points stay inside the centre rect (RTL)PASS    6 lines, sprite w<=382: True; ink inside sprite: True; bullet at right edge: True; still bbox=(446, 1480, 820, 1720) in rect=True
+ T3-8 slot: 4 s T3 render, three columns + media video segment movesPASS    (1080, 1920, 4.0, True); centre pixels moved between 1.9 s and 3.3 s: mean diff 7.7; left thumb ok=True; right orange px=359; centre content=True
+ T3-8 slot: cfg normaliser, questions (defaults remembered), job json, stillPASS    normaliser=True questions=True job roundtrip=True; still t3_still_8.png (demo blocks @4.2 s)
+ T3-9 split segment: frame shrinks, right frame only inside, captions stay in the video framePASS    right-frame image px at 0.4/2.0/3.9 s = False/True/False; frame w 694/389/694; 2 left items (chapter tag + captions) inside frame x 25-414: True
+ T3-9 split transitions are monotonic (frame width, split progress)PASS    in: w 694->389 monotonic=True; out: w 389->694 monotonic=True; x 0.00->1.00
+ T3-9 saved style round trip (save, selector label, load by stdin) + job jsonPASS    style-only file=True selector label=True style questions skipped on load=True cfg['t3'] identical=True job roundtrip=True
+ T3-9 --job re-render of a T3 job with split (image + video segment)PASS    rc=0 (1080, 1920, 4.0, True); image segment visible at 1.8 s only=True; video segment pixels moved 2.8->3.2 s: mean diff 6.0
+ T3-9 bands hidden during S4, back after; defaults; still t3_still_9.pngPASS    (s,p,x) at 1.2/2.6/5.0 s = (0.0, 1.0, 0.0)/(0.0, 0.0, 1.0)/(0.0, 1.0, 0.0); panel band absent during split=True; defaults=True
+ T3-10 Enter-through (defaults) -> grouped questions in order -> 2 s valid renderPASS    1080x1920 2.00s audio=True headers_ok=True order_ok=True pos=ok | Template 3 - Editorial Orange  |  ON: header, headline, footer, captions x1, chapters x1  |  off: cards, strip, panel, centre slot, split, layout AUTO, texts, elements
+ T3-10 selector 1/2/3/4 (+ saved style listed with its label)PASS    ids chosen=[1, 2, 3, 4]; all four names listed=True
+ T3-10 robustness cases (T3)               PASS    11/11 passed
+ T3-10 non-9:16 inputs (1920x1080, 1080x1080) with skewed and straight framePASS    wide/skewed/fill:ok wide/skewed/fit:ok wide/straight/fill:ok wide/straight/fit:ok square/skewed/fill:ok square/straight/fill:ok
+ T3-10 py_compile + --help (3 templates, flags, folders, fonts)PASS    compile errors=none; --help rc=0 93 lines; missing=none
+==============================================================================
+ 110 ok/skipped, 3 failed -> FAILED

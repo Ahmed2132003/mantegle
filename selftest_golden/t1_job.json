@@ -1,0 +1,30 @@
+{
+ "video": "/tmp/claude-0/-home-claude/dcaa7f9b-c052-518c-9056-9368d7ba3ac3/scratchpad/assets/test.mp4",
+ "canvas": [1080, 1920],
+ "video_box": {"x": 238, "y": 335, "w": 604, "h": 928, "mode": "fill"},
+ "background": {"type": "tech", "divider_pct": 79},
+ "layers": [],
+ "captions": [
+  {"srt": "/tmp/claude-0/-home-claude/dcaa7f9b-c052-518c-9056-9368d7ba3ac3/scratchpad/assets/ar.srt", "font": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "size": 42, "color": "#ffffff", "hl_color": "#00b8ff", "keywords": "",
+   "stroke_color": "#000000", "stroke_w": 0, "shadow": true, "mode": "phrase", "max_words": 8,
+   "ref": "box", "y_pct": 86, "anim": "fade", "anim_dur": 0.25},
+  {"srt": "/tmp/claude-0/-home-claude/dcaa7f9b-c052-518c-9056-9368d7ba3ac3/scratchpad/assets/en.srt", "font": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "size": 36, "color": "#ffffff", "hl_color": "#00b8ff", "keywords": "Flutter",
+   "stroke_color": "#000000", "stroke_w": 0, "shadow": true, "mode": "phrase", "max_words": 8,
+   "ref": "canvas", "y_pct": 72, "anim": "fade", "anim_dur": 0.25}
+ ],
+ "texts": [
+  {"text": "Hello مرحبا", "start": 0.0, "end": 2.8, "pos": "top", "font": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "size": 90,
+   "color": "#ffffff", "stroke_color": "#000000", "stroke_w": 0, "anim": "fade", "anim_dur": 0.5}
+ ],
+ "cards": [
+  {"l1": "WEB", "l2": "DEVELOPER", "icon": "code", "icon_path": null, "slot": 1, "start": 0.3, "hold": 2.5,
+   "anim": "pop", "anim_dur": 0.45, "font": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"}
+ ],
+ "elements": [
+  {"path": "/tmp/claude-0/-home-claude/dcaa7f9b-c052-518c-9056-9368d7ba3ac3/scratchpad/assets/element.png", "start": 0.5, "end": 2.8, "pos": "bottom-right", "width": "20%", "opacity": 100,
+   "anim": "pop", "anim_dur": 0.5}
+ ],
+ "video_layers": [],
+ "output": "/tmp/claude-0/-home-claude/dcaa7f9b-c052-518c-9056-9368d7ba3ac3/scratchpad/golden_run/golden.mp4",
+ "preview": 3.0
+}
