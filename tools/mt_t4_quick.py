@@ -222,4 +222,41 @@ def scripted2(first, n=40):
     finally: builtins.input = old
 cp, cplain = scripted2(["1"]), scripted2(["2"])
 rec("T4-4 t4_caption_style: 'pill' -> t4_style pill + yellow / cyan defaults + y_pct None; 'plain' -> classic stream", cp.get("t4_style") == "pill" and cp["hl_color"].lower() in ("#ffc21a", "#ffc21a".upper()) and cp.get("y_pct") in (None, "") and cp["mode"] == "phrase" and "t4_style" not in cplain and cplain.get("srt"), f"{ {k: cp.get(k) for k in ('t4_style', 'hl_color', 'neon', 'y_pct', 'mode', 'size')} } plain={sorted(cplain)[:4]}")
+# ---- T4-5 captions 'glow' (unit checks; stills are checked by eye - see T4_NOTES) --------------------------------------------------
+from mt.templates.t4.captions_glow import T4_GLOW, t4_glow_sprite   # noqa: E402
+GL = {"t4_style": "glow", "ref": "canvas", "mode": "phrase"}
+GAR = {"start": "*بوست* ده اللي مش عايزه يحصل", "middle": "بس أنا مش عايز *بوست* حسابي يبقى مجرد", "end": "بس أنا مش عايز حسابي يبقى مجرد *بوست*"}
+GEN = {"start": "*Flutter* is the best way to build real apps", "middle": "Build real *Flutter* apps that people use", "end": "I do not want my account to be just a *post*"}
+bad_g = []
+for cv in ("reels", "youtube"):
+    W, H = CV[cv]
+    for nm, d in (("ar", GAR), ("en", GEN)):
+        for pos, txt in d.items():
+            f = ctmp / f"g_{nm}_{pos}.srt"
+            f.write_text("1\n00:00:00,000 --> 00:00:02,000\n" + txt + "\n", encoding="utf-8")
+            t4_warn_reset()
+            items, w = quiet(t4_caption_items, job_for(ctmp / "none.mp4", cv, "fill", captions=[dict(GL, srt=str(f))]), 4.0)
+            if len(items) != 1 or w:
+                bad_g.append(f"{cv}/{nm}/{pos}: {len(items)} items warn={w}"); continue
+            it = items[0]; a = np.asarray(it.sprite.getchannel("A"))
+            ys, xs = np.where(a > 60)
+            x0, x1 = it.cx - it.sprite.width / 2.0 + xs.min(), it.cx - it.sprite.width / 2.0 + xs.max()
+            y0, y1 = it.cy - it.sprite.height / 2.0 + ys.min(), it.cy - it.sprite.height / 2.0 + ys.max()
+            sf = 48 * min(W, H) / 1080.0
+            if not (x0 >= sf * 0.9 and x1 <= W - sf * 0.9 and y0 >= sf and y1 <= H - sf * 0.9 and it.cx == W / 2.0):
+                bad_g.append(f"{cv}/{nm}/{pos}: ink box x {x0:.0f}-{x1:.0f} y {y0:.0f}-{y1:.0f} outside safe")
+rec("T4-5 glow items (ar/en x start/middle/end x both canvases): 1 item, no warning, ink inside the safe margin, centred", not bad_g, "; ".join(bad_g[:3]))
+job = job_for(ctmp / "none.mp4", "reels", "fill", captions=[dict(GL, srt=str(ctmp / "g_ar_end.srt"))])
+rec("T4-5 render.build_items: glow streams drawn once (generic caption loop skips them)", len(quiet(t4_caption_items, job, 4.0)[0]) == 1 and len([i for i in quiet(build_items, job, 4.0)[0] if i.sprite.info.get("block_h")]) == 1)
+ok = (t4_glow_sprite([], None) is None and t4_glow_sprite(None, None) is None and t4_glow_sprite([["  ", False]], None) is None
+      and t4_glow_sprite([["Hi", False]], "/no/font.ttf", size="x" if False else 40) is not None
+      and t4_glow_sprite([["Hi", True], [5, True]], None, 40, color="junk", hl=None, neon=(1, 2)) is not None)
+nokw = t4_glow_sprite([["plain", False], ["text", False]], None, 60, max_w=700)
+withkw = t4_glow_sprite([["plain", False], ["text", True]], None, 60, max_w=700)
+rec("T4-5 t4_glow_sprite never raises (empty / junk colours / missing font); no keyword -> no sparks / swoosh margin", ok and nokw.info["above"] == 0 and withkw.info["above"] > 0 and withkw.info["below"] > 0)
+t4_warn_reset()
+r, w = quiet(t4_caption_items, dict(job, captions=[dict(GL, srt=str(ctmp / "g_en_end.srt"), font="/no/such/font.ttf", size="abc", y_pct="zz", anim_dur="q")]), 4.0)
+rec("T4-5 glow: missing font / junk size, y, anim_dur -> fallbacks, one font warning", len(r) == 1 and len(w) == 1 and "font" in w[0], f"{len(r)} items {w}")
+cg = scripted2(["3"])
+rec("T4-5 t4_caption_style: choice 3 -> t4_style glow + blue keyword default + y_pct None; 'pill' stays pill", cg.get("t4_style") == "glow" and cg["hl_color"].lower() == T4_GLOW["hl"].lower() and cg.get("y_pct") in (None, "") and cp.get("t4_style") == "pill", str({k: cg.get(k) for k in ("t4_style", "hl_color", "neon", "size")}))
 print(sum(rows), "pass,", len(rows) - sum(rows), "fail"); sys.exit(0 if all(rows) else 1)
