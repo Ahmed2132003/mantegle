@@ -1,11 +1,13 @@
 """mt.templates.t4 - Template 4 "Overlay Studio" (registry id 5): hooks. Config namespace cfg["t4"] (see cfg.py).
 T4-0: only the plain video on a solid backdrop; the design modules (frame, nameplate, tiles, ...) arrive in later tasks."""
 import os
+import tempfile
 
 from mt.templates.t4.captions import t4_caption_items, t4_caption_style  # noqa: F401  (t4_caption_style = registry hook)
 from mt.common import D, IMAGE_EXTS, ask, ask_choice, c_color, c_existing_file, c_int, probe
 from mt.templates.t4.base import t4_apply_backdrop
-from mt.templates.t4.warn import t4_warn_reset
+from mt.templates.t4.frame import t4_ask_frame, t4_frame_cfg, t4_frame_part
+from mt.templates.t4.warn import t4_warn, t4_warn_reset
 from mt.templates.t4.cfg import CANVAS_REELS, T4_DEFAULTS, T4_MODULES, t4_canvas, t4_cfg  # noqa: F401
 
 
@@ -27,6 +29,7 @@ def t4_ask_config(video_info):
     t4 = {"canvas_mode": mode, "fit": fit}
     if fit == "fit":
         t4["backdrop"] = _ask_backdrop()
+    t4["frame"] = t4_ask_frame()                       # question group 'frame' (T4-8)
     t4 = t4_cfg(t4)
     return {"template_id": 5, "canvas": canvas, "video_box": _full_box(canvas, fit), "background": {"type": "color", "value": t4["backdrop"]["value"]},
             "layers": [], "t4": t4}
@@ -54,8 +57,46 @@ def _canvas_ok(c):
         return False
 
 
+# ---- the T4 foreground plate (cfg['_t2_fg']): ONE transparent full-canvas PNG over the video, merged from the static parts ---------------
+# Each part = (name, builder); builder(W, H, t4) -> RGBA image W x H | None (module off). List order = bottom -> top. A later module
+# (nameplate, tags, ...) adds ONE line here: T4_FG_PARTS.append(("nameplate", t4_nameplate_part)) - never its own _t2_fg.
+T4_FG_PARTS = [("frame", t4_frame_part)]
+
+
+def t4_compose_fg(cfg, tmp):
+    """Alpha-composite every active part into one plate, save tmp/t4_fg.png and point cfg['_t2_fg'] at it (the pipeline's generic
+    foreground slot). No active part -> cfg['_t2_fg'] removed, returns None. A failing part warns once and is skipped; never raises."""
+    cfg.pop("_t2_fg", None)
+    try:
+        W, H = int(cfg["canvas"][0]), int(cfg["canvas"][1])
+    except (KeyError, TypeError, ValueError, IndexError):
+        return None
+    plate = None
+    for name, build in T4_FG_PARTS:
+        try:
+            part = build(W, H, cfg.get("t4"))
+        except Exception as e:
+            t4_warn(f"{name}: could not be drawn ({type(e).__name__}: {e}) - skipped")
+            continue
+        if part is None:
+            continue
+        if part.size != (W, H):
+            t4_warn(f"{name}: plate is {part.size[0]}x{part.size[1]}, canvas is {W}x{H} - skipped")
+            continue
+        if plate is None:
+            plate = part.convert("RGBA")
+        else:
+            plate.alpha_composite(part.convert("RGBA"))
+    if plate is None:
+        return None
+    path = os.path.join(tmp or tempfile.gettempdir(), "t4_fg.png")
+    plate.save(path, compress_level=1)
+    cfg["_t2_fg"] = path
+    return path
+
+
 def t4_build_static_layers(cfg, tmp):
-    """Hook build_background: solid backdrop only. The video is the base, so video_box is forced to the full canvas
+    """Hook build_background: solid backdrop + the foreground plate. The video is the base, so video_box is forced to the full canvas
     (fill / fit from cfg["t4"]); a job without a usable canvas gets one from canvas_mode + the video shape."""
     t4_warn_reset()
     t4 = t4_cfg(cfg.get("t4"))
@@ -70,6 +111,8 @@ def t4_build_static_layers(cfg, tmp):
     cfg["canvas"] = [int(cfg["canvas"][0]), int(cfg["canvas"][1])]
     cfg["video_box"] = _full_box(cfg["canvas"], t4["fit"])
     t4_apply_backdrop(cfg, t4)
+    t4["frame"] = t4_frame_cfg(t4.get("frame"))        # complete {on, text, color, icon, show_ticks} (extras kept)
+    t4_compose_fg(cfg, tmp)
 
 
 def t4_build_items(cfg, duration, splits, lbox, rbox):

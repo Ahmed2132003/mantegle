@@ -303,4 +303,106 @@ r, w = quiet(t4_caption_items, dict(job, captions=[dict(TW, srt=str(ctmp / "t_en
 rec("T4-6 twoline: missing font / junk size, y, anim_dur, words1 -> fallbacks, one font warning", len(r) == 1 and len(w) == 1 and "font" in w[0], f"{len(r)} items {w}")
 ct = scripted2(["4"])
 rec("T4-6 t4_caption_style: choice 4 -> t4_style twoline + cyan keyword default + words1 3 + y_pct None; pill / glow unchanged", ct.get("t4_style") == "twoline" and ct["hl_color"].lower() == T4_TWO["hl"].lower() and ct.get("words1") == 3 and ct.get("y_pct") in (None, "") and cp.get("t4_style") == "pill" and cg.get("t4_style") == "glow", str({k: ct.get(k) for k in ("t4_style", "hl_color", "neon", "words1", "size")}))
+# ---- T4-7 frame (unit checks + one --still pixel check; the look is checked by eye - see T4_NOTES) ----------------------------------------
+import mt.templates.t4 as t4mod                                             # noqa: E402
+from mt.fonts import default_font                                         # noqa: E402
+from mt.templates.t4.frame import T4_FRAME, t4_ask_frame, t4_frame_cfg, t4_frame_part, t4_frame_plate   # noqa: E402
+ftmp = Path(tempfile.mkdtemp(prefix="t4frm_"))
+try:
+    FN = t4_frame_cfg({"on": True})
+    a, b = t4_frame_cfg({"on": "no", "text": "-", "color": "zzz", "icon": "NONE", "show_ticks": "false", "font": "/x.ttf"}), t4_frame_cfg(7)
+    c = t4_frame_cfg({"on": 1, "text": " Hi ", "color": "#abc", "icon": "Gear", "show_ticks": 0})
+    rec("T4-7 t4_frame_cfg: defaults, junk -> defaults, '-' / none -> off, extras kept, never raises",
+        FN == dict(T4_FRAME, on=True) and a["on"] is False and a["text"] == "" and a["color"] == "#19D3FF" and a["icon"] == "" and a["show_ticks"] is False
+        and a["font"] == "/x.ttf" and b == T4_FRAME and c["text"] == "Hi" and c["color"] == "#aabbcc" and c["icon"] == "gear" and c["show_ticks"] is False,
+        f"{a} {c}")
+    bad_f = []
+    for cv, (W, H) in CV.items():
+        for nm, txt in (("en", "CODE \u2022 BUILD \u2022 INSPIRE"), ("ar", "\u0643\u0648\u0651\u062f \u2022 \u0627\u0628\u0646\u0650 \u2022 \u0623\u0644\u0647\u0650\u0645"),
+                        ("long", "WEB \u2022 MOBILE \u2022 AI \u2022 CLOUD \u2022 DEVOPS \u2022 DESIGN \u2022 SECURITY \u2022 DATA")):
+            pl = t4_frame_plate(W, H, t4_frame_cfg({"on": True, "text": txt}))
+            al = np.asarray(pl.getchannel("A"))
+            cen = al[int(H * 0.18):int(H * 0.72), int(W * 0.20):int(W * 0.80)]
+            ys, xs = np.where(al[H - 90:H - 30, int(W * 0.30):int(W * 0.70)] > 200)
+            bar_w = (xs.max() - xs.min()) if xs.size else 0
+            if not (pl.size == (W, H) and pl.mode == "RGBA" and cen.max() == 0 and al[:60].max() > 200 and al[-60:].max() > 200
+                    and al[:, :60].max() > 200 and al[:, -60:].max() > 200 and bar_w > 120):
+                bad_f.append(f"{cv}/{nm}: size={pl.size} centre_alpha={cen.max()} bar_w={bar_w}")
+    rec("T4-7 frame plate (both canvases x EN / AR / long text): full-canvas RGBA, centre fully transparent, rails + brackets on all 4 sides, bar drawn", not bad_f, "; ".join(bad_f[:3]))
+    W, H = CV["reels"]
+    base = t4_frame_cfg({"on": True})
+    notxt, noic, notk = (np.asarray(t4_frame_plate(W, H, dict(base, **kw)).getchannel("A"), int) for kw in ({"text": ""}, {"icon": ""}, {"show_ticks": False}))
+    full = np.asarray(t4_frame_plate(W, H, base).getchannel("A"), int)
+    rec("T4-7 frame options: text '' drops the bar + stripes, icon '' drops the icon, show_ticks False drops the ticks (nothing else changes)",
+        (full - notxt)[H - 120:].sum() > 0 and (full - notxt)[:H - 120].sum() == 0 and (full - noic)[:260, W - 260:].sum() > 0 and (full - noic).clip(0).sum() == (full - noic)[:260, W - 260:].clip(0).sum()
+        and (full - notk)[:, 40:70].sum() > 0 and (full - notk)[:, :20].sum() == 0 and (full - notk)[:, 100:W - 100].sum() == 0)
+    # compose: one plate from several parts
+    got = {}
+    for cv, (W, H) in CV.items():
+        cfg = {"canvas": [W, H], "t4": t4_cfg({"canvas_mode": cv, "frame": {"on": True}}), "video": str(ftmp / "none.mp4")}
+        (ftmp / cv).mkdir()
+        quiet(t4mod.t4_build_static_layers, cfg, str(ftmp / cv))
+        got[cv] = (cfg.get("_t2_fg"), cfg["t4"]["frame"], cfg["canvas"])
+    ok = all(v[0] and os.path.isfile(v[0]) and Image.open(v[0]).size == tuple(CV[k]) and v[1] == dict(T4_FRAME, on=True) and v[2] == CV[k] for k, v in got.items())
+    rec("T4-7 t4_build_static_layers -> cfg['_t2_fg'] = one canvas-size PNG (both canvases), cfg['t4']['frame'] completed", ok, str(got))
+    cfg = {"canvas": [1080, 1920], "t4": t4_cfg({"frame": {"on": False}}), "_t2_fg": "/stale.png"}
+    quiet(t4mod.t4_build_static_layers, cfg, str(ftmp))
+    cfg2 = {"canvas": [1080, 1920], "t4": t4_cfg({})}
+    quiet(t4mod.t4_build_static_layers, cfg2, None)
+    rec("T4-7 frame off (or no frame key) -> no plate, a stale cfg['_t2_fg'] is removed", "_t2_fg" not in cfg and "_t2_fg" not in cfg2, str(cfg.get("_t2_fg")))
+    # a later module adds its part to the SAME plate; a failing part is skipped with one warning
+    def dummy(W, H, t4):
+        im = Image.new("RGBA", (W, H), (0, 0, 0, 0)); im.paste((255, 0, 0, 255), (W // 2 - 20, H // 2 - 20, W // 2 + 20, H // 2 + 20)); return im
+    def boom(W, H, t4):
+        raise ValueError("boom")
+    def wrong(W, H, t4):
+        return Image.new("RGBA", (10, 10))
+    saved = list(t4mod.T4_FG_PARTS)
+    try:
+        t4mod.T4_FG_PARTS[:] = saved + [("dummy", dummy), ("boom", boom), ("wrong", wrong)]
+        cfg = {"canvas": [1080, 1920], "t4": t4_cfg({"frame": {"on": True}})}
+        t4_warn_reset(); r, w = quiet(t4mod.t4_compose_fg, cfg, str(ftmp))
+        pm = np.asarray(Image.open(cfg["_t2_fg"]).convert("RGBA"))
+        t4mod.T4_FG_PARTS[:] = [("dummy", dummy)]
+        cfg3 = {"canvas": [1080, 1920], "t4": t4_cfg({})}
+        quiet(t4mod.t4_compose_fg, cfg3, str(ftmp))
+    finally:
+        t4mod.T4_FG_PARTS[:] = saved
+    rec("T4-7 t4_compose_fg: frame + a later part merged into ONE plate; a raising / wrong-size part -> one warning each, others kept; parts without the frame still work",
+        pm[960, 540].tolist() == [255, 0, 0, 255] and pm[:60, :, 3].max() > 200 and len(w) == 2 and "boom" in w[0] and "1080x1920" in w[1] and "_t2_fg" in cfg3, f"{w}")
+    t4_warn_reset(); r, w = quiet(t4_frame_part, 1080, 1920, {"frame": {"on": True, "icon": "banana"}})
+    rec("T4-7 unknown icon -> one warning, plate still built without an icon; part = None when off", r is not None and len(w) == 1 and "banana" in w[0]
+        and t4_frame_part(1080, 1920, {"frame": {"on": False}}) is None and t4_frame_part(1080, 1920, None) is None, f"{w}")
+    def ask_with(ans):
+        it = iter(ans); old = builtins.input; builtins.input = lambda *_: next(it)
+        try: return quiet(t4_ask_frame)[0]
+        finally: builtins.input = old
+    from mt.common import D                                                 # ask() remembers answers as the next defaults
+    D.clear(); qn, qy = ask_with(["n"]), ask_with(["y", "KEEP IT", "red", "3", "n"])
+    D.clear(); qd = ask_with(["y", "", "", "", ""]); D.clear()
+    rec("T4-7 question group: n -> {'on': False}; y + answers -> {on, text, color, icon, show_ticks}; Enter = defaults",
+        qn == {"on": False} and qy == {"on": True, "text": "KEEP IT", "color": "#ff0000", "icon": "laptop", "show_ticks": False}
+        and qd == {"on": True, "text": T4_FRAME["text"], "color": T4_FRAME["color"].lower(), "icon": "code", "show_ticks": True}, f"{qn} {qy} {qd}")
+    # real --still on both canvases: the video pixels are untouched wherever the plate is transparent
+    bad_s = []
+    for cv, (W, H) in CV.items():
+        mp4 = ftmp / f"v_{cv}.mp4"
+        subprocess.run([FFMPEG, "-y", "-hide_banner", "-loglevel", "error", "-f", "lavfi", "-i", f"testsrc2=s={W}x{H}:r=25:d=2", "-pix_fmt", "yuv420p", str(mp4)], check=True)
+        res = {}
+        for nm, fr in (("off", {"on": False}), ("on", {"on": True})):
+            fr = dict(fr, font=default_font())                              # same font in this process and in montage.py
+            job = dict(job_for(mp4, cv, "fill"), t4=t4_cfg({"canvas_mode": cv, "fit": "fill", "frame": fr}), output=str(ftmp / "o.mp4"))
+            jp, out = ftmp / f"{cv}_{nm}.json", ftmp / f"{cv}_{nm}.png"
+            jp.write_text(json.dumps(job), encoding="utf-8")
+            r = subprocess.run([sys.executable, str(P / "montage.py"), "--still", "--job", str(jp), "--still-out", str(out), "--arabic-mode", "reshape"], cwd=str(ftmp), capture_output=True, text=True, encoding="utf-8", errors="replace")
+            res[nm] = np.asarray(Image.open(out).convert("RGB"), int) if r.returncode == 0 and out.is_file() else None
+        if res["off"] is None or res["on"] is None:
+            bad_s.append(f"{cv}: still failed"); continue
+        al = np.asarray(t4_frame_plate(W, H, t4_frame_cfg({"on": True, "font": default_font()})).getchannel("A"))
+        same = (np.abs(res["on"] - res["off"]).max(axis=2) <= 2)
+        if not (same[al == 0].all() and (~same).sum() > 3000 and (~same)[:, :].any(axis=1)[:60].any()):
+            bad_s.append(f"{cv}: untouched={same[al == 0].mean():.4f} changed_px={(~same).sum()}")
+    rec("T4-7 --still on both canvases: frame drawn over the video, every pixel the plate leaves transparent is byte-identical to the frame-less render", not bad_s, "; ".join(bad_s))
+finally:
+    shutil.rmtree(ftmp, ignore_errors=True)
 print(sum(rows), "pass,", len(rows) - sum(rows), "fail"); sys.exit(0 if all(rows) else 1)
