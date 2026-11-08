@@ -1,7 +1,6 @@
 """Template 4 quick check (fast): python tools/mt_t4_quick.py
 P1: compile + imports + cfg normaliser + 1.5 s --job renders on BOTH canvases (size / duration / audio).
 P3 ('T4-3'): timing.py unit checks (t4_time / t4_stagger / t4_ask_when).
-P9 ('T4-8'): nameplate lower third (cfg, items, geometry on both canvases, timing, animation, Arabic, question group, --still + real encode).
 P2 ('T4-2'): base-video modes fill / fit and the backdrops colour / image / blur, measured on the rendered frames."""
 import json, os, py_compile, subprocess, sys, tempfile, shutil
 from pathlib import Path
@@ -406,175 +405,88 @@ try:
     rec("T4-7 --still on both canvases: frame drawn over the video, every pixel the plate leaves transparent is byte-identical to the frame-less render", not bad_s, "; ".join(bad_s))
 finally:
     shutil.rmtree(ftmp, ignore_errors=True)
-# ---- T4-8 nameplate 'lower_third' (unit checks + real --still / video pixel checks; the look is checked by eye - see T4_NOTES) -----------
-from mt.captions import find_trigger                                        # noqa: E402
-from mt.draw import Item                                                    # noqa: E402
-from mt.templates.t4.nameplate import G as NG, T4_NAMEPLATE, t4_ask_nameplate, t4_nameplate_cfg, t4_nameplate_items   # noqa: E402
-ntmp = Path(tempfile.mkdtemp(prefix="t4np_"))
-def ncfg(cv, **kw):
-    return {"canvas": list(CV[cv]), "captions": [], "t4": t4_cfg({"canvas_mode": cv, "nameplate": dict({"on": True, "font": default_font()}, **kw)})}
-def nbox(it):
-    return (it.cx - it.sprite.width / 2.0, it.cy - it.sprite.height / 2.0, it.cx + it.sprite.width / 2.0, it.cy + it.sprite.height / 2.0)
-def white_x(spr, rows=None):
-    a = np.asarray(spr.convert("RGBA"), int)
-    a = a if rows is None else a[rows[0]:rows[1]]
-    xs = np.where(((a[..., :3] >= 245).all(axis=2) & (a[..., 3] >= 245)).any(axis=0))[0]
-    return (int(xs.min()), int(xs.max())) if len(xs) else None
-try:
-    a = t4_nameplate_cfg(None)
-    b = t4_nameplate_cfg({"on": 1, "name1": 5, "roles": ["x", ("phone", "Y"), {"text": "z"}, {}, 7], "color": "zzz", "anim": "bogus", "anim_dur": "q",
-                          "badge_icon": "NONE", "extra": 1, "start": "0:03", "hold": 2})
-    c = t4_nameplate_cfg({"on": True, "trigger": "hello"})
-    junk_n = [None, 5, "x", [], {"roles": "no", "anim_dur": [1], "color": 3, "tagline": 9}]
-    rec("T4-8 t4_nameplate_cfg: defaults (R1 text), junk -> defaults, roles x3 (str / pair / dict), extras + timing keys kept, start 0 only when no start / trigger",
-        a["on"] is False and a["name1"] == "AHMED" and len(a["roles"]) == 3 and a["style"] == "lower_third" and b["on"] is True and b["name1"] == "AHMED"
-        and [r["text"] for r in b["roles"]] == ["x", "Y", "z"] and b["roles"][1]["icon"] == "phone" and b["color"] == "#19D3FF" and b["anim"] == "slide_left"
-        and b["anim_dur"] == 0.5 and b["badge_icon"] == "" and b["extra"] == 1 and b["start"] == "0:03" and b["hold"] == 2
-        and t4_nameplate_cfg({"on": True})["start"] == 0 and "start" not in c and all(t4_nameplate_cfg(j)["name1"] for j in junk_n), f"{b}")
-    t4_warn_reset()
-    r, w = quiet(lambda: [t4_nameplate_items(j, 5.0) for j in ({}, {"t4": 5}, {"t4": {"nameplate": {"on": True}}}, {"canvas": "x", "t4": {"nameplate": {"on": True}}})])
-    rec("T4-8 items: module off / no t4 / no canvas / junk canvas -> [] (never raises; the no-canvas warning prints once)", r == [[]] * 4 and len(w) == 1, f"{r} {w}")
-    bad_i = []
-    for cv, (W, H) in CV.items():
-        its = t4_nameplate_items(ncfg(cv), 10.0)
-        its4 = t4_nameplate_items(ncfg(cv, hold=20), 4.0)
-        notag = t4_nameplate_items(ncfg(cv, tagline=""), 10.0)
-        onlytag = t4_nameplate_items(ncfg(cv, name1="", name2="", roles=[]), 10.0)
-        none = t4_nameplate_items(ncfg(cv, name1="", name2="", roles=[], tagline=""), 10.0)
-        if not (len(its) == 2 and all(isinstance(i, Item) and i.anim == "slide_left" and i.out and (i.start, i.end) == (0.0, 6.0) for i in its)
-                and its4[0].end == 4.0 and len(notag) == 1 and notag[0].sprite.width < W and len(onlytag) == 1 and onlytag[0].sprite.width == W and none == []):
-            bad_i.append(f"{cv}: {[(i.anim, i.start, i.end) for i in its]} {len(notag)} {len(onlytag)} {len(none)}")
-    rec("T4-8 two Items (bar + card, slide_left in / out, 0-6 s default hold, clamped to the video), tagline '' -> card only, no name / roles -> bar only, nothing -> []",
-        not bad_i, "; ".join(bad_i))
-    bad_g = []
-    for cv, (W, H) in CV.items():
-        s = min(W, H) / 1080.0
-        for nm, kw in (("default", {}), ("long", {"name1": "ABDELRAHMAN", "name2": "MOHAMED ELSAYED", "tagline": "BUILDING RELIABLE DIGITAL EXPERIENCES FOR PEOPLE AND TEAMS WHO CARE ABOUT SOFTWARE QUALITY",
-                                                  "roles": [{"icon": "cloud", "text": "SENIOR CLOUD SOLUTIONS ARCHITECT"}, {"icon": "shield", "text": "CYBER SECURITY CONSULTANT AND TRAINER"}]})):
-            bar, card = t4_nameplate_items(ncfg(cv, **kw), 10.0)
-            px, py, pw, ph = card.sprite.info["panel"]
-            x0, y0, x1, y1 = nbox(card)
-            L, R, T, B = x0 + px, x0 + px + pw, y0 + py, y0 + py + ph
-            bx0, by0, bx1, by1 = nbox(bar)
-            band_top = by0 + bar.sprite.info["top"]
-            tw = white_x(bar.sprite, (int(bar.sprite.info["top"]) + 6, int(bar.sprite.info["line_y"]) - 6))
-            cw = white_x(card.sprite)
-            lim = (L - NG["tag_gap"] * s + 2) if W > H else W - NG["safe"] * s + 2
-            ok = (L >= NG["safe"] * s - 1 and R <= W - NG["safe"] * s + 1 and T >= 0 and B <= H - NG["safe"] * s and x0 >= 0 and x1 <= W and y0 >= 0 and y1 <= H
-                  and (bx0, bx1) == (0, W) and by1 <= H and (R - L) <= (W - 2 * NG["safe"] * s) + 1
-                  and tw is not None and bx0 + tw[1] <= lim and bx0 + tw[0] >= NG["safe"] * s
-                  and cw is not None and px - 1 <= cw[0] and cw[1] <= px + pw + 1
-                  and (B <= band_top if W < H else (W > H and (R - L) <= 0.52 * W + 1)))
-            if not ok:
-                bad_g.append(f"{cv}/{nm}: panel x {L:.0f}-{R:.0f} y {T:.0f}-{B:.0f} band_top {band_top:.0f} bar text {tw} card text {cw} lim {lim:.0f}")
-    rec("T4-8 geometry on BOTH canvases (default + long text): card inside the 48 px margin and the canvas, reels = card above the bar, youtube = card <= 52 % of W and the tagline "
-        "stops before it, every white text pixel inside its panel / before the limit (reflow, no overflow)", not bad_g, "; ".join(bad_g[:2]))
-    srt = ntmp / "c.srt"
-    srt.write_text("1\n00:00:01,000 --> 00:00:02,000\nhello everyone\n\n2\n00:00:02,500 --> 00:00:04,000\nso open the project now\n", encoding="utf-8")
-    from mt.captions import parse_srt
-    tcue = find_trigger(parse_srt(str(srt)), "open the project")
-    cfg = dict(ncfg("youtube", trigger="open the project", hold=2), captions=[{"srt": str(srt)}])
-    t4_warn_reset(); its, w1 = quiet(t4_nameplate_items, cfg, 10.0)
-    cfg2 = dict(ncfg("youtube", trigger="never said", start=1), captions=[{"srt": str(srt)}])
-    t4_warn_reset(); its2, w2 = quiet(t4_nameplate_items, cfg2, 10.0)
-    cfg3 = dict(ncfg("youtube", trigger="never said"), captions=[{"srt": str(srt)}])
-    t4_warn_reset(); its3, w3 = quiet(t4_nameplate_items, cfg3, 10.0)
-    cfg4 = dict(ncfg("youtube", start=12), captions=[])
-    t4_warn_reset(); its4, w4 = quiet(t4_nameplate_items, cfg4, 10.0)
-    rec("T4-8 timing via t4_time: spoken phrase -> its cue time + hold; phrase missing + start -> start (1 warning); missing and no start / start after the end -> [] (1 warning each)",
-        tcue is not None and [(i.start, i.end) for i in its] == [(tcue, tcue + 2.0)] * 2 and not w1 and [i.start for i in its2] == [1.0, 1.0] and len(w2) == 1
-        and its3 == [] and len(w3) == 1 and its4 == [] and len(w4) == 1, f"{tcue} {[(i.start, i.end) for i in its]} {w1} {w2} {w3} {w4}")
-    from mt.anim import anim_state
-    f_ = t4_nameplate_items(ncfg("reels", anim="fade", anim_dur=0.3), 10.0)
-    g_ = t4_nameplate_items(ncfg("reels", anim="bogus", start=1, anim_dur=0.4), 10.0)
-    i = g_[1]
-    st_mid = anim_state(i.anim, i.progress(i.start + 0.1), 1080, 1920)
-    rec("T4-8 animation: default / unknown -> slide_left (in AND out, comes from the right), 'fade' honoured, progress 0 -> 1 over anim_dur and back to 0 at the end",
-        f_[0].anim == "fade" and f_[0].dur == 0.3 and g_[0].anim == "slide_left" and i.dur == 0.4 and abs(i.progress(i.start)) < 1e-9 and abs(i.progress(i.start + 0.4) - 1) < 1e-9
-        and abs(i.progress(i.end)) < 1e-9 and st_mid[1] > 0 and 0 < st_mid[0] < 1, f"{st_mid}")
-    bad_r = []
-    for cv in CV:
-        for nm, n1, n2 in (("en", "AHMED", "IBRAHIM"), ("ar", "أحمد", "إبراهيم")):
-            t4_warn_reset()
-            its, w = quiet(t4_nameplate_items, ncfg(cv, name1=n1, name2=n2, tagline="نبني تجارب رقمية" if nm == "ar" else "BUILDING DIGITAL EXPERIENCES.",
-                                                 tagline_highlight="رقمية" if nm == "ar" else "DIGITAL", roles=[{"icon": "gear", "text": "مطور ويب" if nm == "ar" else "WEB"}]), 10.0)
-            if len(its) != 2 or w:
-                bad_r.append(f"{cv}/{nm}: {len(its)} items {w}"); continue
-            spr = its[1].sprite
-            a_ = np.asarray(spr.convert("RGBA"), int)
-            py_ = spr.info["panel"][1]
-            row = a_[int(py_ + 10):int(py_ + NG["ul_y"] * min(CV[cv]) / 1080.0 - 6)]
-            cy_ = np.where(((row[..., 0] < 90) & (row[..., 1] > 170) & (row[..., 2] > 220) & (row[..., 3] >= 240)))[1]
-            wh_ = np.where(((row[..., :3] >= 245).all(axis=2) & (row[..., 3] >= 245)))[1]
-            if not (cy_.size > 30 and wh_.size > 30 and ((cy_.mean() < wh_.mean()) if nm == "ar" else (cy_.mean() > wh_.mean()))):
-                bad_r.append(f"{cv}/{nm}: cyan {cy_.size} px mean {cy_.mean() if cy_.size else None} white {wh_.size} px mean {wh_.mean() if wh_.size else None}")
-    rec("T4-8 English + Arabic on both canvases: no warnings, English name = white then cyan (left to right), Arabic = white on the RIGHT, cyan to its left", not bad_r, "; ".join(bad_r))
-    t4_warn_reset(); r, w = quiet(t4_nameplate_items, ncfg("youtube", roles=[{"icon": "banana", "text": "X"}, {"icon": "code", "text": "Y"}], badge_icon="nope", font="/no/such.ttf"), 10.0)
-    rec("T4-8 unknown role / badge icon -> one warning each + drawn without that icon; missing font file -> default font; never raises", len(r) == 2 and len(w) == 2 and "banana" in w[0] and "nope" in w[1], f"{w}")
-    cfg = {"canvas": [1080, 1920], "t4": t4_cfg({"nameplate": {"on": True}, "frame": {"on": True}}), "video": str(ntmp / "none.mp4")}
-    (ntmp / "bk").mkdir()
-    quiet(t4mod.t4_build_static_layers, cfg, str(ntmp / "bk"))
-    cfg5 = {"canvas": [1080, 1920], "t4": t4_cfg({"nameplate": {"on": True}}), "video": str(ntmp / "none.mp4")}
-    quiet(t4mod.t4_build_static_layers, cfg5, str(ntmp / "bk"))
-    pl = np.asarray(Image.open(cfg["_t2_fg"]).convert("RGBA"))[..., 3] if cfg.get("_t2_fg") else None
-    its = t4mod.t4_build_items(dict(cfg, t4=t4_cfg({"nameplate": {"on": True, "font": default_font()}})), 10.0, [], None, None)
-    rec("T4-8 not baked: nameplate alone -> no foreground plate; with the frame the plate keeps its centre transparent (no card pixels); t4_build_items returns the 2 Items",
-        "_t2_fg" not in cfg5 and "nameplate" not in [n for n, _ in t4mod.T4_FG_PARTS] and pl is not None and pl[int(1920 * 0.18):int(1920 * 0.72), 216:864].max() == 0 and len(its) == 2, f"{len(its)}")
-    def ask_np(ans):
-        it = iter(ans); old = builtins.input; builtins.input = lambda *_: next(it)
-        try: return quiet(t4_ask_nameplate)[0]
-        finally: builtins.input = old
-    from mt.common import D
-    D.clear(); qn = ask_np(["n"])
-    D.clear(); qy = ask_np(["y", "LINA", "-", "Designer", "3", "-", "", "", "", "Hello there", "there", "red", "1", "2", "5", "", "0.4"]); D.clear()
-    rec("T4-8 question group: n -> {'on': False}; y + answers -> name / roles (icon asked only for kept rows) / badge / tagline / highlight / colour / t4_ask_when / anim",
-        qn == {"on": False} and qy.get("on") is True and qy["name1"] == "LINA" and qy["name2"] == "" and qy["roles"] == [{"icon": "phone", "text": "Designer"}, {"icon": "gear", "text": "AI AUTOMATION"}]
-        and qy["badge_icon"] == "code" and qy["tagline"] == "Hello there" and qy["tagline_highlight"] == "there" and qy["color"] == "#ff0000" and qy["start"] == 2.0 and qy["hold"] == 5.0
-        and qy["anim"] == "slide_left" and qy["anim_dur"] == 0.4 and t4_nameplate_cfg(qy)["roles"] == qy["roles"], f"{qy}")
-    # real --still: the plate-less video is untouched everywhere outside the two Items; both cards really drawn
-    bad_s = []
-    for cv, (W, H) in CV.items():
-        mp4 = ntmp / f"v_{cv}.mp4"
-        subprocess.run([FFMPEG, "-y", "-hide_banner", "-loglevel", "error", "-f", "lavfi", "-i", f"testsrc2=s={W}x{H}:r=25:d=2", "-pix_fmt", "yuv420p", str(mp4)], check=True)
-        res = {}
-        for nm, on in (("off", False), ("on", True)):
-            job = dict(job_for(mp4, cv, "fill"), t4=t4_cfg({"canvas_mode": cv, "fit": "fill", "nameplate": {"on": on, "font": default_font()}}), output=str(ntmp / "o.mp4"))
-            jp, out = ntmp / f"{cv}_{nm}.json", ntmp / f"{cv}_{nm}.png"
-            jp.write_text(json.dumps(job), encoding="utf-8")
-            r = subprocess.run([sys.executable, str(P / "montage.py"), "--still", "--job", str(jp), "--still-out", str(out), "--arabic-mode", "reshape"], cwd=str(ntmp), capture_output=True, text=True, encoding="utf-8", errors="replace")
-            res[nm] = np.asarray(Image.open(out).convert("RGB"), int) if r.returncode == 0 and out.is_file() else None
-        if res["off"] is None or res["on"] is None:
-            bad_s.append(f"{cv}: still failed"); continue
-        ins = np.zeros((H, W), bool)
-        for it in t4_nameplate_items(ncfg(cv), 10.0):
-            b0 = nbox(it); ins[max(0, int(b0[1])):int(b0[3]) + 1, max(0, int(b0[0])):int(b0[2]) + 1] = True
-        ch = np.abs(res["on"] - res["off"]).max(axis=2) > 2
-        if ch[~ins].any() or ch[ins].sum() < 20000:
-            bad_s.append(f"{cv}: outside-changed={int(ch[~ins].sum())} inside-changed={int(ch[ins].sum())}")
-    rec("T4-8 --still on both canvases: card + bar drawn over the video, every pixel outside the two Items identical to the nameplate-less render", not bad_s, "; ".join(bad_s))
-    # real encode: absent before the window, present inside, gone after (slide in / out happens at the window edges)
-    bad_v = []
-    for cv, (W, H) in CV.items():
-        mp4 = ntmp / f"anim_{cv}.mp4"
-        subprocess.run([FFMPEG, "-y", "-hide_banner", "-loglevel", "error", "-f", "lavfi", "-i", f"color=c=0x305070:s={W}x{H}:r=25:d=3", "-f", "lavfi", "-i", "sine=f=440:d=3",
-                        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", str(mp4)], check=True)
-        def grab(path, t_):
-            png = ntmp / "g.png"
-            subprocess.run([FFMPEG, "-y", "-hide_banner", "-loglevel", "error", "-ss", t_, "-i", str(path), "-frames:v", "1", str(png)], check=True)
-            return np.asarray(Image.open(png).convert("RGB"), float)
-        frames = {}
-        for nm, on in (("off", False), ("on", True)):
-            job = dict(job_for(mp4, cv, "fill"), t4=t4_cfg({"canvas_mode": cv, "fit": "fill", "nameplate": {"on": on, "font": default_font(), "start": 0.5, "hold": 1.5, "anim_dur": 0.4}}), output=str(ntmp / f"an_{cv}_{nm}.mp4"))
-            job.pop("preview", None)
-            jp = ntmp / f"an_{cv}_{nm}.json"; jp.write_text(json.dumps(job), encoding="utf-8")
-            r = subprocess.run([sys.executable, str(P / "montage.py"), "--job", str(jp), "--arabic-mode", "reshape"], cwd=str(ntmp), capture_output=True, text=True, encoding="utf-8", errors="replace")
-            frames[nm] = {t: grab(ntmp / f"an_{cv}_{nm}.mp4", t) for t in ("0.2", "1.0", "2.4")} if r.returncode == 0 else None
-        if frames["on"] is None or frames["off"] is None:
-            bad_v.append(f"{cv}: render failed"); continue
-        cnt = {t: int((np.abs(frames["on"][t] - frames["off"][t]).max(axis=2) > 40).sum()) for t in ("0.2", "1.0", "2.4")}
-        if not (cnt["0.2"] == 0 and cnt["2.4"] == 0 and cnt["1.0"] > 20000):
-            bad_v.append(f"{cv}: changed px at 0.2 / 1.0 / 2.4 s = {cnt}")
-    rec("T4-8 real encode on both canvases (start 0.5, hold 1.5): nothing at 0.2 s, card + bar at 1.0 s, nothing again at 2.4 s", not bad_v, "; ".join(bad_v))
-finally:
-    shutil.rmtree(ntmp, ignore_errors=True)
+# ---- T4-8 nameplate (tag_a / tag_b) + corner_list: cfg, placement, frame coexistence, timing, animation, questions ---------------------------
+from PIL import ImageChops                                                  # noqa: E402
+from mt.templates.t4.nameplate import (CORNERS, FRAME_THR, INK_THR, T4_CORNER_LIST, T4_NAMEPLATE, t4_ask_corner_list, t4_ask_nameplate,  # noqa: E402
+                                        t4_corner_list_cfg, t4_nameplate_cfg, t4_nameplate_items)
+from mt.templates.t4.frame import t4_frame_plate as _fplate               # noqa: E402
+def _np_job(cv, frame_on, tag=None, lst=None, **extra):
+    t4 = t4_cfg({"canvas_mode": cv, "frame": {"on": frame_on}, "nameplate": tag or {"on": False}, "corner_list": lst or {"on": False}})
+    return dict({"canvas": list(CV[cv]), "t4": t4}, **extra)
+def _ink(it, W, H):
+    full = Image.new("L", (W, H), 0)
+    full.paste(it.sprite.getchannel("A").point(lambda v: 255 if v > INK_THR else 0), (int(it.cx - it.sprite.width / 2), int(it.cy - it.sprite.height / 2)))
+    return full
+a, b = t4_nameplate_cfg({"on": "yes", "style": "B", "anchor": "br", "color": "zzz", "inset_x": "x", "anim": "bogus", "anim_dur": -3, "icon": "NONE", "font": "/x.ttf"}), t4_nameplate_cfg(7)
+c, d = t4_corner_list_cfg({"on": 1, "rows": ["gear|Hi", "plain", 5, {"text": ""}, ["globe", "Web"]], "size": "abc", "anchor": "zzz", "icon": False}), t4_corner_list_cfg("x")
+rec("T4-8 nameplate / corner_list cfg: defaults, junk -> defaults, style / anchor aliases, rows cleaned, extras kept, never raises",
+    b == T4_NAMEPLATE and d == T4_CORNER_LIST and a["style"] == "tag_b" and a["anchor"] == "bottom-right" and a["on"] is True and a["color"] == "#19D3FF" and a["inset_x"] == 0.0
+    and a["anim"] == "auto" and a["anim_dur"] == 0.45 and a["icon"] == "" and a["font"] == "/x.ttf" and t4_nameplate_cfg({"style": "tag_b"})["anchor"] == "top-left"
+    and t4_nameplate_cfg({})["anchor"] == "bottom-left" and [r["text"] for r in c["rows"]] == ["Hi", "plain", "Web"] and c["rows"][0]["icon"] == "gear"
+    and c["size"] == 22.0 and c["anchor"] == "bottom-right" and c["icon"] == "", f"{a} {c}")
+rec("T4-8 'corner_list' is a registered T4 module and t4_cfg keeps its dict", "corner_list" in T4_MODULES and t4_cfg({"corner_list": {"on": 1, "x": 2}})["corner_list"] == {"on": True, "x": 2})
+bad_n = []
+for cv, (W, H) in CV.items():
+    s = min(W, H) / 1080.0
+    for fo in (False, True):
+        fa = _fplate(W, H, t4_frame_cfg({"on": True})).getchannel("A").point(lambda v: 255 if v > FRAME_THR else 0) if fo else None
+        cases = [({"on": True, "style": st, "anchor": an}, None) for st in ("tag_a", "tag_b") for an in CORNERS]
+        cases += [({"on": True, "style": "tag_b", "name": "أحمد إبراهيم", "role": "مطور ويب"}, None), (None, {"on": True}),
+                  (None, {"on": True, "anchor": "top-left", "icon_anchor": "top-right"}), ({"on": True, "name": "N" * 55, "role": "R" * 55}, None)]
+        for tag, lst in cases:
+            t4_warn_reset(); items, w = quiet(t4_nameplate_items, _np_job(cv, fo, tag, lst), 10.0)
+            if not items or w:
+                bad_n.append(f"{cv}/frame={fo}/{tag or lst}: items={len(items)} warn={w}"); continue
+            for it in items:
+                m = _ink(it, W, H); bb = m.getbbox()
+                hit = fa is not None and ImageChops.multiply(m, fa).getbbox() is not None
+                if not (bb and bb[0] >= 48 * s - 1 and bb[1] >= 48 * s - 1 and W - bb[2] >= 48 * s - 1 and H - bb[3] >= 48 * s - 1) or hit:
+                    bad_n.append(f"{cv}/frame={fo}/{(tag or lst).get('style', 'list')}/{(tag or lst).get('anchor', '')}: ink={bb} frame_hit={hit}")
+rec("T4-8 both canvases x frame off / on x tag_a / tag_b x 4 corners + Arabic + long text + list: ink >= 48 px from every edge, zero overlap with the frame plate, no warning",
+    not bad_n, "; ".join(bad_n[:3]))
+W, H = CV["reels"]
+t4_warn_reset(); (on_i, off_i), _ = quiet(lambda: (t4_nameplate_items(_np_job("reels", True, {"on": True, "style": "tag_b"}), 10), t4_nameplate_items(_np_job("reels", False, {"on": True, "style": "tag_b"}), 10)))
+rec("T4-8 frame on shifts the tag inward (same sprite, further from the corner); frame off = exactly the 48 px margin",
+    on_i[0].cx > off_i[0].cx and on_i[0].cy > off_i[0].cy and _ink(off_i[0], W, H).getbbox()[:2] == (48, 48), f"{on_i[0].cx, on_i[0].cy} vs {off_i[0].cx, off_i[0].cy}")
+it_a = quiet(t4_nameplate_items, _np_job("reels", False, {"on": True, "style": "tag_a", "start": 2, "hold": 3}), 10.0)[0][0]
+it_b = quiet(t4_nameplate_items, _np_job("reels", False, {"on": True, "style": "tag_a", "anchor": "bottom-right"}), 10.0)[0][0]
+it_l = quiet(t4_nameplate_items, _np_job("reels", False, None, {"on": True, "start": 1}), 6.0)[0]
+it_n = quiet(t4_nameplate_items, _np_job("reels", False, {"on": True, "anim": "pop", "anim_dur": 0.9}), 10.0)[0][0]
+rec("T4-8 timing + animation: start / hold -> window; default hold 5 s; list lasts to the video end (no fade-out); 'auto' slides in from its own side; explicit anim / dur kept",
+    (it_a.start, it_a.end) == (2.0, 5.0) and it_a.anim == "slide_right" and it_b.anim == "slide_left" and (it_b.start, it_b.end) == (0.0, 5.0)
+    and len(it_l) == 2 and all((i.start, i.end, i.out) == (1.0, 6.0, False) for i in it_l) and it_n.anim == "pop" and abs(it_n.dur - 0.9) < 1e-9, f"{it_a.anim} {it_b.anim} {[(i.start, i.end, i.out) for i in it_l]}")
+(ctmp / "t.srt").write_text("1\n00:00:01,000 --> 00:00:02,000\nhello\n\n2\n00:00:03,000 --> 00:00:04,000\nopen the project now\n", encoding="utf-8")
+cap = [{"srt": str(ctmp / "t.srt"), "t4_style": "pill", "ref": "canvas", "mode": "phrase"}]
+t4_warn_reset(); ok_t, w1 = quiet(t4_nameplate_items, dict(_np_job("reels", False, {"on": True, "trigger": "open the project", "hold": 2}), captions=cap), 10.0)
+t4_warn_reset(); no_t, w2 = quiet(t4_nameplate_items, dict(_np_job("reels", False, {"on": True, "trigger": "never said"}), captions=cap), 10.0)
+t4_warn_reset(); late, w3 = quiet(t4_nameplate_items, _np_job("reels", False, {"on": True, "start": 99}), 10.0)
+rec("T4-8 trigger phrase found -> starts at that cue; not found (no start) -> skipped with one warning; start after the video end -> skipped",
+    len(ok_t) == 1 and (ok_t[0].start, ok_t[0].end) == (3.0, 5.0) and not w1 and no_t == [] and len(w2) == 1 and late == [] and len(w3) == 1, f"{w1} {w2} {w3}")
+t4_warn_reset(); r, w = quiet(t4_nameplate_items, _np_job("reels", False, {"on": True, "icon": "banana", "font": "/no/font.ttf", "name": "", "role": "Dev"}), 10.0)
+r0 = quiet(t4_nameplate_items, _np_job("reels", False, {"on": True, "name": "-", "role": "-"}), 10.0)[0]
+r1 = quiet(t4_nameplate_items, {"t4": t4_cfg({"nameplate": {"on": True}})}, 10.0)[0]
+r2 = quiet(t4_nameplate_items, _np_job("reels", False), 10.0)[0]
+rec("T4-8 never raises: unknown icon + missing font -> one warning each, still drawn; empty name + role -> skipped; no canvas -> []; both off -> []",
+    len(r) == 1 and len(w) == 2 and r0 == [] and r1 == [] and r2 == [], f"{w}")
+t4_warn_reset(); two, w = quiet(t4_nameplate_items, _np_job("reels", False, {"on": True, "style": "tag_a", "anchor": "bottom-left"}, {"on": True}), 10.0)
+rec("T4-8 two modules in the same corner -> an overlap warning (never silent)", len(two) == 3 and any("overlap" in x for x in w), f"{w}")
+rec("T4-8 render.build_items: tag + list drawn once through the T4 hook; frame plate unchanged by the nameplate (still its own part)",
+    len([i for i in quiet(build_items, dict(job_for(ctmp / "none.mp4", "youtube", "fill"), t4=_np_job("youtube", True, {"on": True}, {"on": True})["t4"]), 10.0)[0]
+         if i.sprite.info.get("panel") or i.sprite.info.get("rows") is not None]) == 2          # tag + list (the laptop sprite has no info key)
+    and [n for n, _ in t4mod.T4_FG_PARTS] == ["frame"])
+def ask_np(fn, ans):
+    it = itertools.chain(ans, itertools.repeat("")); old = builtins.input; builtins.input = lambda *_: next(it)
+    try: return quiet(fn)[0]
+    finally: builtins.input = old
+D.clear(); n0 = ask_np(t4_ask_nameplate, ["n"]); l0 = ask_np(t4_ask_corner_list, ["n"])
+D.clear(); n1 = ask_np(t4_ask_nameplate, ["y", "2", "Sara Ali", "Designer", "2", "red", "4", "1", "0:05", "3", "pop", "0.3"])
+D.clear(); n2 = ask_np(t4_ask_nameplate, ["y"])
+D.clear(); l1 = ask_np(t4_ask_corner_list, ["y", "Web", "cloud|Cloud", "-", "1", "2", "red", "y", "slide_up", "0.2"])
+D.clear()
+rec("T4-8 question groups: n -> {'on': False}; tag answers -> style / name / role / icon / colour / corner / start + hold / anim; Enter = tag_a defaults; list rows + corners + whole video",
+    n0 == {"on": False} and l0 == {"on": False} and n1["style"] == "tag_b" and n1["name"] == "Sara Ali" and n1["role"] == "Designer" and n1["icon"] == "code" and n1["color"] == "#ff0000"
+    and n1["anchor"] == "bottom-right" and n1["start"] == 5.0 and n1["hold"] == 3.0 and n1["anim"] == "pop" and n1["anim_dur"] == 0.3
+    and n2["style"] == "tag_a" and n2["name"] == T4_NAMEPLATE["name"] and n2["anchor"] == "bottom-left" and n2["icon"] == "code"
+    and l1["rows"] == ["Web", "cloud|Cloud"] and l1["icon"] == "" and l1["anchor"] == "top-right" and l1["color"] == "#ff0000" and l1["start"] == 0.0 and l1["anim"] == "slide_up",
+    f"{n1} {l1}")
 print(sum(rows), "pass,", len(rows) - sum(rows), "fail"); sys.exit(0 if all(rows) else 1)
