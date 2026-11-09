@@ -103,3 +103,12 @@
 - Remaining diffs vs R2 / R8: R2's card is perspective-tilted (ours is flat); R8's border is a touch thicker and its label text a bit larger / rounder font (ours uses the project's bold font, Arabic works); R8's label stripes are chunkier.
 - REPO FIX: mt/templates/t4/nameplate_list.py + nameplate_tags.py were missing from the package (only stray copies at mt/nameplate_list.py, mt/nameplate_tags.py, so `import mt.templates.t4` failed) - copied into mt/templates/t4/. The stray mt/nameplate*.py files can be deleted (mt/nameplate.py is an OLDER copy of t4/nameplate.py).
 - GAPS: one card per question run (more via the job file); no tilt; no per-card font question; connector is not frame-aware; video cards = P13.
+
+## P13 - T4 video cards (assumed task number, refs R2 / R8)
+- DONE: card media may be a clip file or 'original' (= the main video) + seg_start / seg_end; the picture is baked into a muted alpha clip, the neon border + label stay an Item over it.
+- Files: NEW t4/cards_video.py (t4_prepare_card_layers = registry hook prepare_layers id 5, render.py already allows id 5); cards_art.py (t4_card_sprite(..., with_picture, media_img), t4_card_mask, t4_video_frame); cards.py (seg keys, _card_sprite split, t4_card_plans, connector cut under the picture, questions); NEW tools/mt_t4_p13_check.py.
+- cfg['t4']['cards'][i]: media = path | 'original'; seg_start / seg_end (s, '0:45', '3s'); default seg_start = the card's start for 'original', 0 for a file; a file without seg_end (and seg_start 0) loops, otherwise it plays once and holds the last frame.
+- Memory: FFmpeg decodes at the picture size straight onto a pipe (one small frame at a time); the patch canvas = the card's animated reach (anim_state sampled), written with qtrle.
+- Still (--still): the card shows the frame at seg_start (or the card start) inside the sprite; no layers.
+- Verified: tools/mt_t4_p13_check.py (3 s render + still on 1080x1920 and 1920x1080: size, duration, one audio stream, picture moves t=1 vs t=2, border pixel, no temp files). Compare out/t4/p13_*.png with R2 / R8 by eye.
+- GAPS: no seam smoothing between clip loops; the connector start is cut with the picture mask (pop overshoot may show 1-2 px); a 3rd+ card per question run = job file.

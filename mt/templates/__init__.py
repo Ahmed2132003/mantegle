@@ -17,7 +17,7 @@ from mt.ask import ask_output_options, ask_srt_paths, ask_video_path, ask_elemen
 from mt.draw import t2_cfg
 from mt.captions import parse_srt
 from mt.common import get_template
-from mt.templates.t4 import t4_ask_cards, t4_ask_config, t4_build_items, t4_build_static_layers, t4_caption_style
+from mt.templates.t4 import t4_ask_cards, t4_ask_config, t4_build_items, t4_build_static_layers, t4_caption_style, t4_prepare_card_layers
 from mt.templates.t4.cfg import T4_MODULES, t4_cfg
 
 TEMPLATE_REGISTRY.update({
@@ -37,7 +37,8 @@ TEMPLATE_REGISTRY.update({
         "build_background": t1_build_background, "build_items": t1_build_items},
     5: {"id": 5, "name": "Template 4", "desc": "Overlay Studio - the video is the base, every design element is a layer",
         "ask_config": t4_ask_config, "ask_cards": t4_ask_cards, "caption_style": t4_caption_style,
-        "build_background": t4_build_static_layers, "build_items": t4_build_items},
+        "build_background": t4_build_static_layers, "build_items": t4_build_items,
+        "prepare_layers": t4_prepare_card_layers},
 })
 
 _SAVED_LABEL = {2: 'Template 2, Lime Creator Series', 3: 'Template 3, Editorial Orange', 5: 'Template 4, Overlay Studio'}

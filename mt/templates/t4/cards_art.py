@@ -9,9 +9,9 @@ import math
 import os
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageOps
 
-from mt.common import VIDEO_EXTS
+from mt.common import FFMPEG, VIDEO_EXTS
 from mt.draw import _t2_alpha_paste, t2_lighten, t2_line_mask, t2_paint, t2_poly_mask, t2_rgb, t2_text_mask
 from mt.fonts import has_arabic
 from mt.templates.t4.kit import _glass_sprite, chamfer_rect, hazard_stripes, kit_paste, neon_stroke
@@ -32,7 +32,7 @@ def t4_load_media(path):
     if not path or not os.path.isfile(str(path)):
         return None, "cards: image '%s' is missing - gray placeholder." % (name or "(empty path)")
     if str(path).lower().endswith(VIDEO_EXTS):
-        return None, "cards: '%s' is a video - video cards arrive in a later task (P13), gray placeholder for now." % name
+        return None, "cards: '%s' is a video - videos are baked by cards_video.py, not loaded as a picture - gray placeholder." % name
     try:
         with Image.open(str(path)) as im:
             im.seek(0)
@@ -145,10 +145,44 @@ def _label_pos(lab, rect, anchor):
     return int(round(x)), int(round(y))
 
 
-def t4_card_sprite(media, label, cw, ch, color, font, label_anchor="bottom-right", label_color=None):
+def t4_card_mask(cw, ch):
+    """The picture's chamfer mask as an 'L' image cw x ch - the exact shape t4_card_sprite cuts its picture with (cards_video bakes clips with it)."""
+    cw, ch = max(40, int(round(cw))), max(40, int(round(ch)))
+    k = min(cw, ch) * 0.06
+    m, (mx, my) = chamfer_rect((cw, ch), (k, k * 0.7, k, k * 1.2))
+    a = Image.new("L", (cw, ch), 0)
+    a.paste(m, (mx, my))
+    return a
+
+
+def t4_video_frame(path, t=0.0):
+    """One RGB frame of a video at time t (seconds) -> PIL image, or None when it cannot be read. Used by --still."""
+    import subprocess
+    import tempfile
+    if not path or not os.path.isfile(str(path)) or not FFMPEG:
+        return None
+    fd, png = tempfile.mkstemp(suffix=".png")
+    os.close(fd)
+    try:
+        r = subprocess.run([FFMPEG, "-y", "-hide_banner", "-loglevel", "error", "-ss", "%.3f" % max(0.0, float(t)), "-i", str(path),
+                            "-frames:v", "1", png], capture_output=True)
+        return Image.open(png).convert("RGB").copy() if r.returncode == 0 and os.path.getsize(png) > 0 else None
+    except Exception:
+        return None
+    finally:
+        try:
+            os.remove(png)
+        except OSError:
+            pass
+
+
+def t4_card_sprite(media, label, cw, ch, color, font, label_anchor="bottom-right", label_color=None, with_picture=True, media_img=None):
     """One finished card -> (RGBA sprite, warning | None). media = path; label = text ('' = none); cw / ch = picture size px; sprite.info['card']
     = the picture rect inside the sprite. A missing / unreadable / video media gives a gray placeholder (+ the one-line warning)."""
-    img, msg = t4_load_media(media)
+    if media_img is not None:                                   # a frame supplied by the caller (video cards in a --still)
+        img, msg = media_img, None
+    else:
+        img, msg = t4_load_media(media)
     cw, ch = max(40, int(round(cw))), max(40, int(round(ch)))
     k = min(cw, ch) * 0.06
     mask = chamfer_rect((cw, ch), (k, k * 0.7, k, k * 1.2))
@@ -162,14 +196,21 @@ def t4_card_sprite(media, label, cw, ch, color, font, label_anchor="bottom-right
             lab = t4_label_sprite(t4_split_label(label), label_color or color, font, size, label_anchor.endswith("left"))
     M = int(glow * 2.6) + 6 + (max(lab.width, lab.height) if lab is not None else 0)
     cv = Image.new("RGBA", (cw + 2 * M, ch + 2 * M), (0, 0, 0, 0))
-    cv.alpha_composite(_picture(img if img is not None else _placeholder(), cw, ch, mask), (M, M))
+    pic = _picture(img if img is not None else _placeholder(), cw, ch, mask)
+    if with_picture:                                            # False = frame only: the picture is a baked video layer under it
+        cv.alpha_composite(pic, (M, M))
     kit_paste(cv, neon_stroke(mask, color, bw, glow), M, M)
     _accent(cv, M, M, cw, k, bw, color)
     rect = (M, M, M + cw, M + ch)
     if lab is not None:
         lx, ly = _label_pos(lab, rect, label_anchor)
         _t2_alpha_paste(cv, lab, lx, ly)
-    bb = cv.getchannel("A").getbbox() or (0, 0, cv.width, cv.height)
+    ab = cv.getchannel("A")
+    if not with_picture:                                        # same crop box as the full card: add the picture's footprint
+        fa = Image.new("L", cv.size, 0)
+        fa.paste(pic.getchannel("A"), (M, M))
+        ab = ImageChops.lighter(ab, fa)
+    bb = ab.getbbox() or (0, 0, cv.width, cv.height)
     out = cv.crop(bb)
     out.info["card"] = (rect[0] - bb[0], rect[1] - bb[1], rect[2] - bb[0], rect[3] - bb[1])
     return out, msg

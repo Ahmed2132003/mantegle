@@ -1,8 +1,8 @@
 """mt.templates.t4.cards - Template 4 module 'cards' (refs R2 right card, R8 PiP card + label): IMAGE cards - a picture inside a chamfered
 neon border, an optional connector line that ends in a glowing dot at a target point, and an optional label tag with slanted stripes.
-Images only here; video media arrives with P13 (a video path = gray placeholder + one warning). Drawing lives in cards_art.py.
+Video cards: the picture is baked into an alpha clip by cards_video.py (muted); the border + label stay an Item over it. Drawing lives in cards_art.py.
 cfg['t4']['cards'] = [card, ...]   (also accepted: one card dict, or {on, cards: [...]})   card = {
-    media  path           the picture (png / jpg / webp ...). Missing / unreadable / video -> gray placeholder + one t4_warn line.
+    media  path           the picture (png / jpg / webp ...). Missing / unreadable -> gray placeholder + one t4_warn line. A video path, or 'original' (= the main video), plus seg_start / seg_end (seconds; default seg_start = the card's start for 'original', 0 for a file; a file without seg_end loops) is baked into a muted clip.
     label  'TEXT' | {text, color, anchor}   tag overlapping a card corner (anchor bottom-right default | bottom-left | top-right | top-left).
                           Latin text is capitalised; > 11 characters -> two balanced lines (or use '\\n' / '|'); '' / '-' = no label.
     anchor 'top-right' | xy   one of the 9 positions (top-left top top-right left center right bottom-left bottom bottom-right) with inset_x /
@@ -20,21 +20,26 @@ Public: T4_CARD, t4_cards_cfg(raw) -> [card], t4_cards_items(cfg, duration), t4_
 import copy
 import os
 
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
 from mt.anim import ANIMS
 from mt.ask import ask_anim
-from mt.common import IMAGE_EXTS, ask, ask_choice, c_existing_file, c_float, yn
+from mt.common import IMAGE_EXTS, VIDEO_EXTS, ask, ask_choice, c_existing_file, c_float, c_time, probe, yn
 from mt.draw import Item
-from mt.templates.t4.cards_art import _aspect, t4_card_sprite, t4_load_media
+from mt.templates.t4.cards_art import (ASPECT_MAX, ASPECT_MIN, _aspect, _placeholder, t4_card_mask, t4_card_sprite, t4_load_media,
+                                       t4_video_frame)
 from mt.templates.t4.cfg import _hex
 from mt.templates.t4.frame import t4_frame_cfg
 from mt.templates.t4.kit import connector
 from mt.templates.t4.nameplate import T4_SAFE, _anchor as _corner, _bool, _cached, _flt, _font, _frame_mask, _place, _window
 from mt.templates.t4.tiles import ANCHORS, TileItem, _anchor, _coord, _place_xy, _point, _warn_overlaps
-from mt.templates.t4.timing import t4_ask_when
+from mt.templates.t4.timing import _num as _secs, t4_ask_when
 from mt.templates.t4.warn import t4_warn
 
 T4_CARD = {"on": True, "media": "", "label": {}, "anchor": "top-right", "xy": None, "width": 480.0, "height": None, "inset_x": 0.0, "inset_y": 0.0,
-           "color": "#19d3ff", "connector": {}, "start": 0.0, "trigger": "", "end": None, "hold": None, "anim": "auto", "anim_dur": 0.45}
+           "color": "#19d3ff", "connector": {}, "start": 0.0, "trigger": "", "end": None, "hold": None, "anim": "auto", "anim_dur": 0.45, "seg_start": None, "seg_end": None}
 _CONN = {"target": None, "points": [], "side": "auto", "style": "elbow", "attach": 0.35, "color": "", "end_dot": True, "width": 2.5, "glow": 9.0}
 _TOKENS = ("card", "card-top", "card-bottom", "card-left", "card-right")
 _SPR = {}
@@ -87,6 +92,11 @@ def _card(raw):
     out.update({k: copy.deepcopy(v) for k, v in raw.items() if k not in out})                          # extras survive
     m = raw.get("media")
     out["media"] = m.strip() if isinstance(m, str) else ""
+    out["seg_start"], out["seg_end"] = _secs(raw.get("seg_start")), _secs(raw.get("seg_end"))
+    if out["seg_start"] is not None and out["seg_start"] < 0:
+        out["seg_start"] = 0.0
+    if out["seg_end"] is not None and out["seg_end"] <= (out["seg_start"] or 0.0) + 0.05:
+        out["seg_end"] = None
     out["label"] = _label(raw.get("label"))
     out["anchor"] = _anchor(raw.get("anchor"), "top-right")
     xy = _point(raw.get("xy"))
@@ -170,7 +180,82 @@ def _conn_points(c, rect, W, H, s):
 
 
 # ---- items ------------------------------------------------------------------------------------------------------------------
-def _card_sprite(c, s, W, H):
+def _kind(c):
+    """'original' (a segment of the main video) | 'video' (a clip file) | 'image'."""
+    m = str(c.get("media") or "").strip()
+    if m.lower() == "original":
+        return "original"
+    return "video" if m.lower().endswith(VIDEO_EXTS) else "image"
+
+
+def _src(c, cfg):
+    return cfg.get("video") if _kind(c) == "original" else c.get("media")
+
+
+_ASP = {}
+
+
+def _vid_aspect(src):
+    """Width / height of a video file, clamped like pictures; 4:3 when it cannot be probed."""
+    key = (str(src), os.path.getmtime(src) if src and os.path.isfile(str(src)) else 0)
+    if key not in _ASP:
+        try:
+            i = probe(src)
+            _ASP[key] = max(ASPECT_MIN, min(ASPECT_MAX, i["w"] / float(i["h"])))
+        except (Exception, SystemExit):
+            _ASP[key] = 4.0 / 3.0
+    return _ASP[key]
+
+
+def _foot(spr):
+    """Frame-only sprite + the picture's footprint in its alpha = what the finished card covers. Used only to place a video card."""
+    x0, y0, x1, y1 = spr.info["card"]
+    lay = Image.new("L", spr.size, 0)
+    lay.paste(t4_card_mask(x1 - x0, y1 - y0), (x0, y0))
+    foot = spr.copy()
+    foot.putalpha(ImageChops.lighter(spr.getchannel("A"), lay))
+    return foot
+
+
+def _cut_card(csp, pos, cw, ch):
+    """Remove the card's picture area from a connector sprite (its start stays hidden under the card, as with picture cards)."""
+    org = csp.info["origin"]
+    hole = Image.new("L", csp.size, 255)
+    hole.paste(ImageChops.invert(t4_card_mask(cw, ch)), (int(round(pos[0])) + org[0], int(round(pos[1])) + org[1]))
+    csp.putalpha(ImageChops.multiply(csp.getchannel("A"), hole))
+    return csp
+
+
+def _card_sprite(c, s, W, H, cfg=None, live=False, ft=0.0):
+    """Cached (sprite, warning). Pictures: the full card. Video / original: live = the frame only (cards_video bakes the picture into a
+    clip under it); not live = the full card with the frame at time ft (--still) or a gray placeholder (missing source)."""
+    if _kind(c) == "image":
+        return _card_sprite_img(c, s, W, H)
+    src = _src(c, cfg or {})
+    ok = bool(src) and os.path.isfile(str(src))
+    cw = c["width"] * s
+    ch = c["height"] * s if c["height"] else cw / (_vid_aspect(src) if ok else 4.0 / 3.0)
+    lab, fp = c["label"], _font(c.get("font"))
+    live = bool(live and ok)
+    key = ("v", _kind(c), str(src), _mtime(src), live, round(float(ft), 2), repr(lab), round(cw), round(ch), c["color"], fp)
+
+    def make():
+        msg = None
+        if not ok:
+            msg, img = "cards: video '%s' is missing - gray placeholder." % (Path(str(src)).name if src else "(none)"), _placeholder()
+        elif live:
+            img = Image.new("RGB", (4, 4))
+        else:
+            img = t4_video_frame(src, ft)
+            if img is None:
+                msg, img = "cards: could not read a frame of '%s' - gray placeholder." % Path(str(src)).name, _placeholder()
+        spr, m2 = t4_card_sprite("", lab.get("text", ""), cw, ch, c["color"], fp, lab.get("anchor", "bottom-right"),
+                                 lab.get("color") or None, with_picture=not live, media_img=img)
+        return spr, msg or m2
+    return _cached(_SPR, key, make, 16)
+
+
+def _card_sprite_img(c, s, W, H):
     """Cached (sprite, warning) of one card at canvas scale s."""
     cw = c["width"] * s
     if c["height"]:
@@ -194,15 +279,20 @@ def _make_item(spr, st, en, cx, cy, c):
     return Item(spr, st, en, cx, cy, c["anim"], c["anim_dur"], out=True)
 
 
-def _one_card(cfg, c, idx, duration, W, H, s, fm, placed):
+def _one_card(cfg, c, idx, duration, W, H, s, fm, placed, plans=None):
     label = "card %d" % (idx + 1)
     win = _window(cfg, c, label, duration, 5.0)
     if win is None:
         return []
-    spr, msg = _card_sprite(c, s, W, H)
+    kind = _kind(c)
+    src = _src(c, cfg)
+    live = kind != "image" and bool(src) and os.path.isfile(str(src)) and not cfg.get("_t2_still")     # live = baked into a video layer
+    ft = c["seg_start"] if c["seg_start"] is not None else (win[0] if kind == "original" else 0.0)
+    spr, msg = _card_sprite(c, s, W, H, cfg, live, ft)
+    foot = _foot(spr) if live else spr
     if msg:
         t4_warn(msg)
-    pl = _place_xy(spr, c["xy"], W, H, s) if c["xy"] else _place(spr, c["anchor"], W, H, s, c["inset_x"], c["inset_y"], fm, label)
+    pl = _place_xy(foot, c["xy"], W, H, s) if c["xy"] else _place(foot, c["anchor"], W, H, s, c["inset_x"], c["inset_y"], fm, label)
     if pl is None:
         return []
     cx, cy, ink, _ = pl
@@ -211,18 +301,23 @@ def _one_card(cfg, c, idx, duration, W, H, s, fm, placed):
     x0, y0, x1, y1 = spr.info["card"]
     rect = (left + x0, top + y0, left + x1, top + y1)
     last = max(win[0], win[1] - 0.1)
+    if live and plans is not None:                            # cards_video bakes the picture of this card
+        plans.append({"c": c, "idx": idx, "win": win, "cx": cx, "cy": cy, "size": spr.size, "pic": (x0, y0, x1 - x0, y1 - y0),
+                      "src": src, "kind": kind})
     items = []
     if c["connector"]:
         k = c["connector"]
         col = k["color"] or c["color"]
         csp = connector(_conn_points(k, rect, W, H, s), col, k["end_dot"], k["width"] * s, k["glow"] * s)
         ox, oy = csp.info["origin"]
+        if live:
+            _cut_card(csp, (left + x0, top + y0), x1 - x0, y1 - y0)
         items.append(Item(csp, min(win[0] + c["anim_dur"] * 0.8, last), win[1], -ox + csp.width / 2.0, -oy + csp.height / 2.0, "fade", c["anim_dur"], out=True))
     items.append(_make_item(spr, win[0], win[1], cx, cy, c))                              # last = on top of the connector
     return items
 
 
-def t4_cards_items(cfg, duration):
+def t4_cards_items(cfg, duration, plans=None):
     """Items of every card: [connector (fade), card (pop)] per card, all ending together. Never raises; [] when the module is off."""
     t4 = cfg.get("t4") if isinstance(cfg, dict) and isinstance(cfg.get("t4"), dict) else {}
     cards = [c for c in t4_cards_cfg(t4.get("cards")) if c["on"]]
@@ -237,7 +332,7 @@ def t4_cards_items(cfg, duration):
     try:
         fm = _frame_mask(W, H, t4_frame_cfg(t4.get("frame")), s)
         for i, c in enumerate(cards):
-            items += _one_card(cfg, c, i, duration, W, H, s, fm, placed)
+            items += _one_card(cfg, c, i, duration, W, H, s, fm, placed, plans)
         _warn_overlaps(placed)
     except Exception as e:
         t4_warn("t4 cards: could not be drawn (%s: %s) - skipped." % (type(e).__name__, e))
@@ -245,6 +340,14 @@ def t4_cards_items(cfg, duration):
 
 
 # ---- questions --------------------------------------------------------------------------------------------------------------
+def t4_card_plans(cfg, duration):
+    """Placement of every video / original-segment card, computed by the same code as the Items: [{c, idx, win, cx, cy, size, pic, src, kind}]
+    (pic = x, y, w, h of the picture inside the sprite). Used by cards_video to bake the clips."""
+    plans = []
+    t4_cards_items(cfg, duration, plans)
+    return plans
+
+
 def _c_target(s):
     p = _cpoint(s.strip())
     if p is None or isinstance(p, str):
@@ -256,7 +359,16 @@ def t4_ask_image_cards():
     """Question group 'cards' (called by t4_ask_config). -> a list with ONE card, or {'on': False}. More cards: edit the job file."""
     if not yn("Add an image card (picture in a neon border, optional label + connector - references R2 / R8)?", default=False):
         return {"on": False}
-    c = {"media": ask("Card picture (PNG / JPG path)", key="t4_card_img", cast=c_existing_file(IMAGE_EXTS))}
+    kind = ask_choice("Card media:", ["Picture (PNG / JPG)", "Video clip (MP4 ...)", "A segment of the original video"], default=1, key="t4_card_kind")
+    if kind == 1:
+        c = {"media": ask("Card picture (PNG / JPG path)", key="t4_card_img", cast=c_existing_file(IMAGE_EXTS))}
+    else:
+        c = {"media": ask("Card video (MP4 ...; loops when no segment is given; muted)", key="t4_card_vid", cast=c_existing_file(VIDEO_EXTS)) if kind == 2 else "original"}
+        for k, q in (("seg_start", "Segment start (seconds or mm:ss; Enter = %s)" % ("the card's start time" if kind == 3 else "0")),
+                     ("seg_end", "Segment end (seconds or mm:ss; Enter = %s)" % ("the card's hold time" if kind == 3 else "the clip's end / loop"))):
+            v = ask(q, allow_empty=True, cast=c_time)
+            if v not in (None, ""):
+                c[k] = v
     lab = ask("Label text on the card (Enter / '-' = none, e.g. LIVE CODING DEVELOPMENT)", default="-", key="t4_card_label", cast=lambda s: s.strip())
     c["label"] = "" if lab in ("", "-") else lab
     c["width"] = ask("Card width (px, for a 1080 px short side)", default=T4_CARD["width"], key="t4_card_width", cast=c_float)

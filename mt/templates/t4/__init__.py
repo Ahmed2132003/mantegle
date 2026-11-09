@@ -7,6 +7,7 @@ from mt.templates.t4.captions import t4_caption_items, t4_caption_style  # noqa:
 from mt.common import D, IMAGE_EXTS, ask, ask_choice, c_color, c_existing_file, c_int, probe
 from mt.templates.t4.base import t4_apply_backdrop
 from mt.templates.t4.cards import t4_ask_image_cards, t4_cards_cfg, t4_cards_items
+from mt.templates.t4.cards_video import t4_prepare_card_layers  # noqa: F401  (registry hook prepare_layers, id 5)
 from mt.templates.t4.frame import t4_ask_frame, t4_frame_cfg, t4_frame_part
 from mt.templates.t4.nameplate import t4_ask_corner_list, t4_ask_nameplate, t4_corner_list_cfg, t4_nameplate_cfg, t4_nameplate_items
 from mt.templates.t4.tiles import t4_ask_tiles, t4_tiles_cfg, t4_tiles_items
