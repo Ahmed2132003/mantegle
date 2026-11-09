@@ -33,6 +33,8 @@ def _out_bounce(p):
 
 def anim_state(name, p, W, H):
     """p: 0 (hidden) -> 1 (fully shown). Returns alpha, dx, dy, scale, rotation, reveal."""
+    if name == "t4_pop":                        # T4 tiles (t4/tiles.py): in = pop (overshoot + fade); out arrives as p < 0 = pure fade of -p
+        return 1.0 if p >= 1 else (min(1.0, -p) if p < 0 else min(1.0, p * 4)), 0, 0, 1.0 if (p >= 1 or p < 0) else max(0.01, _out_back(p)), 0.0, None
     if name in (None, "none") or p >= 1:
         return 1.0, 0, 0, 1.0, 0.0, None
     p = max(0.0, p)

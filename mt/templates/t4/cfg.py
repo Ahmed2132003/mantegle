@@ -5,7 +5,7 @@ import re
 
 CANVAS_REELS = [1080, 1920]
 CANVAS_YOUTUBE = [1920, 1080]
-T4_MODULES = ("frame", "nameplate", "tags", "tiles", "cards", "scenes", "split", "broll")
+T4_MODULES = ("frame", "nameplate", "corner_list", "tags", "tiles", "cards", "scenes", "split", "broll")
 T4_DEFAULTS = {
     "canvas_mode": "auto",                                   # 'auto' (by the video aspect) | 'reels' | 'youtube'
     "fit": "fill",                                           # 'fill' (crop to the canvas) | 'fit' (whole video, letterboxed)
@@ -67,6 +67,8 @@ def t4_cfg(raw):
                 d = copy.deepcopy(src)
                 d["on"] = bool(src.get("on", False))
                 out[m] = d
+            elif m == "tiles" and isinstance(src, list):          # tiles = a LIST of groups (t4/tiles.py normalises it)
+                out[m] = copy.deepcopy(src)
         for k, v in raw.items():                         # unknown keys survive (forward compatibility with newer jobs)
             if k not in out:
                 out[k] = copy.deepcopy(v)

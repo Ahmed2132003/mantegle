@@ -489,4 +489,141 @@ rec("T4-8 question groups: n -> {'on': False}; tag answers -> style / name / rol
     and n2["style"] == "tag_a" and n2["name"] == T4_NAMEPLATE["name"] and n2["anchor"] == "bottom-left" and n2["icon"] == "code"
     and l1["rows"] == ["Web", "cloud|Cloud"] and l1["icon"] == "" and l1["anchor"] == "top-right" and l1["color"] == "#ff0000" and l1["start"] == 0.0 and l1["anim"] == "slide_up",
     f"{n1} {l1}")
+# ---- T4-9 tiles: logo glass tiles in a grid + connector, staggered pop-in, fade-out together, placeholder -----------------------------------
+from PIL import ImageDraw                                                    # noqa: E402
+from mt.anim import anim_state                                               # noqa: E402
+from mt.render import render_still                                           # noqa: E402
+from mt.templates.t4.tiles import TileItem, t4_ask_tiles, t4_tile_sprite, t4_tiles_cfg, t4_tiles_items   # noqa: E402
+ttmp = Path(tempfile.mkdtemp(prefix="t4til_"))
+try:
+    LG = []
+    for nm, (w, h), col in (("sq", (300, 300), (240, 96, 40)), ("wide", (600, 200), (40, 110, 255)), ("tall", (200, 400), (250, 205, 40)), ("round", (300, 300), (30, 215, 235))):
+        im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); ImageDraw.Draw(im).ellipse((0, 0, w - 1, h - 1), fill=col + (255,)) if nm == "round" else ImageDraw.Draw(im).rectangle((0, 0, w - 1, h - 1), fill=col + (255,))
+        im.save(ttmp / f"{nm}.png"); LG.append(str(ttmp / f"{nm}.png"))
+    (ttmp / "broken.png").write_text("not an image", encoding="utf-8")
+    def tj(cv, fo, groups, **extra):
+        return dict({"canvas": list(CV[cv]), "t4": t4_cfg({"canvas_mode": cv, "frame": {"on": fo}, "tiles": groups})}, **extra)
+    def ink_rect(it, W, H):
+        full = Image.new("L", (W, H), 0)
+        full.paste(it.sprite.getchannel("A").point(lambda v: 255 if v > INK_THR else 0), (int(it.cx - it.sprite.width / 2), int(it.cy - it.sprite.height / 2)))
+        return full
+    a = t4_tiles_cfg([{"images": LG + [5, None, ""], "cols": "3", "gap": -4, "size": "x", "anchor": "7", "xy": ["10%", 20], "border": "zz", "anim": "bogus",
+                       "stagger": 99, "connector": {"points": ["group-bottom", "30%,50%", [1, "x"], "bad"], "end_dot": "both"}, "extra": 1}, "junk", 5, {"images": "x"}])
+    b, c, d = t4_tiles_cfg({"on": False}), t4_tiles_cfg({"images": [LG[0]]}), t4_tiles_cfg({"on": True, "groups": [{"images": [LG[0]]}]})
+    g = a[0]
+    rec("T4-9 t4_tiles_cfg: list / single group / {on, groups}; junk dropped; cols / gap / size / anchor preset / xy / border / anim / stagger fall back; connector points cleaned; extras kept; never raises",
+        len(a) == 2 and g["images"] == LG and g["cols"] == 3 and g["gap"] == 18.0 and g["size"] == 150.0 and g["anchor"] == "bottom-left" and g["xy"] == ["10%", 20.0]
+        and g["border"] == "#c4d6ef" and g["anim"] == "pop" and g["stagger"] == 0.12 and g["connector"]["points"] == ["group-bottom", ["30%", "50%"]] and g["connector"]["end_dot"] == "both"
+        and g["extra"] == 1 and a[1]["images"] == [] and b == [] and len(c) == 1 and c[0]["anchor"] == "left" and len(d) == 1 and t4_tiles_cfg(None) == [] and t4_tiles_cfg("x") == [],
+        f"{ {k: g[k] for k in ('cols', 'gap', 'size', 'anchor', 'xy', 'connector', 'anim', 'stagger')} }")
+    rec("T4-9 t4_cfg keeps cfg['t4']['tiles'] as a list of groups (default stays {'on': False})", t4_cfg({"tiles": [{"images": ["a.png"]}]})["tiles"] == [{"images": ["a.png"]}] and t4_cfg({})["tiles"] == {"on": False})
+    t4_warn_reset(); sps, w = quiet(lambda: [t4_tile_sprite(p, 150, "#c4d6ef", 1.0) for p in LG])
+    pm = [np.asarray(s_.getchannel("A")) for s_ in sps]
+    ox, oy = sps[0].info["origin"]
+    def logo_box(s_, col):
+        arr = np.asarray(s_.convert("RGB"), int); ys, xs = np.where(np.abs(arr - np.array(col)).sum(axis=2) < 40)
+        return (xs.min() - ox, ys.min() - oy, xs.max() + 1 - ox, ys.max() + 1 - oy)
+    bw, bt = logo_box(sps[1], (40, 110, 255)), logo_box(sps[2], (250, 205, 40))
+    rec("T4-9 tile sprites: same size for every logo, logo fitted (wide = 90 px wide, tall = 90 px tall) and centred in the 150 px tile, no warning",
+        len({s_.size for s_ in sps}) == 1 and abs((bw[2] - bw[0]) - 90) <= 2 and abs((bt[3] - bt[1]) - 90) <= 2 and abs((bw[0] + bw[2]) / 2 - 75) <= 1.5 and abs((bw[1] + bw[3]) / 2 - 75) <= 1.5
+        and abs((bt[0] + bt[2]) / 2 - 75) <= 1.5 and abs((bt[1] + bt[3]) / 2 - 75) <= 1.5 and not w, f"{bw} {bt} {w}")
+    t4_warn_reset(); r, w = quiet(lambda: (t4_tile_sprite("/no/such/x.png", 150), t4_tile_sprite(str(ttmp / "broken.png"), 150), t4_tile_sprite("", 150), t4_tile_sprite("/no/such/x.png", 150)))
+    gray = np.asarray(r[0].convert("RGB"), int)[oy + 60:oy + 90, ox + 60:ox + 90]
+    rec("T4-9 missing / unreadable / empty path -> gray placeholder tile (same size) + one warning per distinct file", all(x.size == sps[0].size for x in r) and len(w) == 3 and "x.png" in w[0]
+        and abs(gray[..., 0] - gray[..., 2]).max() < 40, f"{w}")
+    bad_t = []
+    for cv, (W, H) in CV.items():
+        s = min(W, H) / 1080.0
+        for fo in (False, True):
+            fa = t4_frame_plate(W, H, t4_frame_cfg({"on": True})).getchannel("A").point(lambda v: 255 if v > FRAME_THR else 0) if fo else None
+            for an in ("top-left", "top", "top-right", "left", "center", "right", "bottom-left", "bottom", "bottom-right"):
+                t4_warn_reset(); items, w = quiet(t4_tiles_items, tj(cv, fo, [{"images": LG, "anchor": an, "connector": {"points": ["group-bottom", "30%,60%"]}}]), 10.0)
+                if len(items) != 5 or w:
+                    bad_t.append(f"{cv}/{fo}/{an}: {len(items)} items warn={w}"); continue
+                for it in items[:4]:
+                    bb = ink_rect(it, W, H).getbbox()
+                    hit = fa is not None and ImageChops.multiply(ink_rect(it, W, H), fa).getbbox() is not None
+                    if not (bb[0] >= 47 and bb[1] >= 47 and W - bb[2] >= 47 and H - bb[3] >= 47) or hit:
+                        bad_t.append(f"{cv}/{fo}/{an}: ink={bb} frame_hit={hit}")
+    rec("T4-9 4 logos + connector, both canvases x frame off / on x all 9 anchors: 5 items, no warning, every tile >= 48 px from the edges, zero overlap with the frame plate", not bad_t, "; ".join(bad_t[:3]))
+    items = quiet(t4_tiles_items, tj("youtube", False, [{"images": LG, "start": 1, "hold": 4, "stagger": 0.2, "anim_dur": 0.3, "connector": {"points": ["group-right", "70%,60%"]}}]), 10.0)[0]
+    tl, cn = items[:4], items[4]
+    xs, ys = sorted({round(i.cx) for i in tl}), sorted({round(i.cy) for i in tl})
+    rec("T4-9 grid + timing: 2 columns x 2 rows (gap 18), tiles start 1.0 / 1.2 / 1.4 / 1.6 s (t4_stagger), connector after the last one, ALL end together at 5.0 s",
+        len(xs) == 2 and len(ys) == 2 and xs[1] - xs[0] == 168 and ys[1] - ys[0] == 168 and [round(i.start, 3) for i in tl] == [1.0, 1.2, 1.4, 1.6] and abs(cn.start - 1.9) < 1e-6
+        and {i.end for i in items} == {5.0} and all(isinstance(i, TileItem) and i.anim == "t4_pop" and i.out for i in tl) and cn.anim == "fade", f"{xs} {ys} {[i.start for i in items]}")
+    probe = tl[0]
+    sts = [anim_state(probe.anim, probe.progress(t), 1920, 1080) for t in (1.0, 1.1, 1.3, 3.0, 4.85, 4.95, 4.999)]
+    rec("T4-9 TileItem: entry = fade + scale pop from 0, hold = fully shown, exit = PURE fade (scale stays 1) ending at 0; the exit mirrors the entry length",
+        sts[0][0] == 0 and 0 < sts[1][0] <= 1 and sts[1][3] != 1.0 and sts[2] == (1.0, 0, 0, 1.0, 0.0, None) and sts[3] == (1.0, 0, 0, 1.0, 0.0, None)
+        and 0 < sts[4][0] < 1 and sts[4][3] == 1.0 and sts[5][0] < sts[4][0] and sts[6][0] < 0.05, f"{sts}")
+    rec("T4-9 anim.py: other animations unchanged (fade / pop / slide_up / none / unknown spot checks)",
+        anim_state("fade", 0.5, 1080, 1920)[0] == 1 - 0.5 ** 3 and anim_state("pop", 0.5, 1080, 1920)[:3] == (1.0, 0, 0) and anim_state("slide_up", 1.0, 1080, 1920) == (1.0, 0, 0, 1.0, 0.0, None)
+        and anim_state("none", 0.2, 1080, 1920) == (1.0, 0, 0, 1.0, 0.0, None) and anim_state("zzz", 0.2, 1080, 1920) == (1.0, 0, 0, 1.0, 0.0, None))
+    it_f = quiet(t4_tiles_items, tj("reels", False, [{"images": LG[:2], "anim": "fade", "start": 0}]), 6.0)[0]
+    it_n = quiet(t4_tiles_items, tj("reels", False, [{"images": LG[:2], "anim": "none"}]), 6.0)[0]
+    rec("T4-9 other anims: 'fade' -> plain Item (fade in / out), 'none' -> static; default hold 5 s", all(type(i) is not TileItem and i.anim == "fade" for i in it_f) and all(i.anim == "none" for i in it_n)
+        and {i.end for i in it_f} == {5.0})
+    # connector: tokens + clamping + glowing end dot
+    W, H = CV["youtube"]
+    it = quiet(t4_tiles_items, tj("youtube", False, [{"images": LG, "anchor": "top-left", "connector": {"points": ["group-bottom", [5, 5000], "999%,50%"], "end_dot": True}}]), 10.0)[0]
+    bb = ink_rect(it[4], W, H).getbbox()
+    rec("T4-9 connector: points far outside the canvas are clamped so the whole polyline ink (glow + end dot included) stays inside the 48 px safe area",
+        bb[0] >= 47 and bb[1] >= 47 and W - bb[2] >= 47 and H - bb[3] >= 47, f"{bb}")
+    it = quiet(t4_tiles_items, tj("youtube", False, [{"images": LG, "anchor": "top-left", "connector": {"points": ["group-bottom", "60%,90%"], "end_dot": False}}]), 10.0)[0]
+    gx, gb = (it[0].cx + it[1].cx) / 2.0, max(i.cy for i in it[:4]) + 75
+    cs = it[4].sprite
+    yy, xx = int(gb - (it[4].cy - cs.height / 2.0)), int(gx - (it[4].cx - cs.width / 2.0))
+    px = np.asarray(cs.getchannel("A"))[yy - 3:yy + 4, xx - 3:xx + 4].max()
+    rec("T4-9 connector token 'group-bottom' = the bottom centre of the tile group (the line starts exactly there)", px > 200, f"max alpha around ({gx:.0f},{gb:.0f}) = {px}")
+    # xy
+    for cv, (W, H) in CV.items():
+        itx = quiet(t4_tiles_items, tj(cv, False, [{"images": LG, "xy": ["50%", "50%"]}, {"images": LG[:1], "xy": [-500, 99999], "size": 100}]), 10.0)[0]
+        g1 = [i for i in itx[:4]]
+        gcx, gcy = sum(i.cx for i in g1) / 4.0, sum(i.cy for i in g1) / 4.0
+        b2 = ink_rect(itx[4], W, H).getbbox()
+        rec(f"T4-9 xy on {cv}: group centred on 50%,50%; an xy far outside is clamped inside the safe area", abs(gcx - W / 2) < 2 and abs(gcy - H / 2) < 2 and b2[0] >= 47 and b2[1] >= 47 and W - b2[2] >= 47 and H - b2[3] >= 47, f"{gcx, gcy} {b2}")
+    t4_warn_reset(); r, w = quiet(t4_tiles_items, tj("reels", False, [{"images": [LG[0], "/no/such/a.png", "/no/such/a.png"]}]), 10.0)
+    t4_warn_reset(); r1, w1 = quiet(t4_tiles_items, tj("reels", False, [{"images": []}]), 10.0)
+    t4_warn_reset(); r2, w2 = quiet(t4_tiles_items, dict(tj("reels", False, [{"images": LG, "trigger": "never said"}]), captions=[]), 10.0)
+    t4_warn_reset(); r3, w3 = quiet(t4_tiles_items, tj("reels", False, [{"images": LG, "start": 50}]), 10.0)
+    r4 = quiet(t4_tiles_items, {"t4": t4_cfg({"tiles": [{"images": LG}]})}, 10.0)[0]
+    r5 = quiet(t4_tiles_items, tj("reels", False, {"on": False}), 10.0)[0]
+    rec("T4-9 never raises: missing PNG -> still 3 tiles + ONE warning; no images / trigger not found / start after the end -> skipped with a warning; no canvas -> []; module off -> []",
+        len(r) == 3 and len(w) == 1 and r1 == [] and len(w1) == 1 and r2 == [] and len(w2) == 1 and r3 == [] and len(w3) == 1 and r4 == [] and r5 == [], f"{w} {w1} {w2} {w3}")
+    t4_warn_reset(); r, w = quiet(t4_tiles_items, tj("reels", False, [{"images": LG[:2], "anchor": "left"}, {"images": LG[2:], "anchor": "left"}]), 10.0)
+    rec("T4-9 two groups on the same anchor -> an overlap warning (never silent)", len(r) == 4 and any("overlap" in x for x in w), f"{w}")
+    jb = dict(job_for(ctmp / "none.mp4", "youtube", "fill"), t4=tj("youtube", True, [{"images": LG}])["t4"])
+    rec("T4-9 render.build_items: the T4 hook draws the tiles (4 tile items) next to captions / nameplate", len([i for i in quiet(build_items, jb, 10.0)[0] if isinstance(i, TileItem)]) == 4)
+    def ask_t(ans):
+        it_ = itertools.chain(ans, itertools.repeat("")); old = builtins.input; builtins.input = lambda *_: next(it_)
+        try: return quiet(t4_ask_tiles)[0]
+        finally: builtins.input = old
+    D.clear(); q0 = ask_t(["n"])
+    D.clear(); q1 = ask_t(["y", LG[0], LG[1], "", "3", "120", "1", "y", "group-bottom; 30%,50%", "y", "1", "0:02", "4", "fade"])
+    D.clear(); q2 = ask_t(["y", "/nope.png", LG[2], "", "", "", "", "n", "2", "open the project", "", ""])
+    D.clear()
+    rec("T4-9 question group: n -> {'on': False}; answers -> one group (images, cols, size, anchor, connector, start + hold, anim); a missing path is re-asked; Enter = defaults",
+        q0 == {"on": False} and len(q1) == 1 and q1[0]["images"] == LG[:2] and q1[0]["cols"] == 3 and q1[0]["size"] == 120.0 and q1[0]["anchor"] == "top-left"
+        and q1[0]["connector"]["points"] == ["group-bottom", ["30%", "50%"]] and q1[0]["connector"]["end_dot"] == "both" and q1[0]["start"] == 2.0 and q1[0]["hold"] == 4.0 and q1[0]["anim"] == "fade"
+        and q2[0]["images"] == [LG[2]] and q2[0]["cols"] == 2 and q2[0]["anchor"] == "left" and "connector" not in q2[0] and q2[0]["trigger"] == "open the project" and q2[0]["anim"] == "pop", f"{q1} {q2}")
+    # real still, both canvases: only the tile + connector area changes, the rest of the video is untouched
+    bad_s = []
+    for cv, (W, H) in CV.items():
+        mp4 = ttmp / f"v_{cv}.mp4"
+        subprocess.run([FFMPEG, "-y", "-hide_banner", "-loglevel", "error", "-f", "lavfi", "-i", f"testsrc2=s={W}x{H}:r=25:d=2", "-pix_fmt", "yuv420p", str(mp4)], check=True)
+        res = {}
+        for nm, grp in (("off", []), ("on", [{"images": LG, "anchor": "top-left", "inset_x": 30, "inset_y": 60, "connector": {"points": ["group-bottom", "40%,60%"]}}])):
+            job = dict(job_for(mp4, cv, "fill"), t4=t4_cfg({"canvas_mode": cv, "fit": "fill", "tiles": grp}), output=str(ttmp / "o.mp4"))
+            out = ttmp / f"s_{cv}_{nm}.png"; quiet(render_still, job, str(out), 1.5)
+            res[nm] = np.asarray(Image.open(out).convert("RGB"), int) if out.is_file() else None
+        if res["off"] is None or res["on"] is None:
+            bad_s.append(f"{cv}: still failed"); continue
+        diff = np.abs(res["on"] - res["off"]).max(axis=2) > 2
+        ys_, xs_ = np.where(diff)
+        if not (diff.sum() > 8000 and xs_.min() >= 40 and ys_.min() >= 40 and xs_.max() <= W * 0.45 and ys_.max() <= H * 0.65 and not diff[:, int(W * 0.5):].any()):
+            bad_s.append(f"{cv}: changed_px={diff.sum()} box=({xs_.min() if xs_.size else 0},{ys_.min() if ys_.size else 0})-({xs_.max() if xs_.size else 0},{ys_.max() if ys_.size else 0})")
+    rec("T4-9 --still on both canvases (4 logos + connector): tiles drawn over the video, the right half of the canvas is byte-identical to the tile-less render", not bad_s, "; ".join(bad_s))
+finally:
+    shutil.rmtree(ttmp, ignore_errors=True)
 print(sum(rows), "pass,", len(rows) - sum(rows), "fail"); sys.exit(0 if all(rows) else 1)

@@ -1,393 +1,397 @@
-"""mt.templates.t4.nameplate - Template 4 module 'nameplate', style 'lower_third' (ref R1): a name card + a tagline bar.
-NOT baked into the foreground plate: both are timeline Items (t4_build_items), timed by t4_time / t4_ask_when and animated with the
-shared anim presets (default slide_left, in AND out). Everything is text-driven (cfg['t4']['nameplate']):
-  name1 (white) name2 (cyan) | roles = up to 3 x {icon, text} | badge_icon | tagline + tagline_highlight (yellow word(s), 'a, b' list ok)
-  color (neon) name_color hl_color font | anim anim_dur | start / trigger (spoken phrase) / hold / end  (see timing.t4_time)
-Card = chamfered dark panel + neon border, hexagon icon badge, two-tone name + thin underline, icon + role rows, yellow hazard stripes
-top-right and blue ones bottom-right. Bar = full-width dark glass band with a bevelled left end, neon line across the width and
-tracked italic caps text (one highlighted word). Authored in px at short side 1080 (scaled); text stays inside the 48 px safe margin.
-Canvas rule: youtube = card at the bottom-right, bar at the bottom-left (as R1); reels (narrow) = the card stacked above the bar.
-Text that is too wide shrinks first, then the tagline wraps to 2 lines - nothing overflows. Arabic / RTL: shaped, untracked, upright.
-Public: T4_NAMEPLATE, t4_nameplate_cfg(raw), t4_ask_nameplate(), t4_nameplate_sprite(...), t4_tagline_sprite(...), t4_nameplate_items(cfg, duration)."""
+"""mt.templates.t4.nameplate - Template 4 modules 'nameplate' (name tag, styles tag_a = ref R2 / tag_b = ref R10) and 'corner_list'
+(ref R10: laptop icon in one bottom corner + a 3-row icon list in the other). Both are timed + animated overlay ITEMS (one sprite each,
+drawn above the frame plate) - not part of the static foreground plate.
+cfg['t4']['nameplate'] = {on, style 'tag_a'|'tag_b', name, role, icon, color, anchor, inset_x, inset_y, start|trigger, end|hold, anim, anim_dur}
+cfg['t4']['corner_list'] = {on, color, icon ('laptop' | kit icon | '' = none), icon_anchor, anchor, rows [{icon, text}], size, inset_x, inset_y,
+                            start|trigger, end|hold, anim, anim_dur}
+  anchor     top-left | top-right | bottom-left | bottom-right (default: tag_a bottom-left, tag_b top-left, list bottom-right, laptop bottom-left).
+  inset_x/y  extra px (short side 1080) inward from the corner margin.
+  timing     as t4/timing.t4_time: `trigger` (spoken phrase in the captions) or `start` (default 0); `end` or `hold` (tag default 5 s; list
+             default = to the end of the video); trigger not found -> one warning, skipped.
+  anim       'auto' (default: slides in from its own side) | none | any mt.anim name; anim_dur seconds (default 0.45).
+Placement: the VISIBLE ink (alpha > 24, glow tails included) sits at least 48 px (short side 1080) from every canvas edge. Frame on (cfg['t4']['frame']):
+the item is moved along the vertical (down from a top corner, up from a bottom one) just far enough that its ink keeps ~10 px away from every
+solid frame pixel (brackets, hazard stripes, tab, icon) - measured against the real frame plate, so a frame redesign needs no change here.
+Public: T4_NAMEPLATE, T4_CORNER_LIST, t4_nameplate_cfg(raw), t4_corner_list_cfg(raw), t4_nameplate_items(cfg, duration), t4_ask_nameplate(), t4_ask_corner_list()."""
+import copy
+import math
 import os
+from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageChops, ImageFilter
 
-from mt.anim import ANIMS
+from mt.anim import ANIMS, PRESETS
 from mt.ask import ask_anim
-from mt.captions import caption_streams, parse_srt, visual_order
+from mt.captions import caption_streams, parse_srt
 from mt.common import ask, ask_choice, c_color, c_float, yn
-from mt.draw import Item, t2_glow, t2_grad, t2_paint, t2_poly_mask, t2_rgb
-from mt.fonts import default_font, is_rtl_text, load_font, shape
-from mt.templates.t4.captions import _is_bold, _ramp_alpha, t4_tokens
+from mt.draw import Item
+from mt.fonts import default_font, t2_font
 from mt.templates.t4.cfg import _hex
-from mt.templates.t4.kit import PALETTE, connector, glass_panel, hazard_stripes, hex_badge, icon, kit_paste
+from mt.templates.t4.frame import t4_frame_cfg, t4_frame_plate
 from mt.templates.t4.kit_icons import ICON_NAMES
+from mt.templates.t4.nameplate_list import LIST_ICONS, T4_LIST, t4_laptop_sprite, t4_list_sprite
+from mt.templates.t4.nameplate_tags import TAG_STYLES, t4_tag_sprite
 from mt.templates.t4.timing import t4_ask_when, t4_time
 from mt.templates.t4.warn import t4_warn
 
-_DEF_ROLES = ({"icon": "laptop", "text": "WEB DEVELOPER"}, {"icon": "phone", "text": "MOBILE DEVELOPER"},
-              {"icon": "gear", "text": "AI AUTOMATION"})
-T4_NAMEPLATE = {"on": False, "style": "lower_third", "name1": "AHMED", "name2": "IBRAHIM", "roles": [dict(r) for r in _DEF_ROLES],
-                "badge_icon": "code", "tagline": "BUILDING DIGITAL EXPERIENCES.", "tagline_highlight": "DIGITAL",
-                "color": "#19D3FF", "name_color": "#FFFFFF", "hl_color": "#FFC21A", "anim": "slide_left", "anim_dur": 0.5}
-# timing keys (start / trigger / hold / end) are not defaults here: they pass through untouched to timing.t4_time (hold default 6 s)
-# layout in px at short side 1080 (the R1 card is ~637 x 295 there)
-G = {"text_x": 205, "pad_r": 40, "min_col": 330, "hex": 140, "hex_cy": 96, "name_size": 48, "name_track": 0.02, "name_cy": 62,
-     "ul_y": 98, "role_size": 27, "role_track": 0.06, "icon": 38, "icon_gap": 63, "row_y0": 133, "pitch": 52, "bot": 58,
-     "cut": (74, 26, 74, 26), "bw": 2.6, "glow": 12, "tint": (6, 16, 40, 205), "stripes_h": 16, "stripes_w": 86,
-     "tag_size": 36, "tag_track": 0.20, "slant": 0.22, "band_h": 124, "bev": 155, "tag_x": 184, "line_y": 56,
-     "gap": 46, "gap_stack": 40, "safe": 48, "pad": 40, "tag_gap": 36}
-_CACHE = {}
+T4_SAFE = 48                                       # px at short side 1080: no ink closer than this to a canvas edge
+INK_THR, FRAME_THR, GAP = 24, 60, 10               # sprite alpha = ink | frame alpha = solid | px kept between ink and frame
+CORNERS = ("top-left", "top-right", "bottom-left", "bottom-right")
+STYLE_ANCHOR = {"tag_a": "bottom-left", "tag_b": "top-left"}             # R2 / R10
+DEFAULT_ROWS = [{"icon": "globe", "text": "Web Development"}, {"icon": "phone", "text": "Mobile Development"},
+                {"icon": "gear", "text": "Tech Content Creator"}]
+MAX_ROWS = 5
+_COMMON = {"on": False, "color": "#19D3FF", "inset_x": 0.0, "inset_y": 0.0, "start": 0.0, "trigger": "", "end": None, "hold": None,
+           "anim": "auto", "anim_dur": 0.45}
+T4_NAMEPLATE = dict(_COMMON, style="tag_a", name="Ahmed Ibrahim", role="Full Stack Developer", icon="code", anchor="bottom-left")
+T4_CORNER_LIST = dict(_COMMON, icon="laptop", icon_anchor="bottom-left", anchor="bottom-right", rows=DEFAULT_ROWS, size=22.0)
+_OFF = ("", "none", "off", "false", "no", "0", "-")
+_ALIAS = {"tl": "top-left", "tr": "top-right", "bl": "bottom-left", "br": "bottom-right", "left-top": "top-left",
+          "right-top": "top-right", "left-bottom": "bottom-left", "right-bottom": "bottom-right"}
 
 
 # ---- config -----------------------------------------------------------------------------------------------------------------
-def _txt(v, default, n):
-    return v.strip()[:n] if isinstance(v, str) else default
+def _bool(v, default):
+    if isinstance(v, str):
+        return default if not v.strip() else v.strip().lower() not in _OFF
+    return default if v is None else bool(v)
 
 
-def _roles(raw):
-    out = []
-    for i, r in enumerate(raw if isinstance(raw, (list, tuple)) else []):
-        if isinstance(r, str):
-            r = {"text": r}
-        elif isinstance(r, (list, tuple)) and len(r) == 2:
-            r = {"icon": r[0], "text": r[1]}
-        if not isinstance(r, dict):
-            continue
-        t = _txt(r.get("text"), "", 60)
-        ic = r.get("icon")
-        out.append({"icon": ic.strip().lower() if isinstance(ic, str) else _DEF_ROLES[min(i, 2)]["icon"], "text": t})
-    return out[:3]
+def _flt(v, lo, hi, default):
+    try:
+        x = float(v)
+    except (TypeError, ValueError, OverflowError):
+        return default
+    return x if not isinstance(v, bool) and lo <= x <= hi else default           # nan fails the comparison -> default
+
+
+def _anchor(v, default):
+    s = str(v).strip().lower().replace("_", "-").replace(" ", "-") if isinstance(v, (str, int)) and not isinstance(v, bool) else ""
+    s = _ALIAS.get(PRESETS.get(s, s), PRESETS.get(s, s))
+    return s if s in CORNERS else default
+
+
+def _anim(v):
+    s = v.strip().lower() if isinstance(v, str) else ""
+    s = "reveal" if s == "typewriter" else s
+    return s if s in ANIMS or s in ("none", "auto") else "auto"
+
+
+def _icon(v, default):
+    if v is False:
+        return ""
+    return ("" if v.strip().lower() in _OFF else v.strip().lower()) if isinstance(v, str) else default
+
+
+def _common(raw, out, anchor):
+    """Fields both modules share: on, colour, anchor, insets, timing (start / trigger / end / hold) and animation."""
+    out["on"] = _bool(raw.get("on"), False)
+    out["color"] = _hex(raw.get("color"), out["color"])
+    out["anchor"] = _anchor(raw.get("anchor"), anchor)
+    out["inset_x"], out["inset_y"] = _flt(raw.get("inset_x"), 0, 600, 0.0), _flt(raw.get("inset_y"), 0, 600, 0.0)
+    trig = raw.get("trigger")
+    out["trigger"] = trig.strip() if isinstance(trig, str) else ""
+    out["start"] = raw["start"] if raw.get("start") is not None else (None if out["trigger"] else 0.0)    # a phrase never falls back to 0
+    out["end"], out["hold"] = raw.get("end"), raw.get("hold")
+    out["anim"] = _anim(raw.get("anim"))
+    out["anim_dur"] = _flt(raw.get("anim_dur"), 0.0, 5.0, 0.45)
+
+
+def _style(v):
+    s = str(v).strip().lower().replace("-", "_") if isinstance(v, (str, int)) and not isinstance(v, bool) else ""
+    return {"tag_b": "tag_b", "b": "tag_b", "2": "tag_b", "tagb": "tag_b"}.get(s, "tag_a")
 
 
 def t4_nameplate_cfg(raw):
-    """Normalise cfg['t4']['nameplate'] -> complete dict. Never raises; junk -> defaults; extra keys (timing, font ...) survive.
-    No start / trigger -> start 0. Empty texts are allowed (the matching part is simply not drawn)."""
-    out = dict(T4_NAMEPLATE, roles=[dict(r) for r in _DEF_ROLES])
+    """Normalise cfg['t4']['nameplate'] -> complete dict (extra keys such as 'font' survive). Never raises; junk -> defaults."""
+    out = dict(T4_NAMEPLATE)
     if not isinstance(raw, dict):
         return out
     try:
         out.update({k: v for k, v in raw.items() if k not in out})
-        out["on"] = bool(raw.get("on", False))
-        for k, n in (("name1", 40), ("name2", 40), ("tagline", 120), ("tagline_highlight", 80)):
-            out[k] = _txt(raw.get(k), out[k], n)
-        if isinstance(raw.get("roles"), (list, tuple)):
-            out["roles"] = _roles(raw["roles"])
-        ic = raw.get("badge_icon")
-        out["badge_icon"] = "" if (ic is False or (isinstance(ic, str) and ic.strip().lower() in ("", "none", "-"))) \
-            else (ic.strip().lower() if isinstance(ic, str) else out["badge_icon"])
-        for k in ("color", "name_color", "hl_color"):
-            out[k] = _hex(raw.get(k), T4_NAMEPLATE[k])
-        a = raw.get("anim")
-        out["anim"] = a.strip().lower() if isinstance(a, str) and a.strip().lower() in tuple(ANIMS) + ("none",) else "slide_left"
-        try:
-            d = float(raw.get("anim_dur", out["anim_dur"]))
-            out["anim_dur"] = d if 0.0 <= d <= 5.0 else 0.5
-        except (TypeError, ValueError, OverflowError):
-            out["anim_dur"] = 0.5
-        if "start" not in raw and not str(raw.get("trigger") or "").strip():
-            out["start"] = 0
+        out["style"] = _style(raw.get("style"))
+        for k in ("name", "role"):
+            v = raw.get(k)
+            if isinstance(v, str):
+                out[k] = "" if v.strip().lower() in ("-", "none") else v.strip()[:60]
+        out["icon"] = _icon(raw.get("icon"), T4_NAMEPLATE["icon"])
+        _common(raw, out, STYLE_ANCHOR[out["style"]])
     except Exception:
-        return dict(T4_NAMEPLATE, roles=[dict(r) for r in _DEF_ROLES])
+        return dict(T4_NAMEPLATE)
     return out
 
 
-def t4_ask_nameplate():
-    """Question group 'nameplate' (called by t4_ask_config). -> the nameplate dict for cfg['t4']['nameplate']."""
-    if not yn("Add the lower-third nameplate (name card + tagline bar)?", default=False):
-        return {"on": False}
-    d = T4_NAMEPLATE
-    dash = lambda s: "" if s.strip() in ("-", "none") else s.strip()                    # noqa: E731
-    out = {"on": True, "style": "lower_third",
-           "name1": ask("Name - first word (white)", default=d["name1"], key="t4_np_n1", cast=dash),
-           "name2": ask("Name - second word (cyan, '-' = none)", default=d["name2"], key="t4_np_n2", cast=dash), "roles": []}
-    for i, r in enumerate(_DEF_ROLES):
-        t = ask(f"Role {i + 1} text ('-' = no row)", default=r["text"], key=f"t4_np_r{i}", cast=dash)
-        if t:
-            ic = ask_choice(f"Role {i + 1} icon:", list(ICON_NAMES), default=ICON_NAMES.index(r["icon"]) + 1, key=f"t4_np_i{i}")
-            out["roles"].append({"icon": ICON_NAMES[ic - 1], "text": t})
-    bi = ask_choice("Hexagon badge icon:", list(ICON_NAMES), default=ICON_NAMES.index(d["badge_icon"]) + 1, key="t4_np_badge")
-    out["badge_icon"] = ICON_NAMES[bi - 1]
-    out["tagline"] = ask("Tagline bar text ('-' = no bar)", default=d["tagline"], key="t4_np_tag", cast=dash)
-    if out["tagline"]:
-        out["tagline_highlight"] = ask("Highlighted word(s) in the tagline (yellow, '-' = none)", default=d["tagline_highlight"],
-                                       key="t4_np_hl", cast=dash)
-    out["color"] = ask("Neon colour (hex or name)", default=d["color"], key="t4_np_color", cast=c_color)
-    out.update(t4_ask_when("Nameplate", 6.0, key="t4_np_when"))
-    out["anim"] = ask_anim("Animation (used in and out)", default="slide_left", key="t4_np_anim")
-    out["anim_dur"] = ask("Animation seconds", default=0.5, key="t4_np_adur", cast=c_float)
+def _rows(v):
+    """[{'icon', 'text'} | ('icon', 'text') | 'text' | 'icon|text'] -> clean rows (<= 5). Nothing usable -> the three R10 rows."""
+    out = []
+    for i, r in enumerate(v[:MAX_ROWS] if isinstance(v, (list, tuple)) else []):
+        ic, tx = None, None
+        if isinstance(r, dict):
+            ic, tx = r.get("icon"), r.get("text")
+        elif isinstance(r, (list, tuple)) and len(r) == 2:
+            ic, tx = r
+        elif isinstance(r, str):
+            head, _, tail = r.partition("|")
+            ic, tx = (head, tail) if tail and head.strip().lower() in ICON_NAMES else (None, r)
+        tx = tx.strip()[:40] if isinstance(tx, str) else ""
+        if tx:
+            out.append({"icon": _icon(ic, LIST_ICONS[len(out) % len(LIST_ICONS)]), "text": tx})
+    return out or copy.deepcopy(DEFAULT_ROWS)
+
+
+def t4_corner_list_cfg(raw):
+    """Normalise cfg['t4']['corner_list'] -> complete dict. Never raises; junk -> defaults (rows: the three R10 rows)."""
+    out = copy.deepcopy(T4_CORNER_LIST)
+    if not isinstance(raw, dict):
+        return out
+    try:
+        out.update({k: copy.deepcopy(v) for k, v in raw.items() if k not in out})
+        out["icon"] = _icon(raw.get("icon"), "laptop")
+        out["icon_anchor"] = _anchor(raw.get("icon_anchor"), "bottom-left")
+        out["rows"] = _rows(raw.get("rows"))
+        out["size"] = _flt(raw.get("size"), 8, 120, 22.0)
+        _common(raw, out, "bottom-right")
+    except Exception:
+        return copy.deepcopy(T4_CORNER_LIST)
     return out
 
 
-# ---- text helpers -----------------------------------------------------------------------------------------------------------
-def _w(s, f, tp, rtl):
-    """Width of a run: whole-string advance (RTL / untracked) or per-character advance + tracking after each character."""
-    return f.getlength(s) if (rtl or tp <= 0) else sum(f.getlength(c) for c in s) + tp * len(s)
+# ---- placement --------------------------------------------------------------------------------------------------------------
+_FM, _SPR = {}, {}
 
 
-def _fit_size(texts, fp, size, track, avail, extra=0.0, floor=0.55):
-    """Largest size <= `size` (never below floor x size) at which every text (+ `extra` px) fits `avail`. Shrinks, never wraps."""
-    sz, lo = float(size), max(10.0, float(size) * floor)
-    while sz > lo:
-        f = load_font(fp, max(8, int(round(sz))))
-        if all(extra + _w(shape(t) if is_rtl_text(t) else t, f, 0 if is_rtl_text(t) else track * sz, is_rtl_text(t)) <= avail
-               for t in texts):
-            break
-        sz *= 0.95
-    return max(lo, sz)
+def _cached(cache, key, make, limit=12):
+    if key not in cache:
+        if len(cache) >= limit:
+            cache.pop(next(iter(cache)))
+        cache[key] = make()
+    return cache[key]
 
 
-def _put(d, x, yb, s, f, tp, rtl, sw):
-    """Draw one run (tracked per character for LTR) on an L mask, return the x after it."""
-    if rtl or tp <= 0:
-        d.text((x, yb), s, font=f, fill=255, anchor="ls", stroke_width=sw, stroke_fill=255)
-        return x + f.getlength(s)
-    for ch in s:
-        d.text((x, yb), ch, font=f, fill=255, anchor="ls", stroke_width=sw, stroke_fill=255)
-        x += f.getlength(ch) + tp
-    return x
-
-
-def _cap(f):
-    return -f.getbbox("H", anchor="ls")[1]
-
-
-def _icon_ok(name):
-    if name and name not in ICON_NAMES:
-        t4_warn(f"nameplate icon '{name}' unknown (use one of: {', '.join(ICON_NAMES)}) - no icon")
-        return ""
-    return name
-
-
-def _paint(spr, mask, col, glow=0.0, ga=0.0):
-    if glow > 0:
-        t2_paint(spr, t2_glow((mask, (0, 0)), glow, 1.2), col, ga)
-    t2_paint(spr, (mask, (0, 0)), col)
-
-
-# ---- card -------------------------------------------------------------------------------------------------------------------
-def _draw_name(spr, size, fp, s, names, rtl, x0, col_w, yb, bold, cols):
-    f = load_font(fp, max(8, int(round(size))))
-    tp = 0 if rtl else G["name_track"] * size
-    sw = 0 if bold else max(1, int(round(size * 0.03)))
-    runs = [(shape(t) if rtl else t, k) for t, k in names]
-    runs = runs[::-1] if rtl else runs
-    sp = f.getlength(" ") + tp
-    x = x0 + (col_w - (sum(_w(t, f, tp, rtl) for t, _ in runs) + sp * (len(runs) - 1)) if rtl else 0)
-    for t, k in runs:
-        m = Image.new("L", spr.size, 0)
-        x = _put(ImageDraw.Draw(m), x, yb, t, f, tp, rtl, sw) + sp
-        _paint(spr, m, cols[k], 4 * s if k == 1 else 0, 0.35)
-    return _cap(f)
-
-
-def _draw_rows(spr, rows, fp, s, size, x0, col_w, y0, rtl_ui, col, bold):
-    """Icon + role text per row (white text, neon-coloured icon); RTL rows: icon at the right end, text right-aligned."""
-    f = load_font(fp, max(8, int(round(size))))
-    tp0, isz, gap = G["role_track"] * size, int(G["icon"] * s), G["icon_gap"] * s
-    sw = 0 if bold else max(1, int(round(size * 0.03)))
-    m = Image.new("L", spr.size, 0)
-    d = ImageDraw.Draw(m)
-    for i, (ic, text) in enumerate(rows):
-        cy, rtl = y0 + i * G["pitch"] * s, is_rtl_text(text)
-        t, tp = (shape(text) if rtl else text), (0 if rtl else tp0)
-        yb = cy + _cap(f) / 2.0
-        tw = _w(t, f, tp, rtl)
-        _put(d, (x0 + col_w - gap - tw) if rtl else (x0 + gap), yb, t, f, tp, rtl, sw)
-        if ic:
-            kit_paste(spr, icon(ic, isz, col), (x0 + col_w - isz) if rtl else x0, cy - isz / 2.0)
-    t2_paint(spr, (m, (0, 0)), (255, 255, 255))
-
-
-def t4_nameplate_sprite(np_, fp, s, max_w):
-    """The card as an RGBA sprite (glow margin included) or None when it has no name and no rows. max_w = widest allowed PANEL (px).
-    sprite.info: panel = (x, y, w, h) of the chamfered panel inside the sprite."""
-    names = [(t, k) for k, t in ((0, np_["name1"]), (1, np_["name2"])) if t]
-    names = [(t.upper(), k) for t, k in names]
-    rows = [(_icon_ok(r["icon"]), r["text"].upper()) for r in np_["roles"] if r.get("text")]
-    if not names and not rows:
+def _frame_mask(W, H, fcfg, s):
+    """Quarter-size 'L' mask of where the frame is solid, grown by GAP px (conservative). None when the frame is off."""
+    if not fcfg["on"]:
         return None
-    col, bold, badge = np_["color"], _is_bold(fp), _icon_ok(np_["badge_icon"])
-    tx, pr = G["text_x"] * s, G["pad_r"] * s
-    avail = max(60.0, max_w - tx - pr)
-    full = " ".join(t for t, _ in names)
-    nsz = _fit_size([full], fp, G["name_size"] * s, G["name_track"], avail) if names else G["name_size"] * s
-    rsz = _fit_size([t for _, t in rows], fp, G["role_size"] * s, G["role_track"], avail, G["icon_gap"] * s) if rows else G["role_size"] * s
-    nf, rf = load_font(fp, max(8, int(round(nsz)))), load_font(fp, max(8, int(round(rsz))))
-    rtl_n = is_rtl_text(full)
-    nw = _w(shape(full) if rtl_n else full, nf, 0 if rtl_n else G["name_track"] * nsz, rtl_n) if names else 0
-    rw = max([G["icon_gap"] * s + _w(shape(t) if is_rtl_text(t) else t, rf, 0 if is_rtl_text(t) else G["role_track"] * rsz,
-                                     is_rtl_text(t)) for _, t in rows] or [0])
-    cw = max(G["min_col"] * s, nw, rw)
-    pw = int(tx + cw + pr)
-    ph = int((G["row_y0"] + G["pitch"] * (len(rows) - 1) + G["bot"] if rows else G["ul_y"] + 44) * s)
-    pad, top = int(G["pad"] * s), int(G["stripes_h"] * s * 1.6)
-    spr = Image.new("RGBA", (pw + 2 * pad, ph + 2 * pad + top + int((G["gap"] + 14) * s)), (0, 0, 0, 0))
-    px, py = pad, pad + top
-    kit_paste(spr, glass_panel((pw, ph), 0, G["tint"], t2_rgb(col), tuple(c * s for c in G["cut"]), G["bw"] * s, G["glow"] * s), px, py)
-    hs = G["hex"] * s
-    hcy = min(G["hex_cy"] * s, ph - hs * 0.433 - 8 * s)                      # hexagon centre: R1 position, kept inside short cards
-    kit_paste(spr, hex_badge(hs, badge, t2_rgb(col), G["glow"] * 0.8 * s), px + 94 * s - hs / 2.0, py + hcy - hs * 0.433)
-    if names:
-        _draw_name(spr, nsz, fp, s, names, rtl_n, px + tx, cw, py + G["name_cy"] * s + _cap(nf) / 2.0, bold,
-                         [t2_rgb(np_["name_color"]), t2_rgb(col)])
-        yu = py + G["ul_y"] * s
-        kit_paste(spr, connector([(px + tx, yu), (px + tx + cw, yu)], t2_rgb(col), False, max(1.6, 1.8 * s), 6 * s), 0, 0)
-    if rows:
-        _draw_rows(spr, rows, fp, s, rsz, px + tx, cw, py + G["row_y0"] * s, False, t2_rgb(col), bold)
-    sw_, sh_ = G["stripes_w"] * s, G["stripes_h"] * s
-    kit_paste(spr, hazard_stripes((sw_, sh_), 30, PALETTE["yellow"], 6 * s), px + pw - 22 * s - sw_, py - sh_ - 3 * s)
-    spr.info["panel"] = (px, py, pw, ph)
-    return spr
+
+    def make():
+        a = t4_frame_plate(W, H, fcfg).getchannel("A").point(lambda v: 255 if v > FRAME_THR else 0)
+        q = a.resize(((W + 3) // 4, (H + 3) // 4), Image.BOX).point(lambda v: 255 if v > 0 else 0)
+        return q.filter(ImageFilter.MaxFilter(2 * int(math.ceil((GAP * s + 4) / 4.0)) + 1))
+    return _cached(_FM, (W, H, round(s, 3), repr(sorted(fcfg.items()))), make, 4)
 
 
-def _stripes_below(spr, col, drop, s):
-    """The blue stripes at the card's bottom-right corner, `drop` px under the panel bottom (drawn after the placement is known)."""
-    px, py, pw, ph = spr.info["panel"]
-    sw_, sh_ = G["stripes_w"] * s, G["stripes_h"] * s
-    kit_paste(spr, hazard_stripes((sw_, sh_), 30, PALETTE["blue"], 6 * s), px + pw - 22 * s - sw_ - 6 * s, py + ph + drop - sh_ / 2.0)
-    return spr
+def _ink_box(spr):
+    return spr.getchannel("A").point(lambda v: 255 if v > INK_THR else 0).getbbox()
 
 
-# ---- tagline bar ------------------------------------------------------------------------------------------------------------
-def _tag_lines(tokens, fp, size, track, avail, rtl):
-    f = load_font(fp, max(8, int(round(size))))
-    tp = 0 if rtl else track * size
-    sp = f.getlength(" ") + tp
-    ww = [_w(shape(t) if rtl else t, f, tp, rtl) for t, _ in tokens]
-    lines, cur, cw = [], [], 0.0
-    for i, w in enumerate(ww):
-        add = w if not cur else sp + w
-        if cur and cw + add > avail:
-            lines.append(cur)
-            cur, cw = [i], w
+def _pooled(spr, box):
+    """Quarter-size ink mask of the sprite (cropped to its ink), grown by one cell so a placement that is not a multiple of 4 px stays safe."""
+    a = spr.getchannel("A").crop(box).point(lambda v: 255 if v > INK_THR else 0)
+    q = a.resize((max(1, (a.width + 3) // 4), max(1, (a.height + 3) // 4)), Image.BOX).point(lambda v: 255 if v > 0 else 0)
+    padded = Image.new("L", (q.width + 2, q.height + 2), 0)             # 1 cell of room on every side, then grow by 1 cell
+    padded.paste(q, (1, 1))
+    return padded.filter(ImageFilter.MaxFilter(3))
+
+
+def _hits(fm, q, x, y):
+    qx, qy = int(x // 4), int(y // 4)
+    return ImageChops.multiply(fm.crop((qx - 1, qy - 1, qx - 1 + q.width, qy - 1 + q.height)), q).getbbox() is not None
+
+
+def _place(spr, anchor, W, H, s, inx, iny, fm, label):
+    """Item centre for `spr` anchored at a corner -> (cx, cy, ink rect on the canvas, moved px) or None for an empty sprite.
+    Ink at the 48 px safe margin (+ inset); with a frame mask: moved vertically (down from the top, up from the bottom) until clear."""
+    box = _ink_box(spr)
+    if box is None:
+        return None
+    w, h = box[2] - box[0], box[3] - box[1]
+    m = T4_SAFE * s
+    sx = 1 if anchor.endswith("left") else -1 if anchor.endswith("right") else 0          # inward direction; 0 = centred on that axis
+    sy = 1 if anchor.startswith("top") else -1 if anchor.startswith("bottom") else 0     # (the 4 corners behave exactly as before)
+    x = m + inx * s if sx > 0 else W - m - inx * s - w if sx < 0 else (W - w) / 2.0
+    y = m + iny * s if sy > 0 else H - m - iny * s - h if sy < 0 else (H - h) / 2.0
+    x, y = int(round(min(max(x, m), W - m - w))), int(round(min(max(y, m), H - m - h)))
+    moved = 0
+    if fm is not None:
+        dx, dy = _clear_shift(fm, _pooled(spr, box), x, y, sx, sy, W, H, s)
+        if dx is None:
+            t4_warn("%s: no free place next to the frame in the %s corner - kept at the safe margin." % (label, anchor))
         else:
-            cur.append(i)
-            cw += add
-    lines.append(cur)
-    lw = [sum(ww[i] for i in ln) + sp * (len(ln) - 1) for ln in lines]
-    return {"f": f, "tp": tp, "sp": sp, "ww": ww, "lines": lines, "lw": lw, "size": size, "rtl": rtl}
+            x, y, moved = x + dx, y + dy, abs(dx) + abs(dy)
+    return x - box[0] + spr.width / 2.0, y - box[1] + spr.height / 2.0, (x, y, x + w, y + h), moved
 
 
-def _tag_layout(tokens, fp, size, track, avail):
-    """One line at a smaller size first; when even that is too wide -> 2 lines (shrinking further if needed)."""
-    rtl = is_rtl_text(" ".join(t for t, _ in tokens))
-    for k in (1.0, 0.93, 0.86, 0.79, 0.72):
-        lay = _tag_lines(tokens, fp, size * k, track, avail, rtl)
-        if len(lay["lines"]) == 1:
-            return lay
-    for k in (0.86, 0.78, 0.70, 0.62, 0.55):
-        lay = _tag_lines(tokens, fp, size * k, track, avail, rtl)
-        if len(lay["lines"]) <= 2:
-            break
-    return lay
-
-
-def _shear(mask, k, yb):
-    """Italic lean: points above the baseline yb move right by k x height (affine, bicubic)."""
-    return mask.transform(mask.size, Image.AFFINE, (1, k, -k * yb, 0, 1, 0), Image.BICUBIC)
-
-
-def _band(spr, W, yt, yb, bev, s, col):
-    """Dark glass band (alpha fades to the right) + bevelled left end, neon line across the width, thin second line."""
-    mask = t2_poly_mask([(0, yt), (W, yt), (W, yb), (bev, yb)])
-    t2_paint(spr, mask, t2_grad([(0, (8, 20, 48, 214)), (0.45, (6, 16, 40, 150)), (1, (6, 16, 40, 0))], 0, (0, 0, W, 1)))
-    c, thick = t2_rgb(col), max(2.4, 3.2 * s)
-    kit_paste(spr, connector([(0, yt), (bev, yb), (W + 4, yb)], c, False, thick, 14 * s), 0, 0)
-    x0, x1 = 44 * s, W * 0.68
-    thin = connector([(x0, yt + 1), (x1, yt + 1)], c, False, max(1.4, 1.6 * s), 5 * s)
-    kit_paste(spr, _ramp_alpha(thin, x0, x1), 0, 0)
-
-
-def t4_tagline_sprite(np_, fp, s, W, right_limit=None):
-    """The full-width tagline bar (W px wide) or None. right_limit = x where the text must stop (the card on a wide canvas).
-    sprite.info: line_y (local y of the neon line), top (local y of the band top), band_h."""
-    tokens = t4_tokens(np_["tagline"].upper(), np_["tagline_highlight"].upper()) if np_["tagline"] else []
-    if not tokens:
-        return None
-    x0 = G["tag_x"] * s
-    lim = min(float(right_limit if right_limit else W - G["safe"] * s), W - G["safe"] * s)
-    lay = _tag_layout(tokens, fp, G["tag_size"] * s, G["tag_track"], max(80.0, lim - x0))
-    n, size, f = len(lay["lines"]), lay["size"], lay["f"]
-    pitch = size * 1.42
-    bh = max(G["band_h"] * s, n * pitch + 52 * s)
-    pad = int(G["pad"] * s)
-    yt, yb = pad, pad + bh
-    spr = Image.new("RGBA", (int(W), int(yb + pad)), (0, 0, 0, 0))
-    _band(spr, W, yt, yb, min(G["bev"] * s, W * 0.25), s, np_["color"])
-    white, hl = Image.new("L", spr.size, 0), Image.new("L", spr.size, 0)
-    sw, bold = (0 if _is_bold(fp) else max(1, int(round(size * 0.03)))), _is_bold(fp)
-    cy0 = (yt + yb) / 2.0 - (n - 1) * pitch / 2.0
-    for li, ln in enumerate(lay["lines"]):
-        items = [(tokens[i][0], tokens[i][1], lay["ww"][i], f) for i in ln]
-        x, yline = x0, cy0 + li * pitch + _cap(f) / 2.0
-        for t, h, w, _ in visual_order(items, lay["rtl"]):
-            _put(ImageDraw.Draw(hl if h else white), x, yline, shape(t) if lay["rtl"] else t, f, lay["tp"], lay["rtl"], sw)
-            x += w + lay["sp"]
-    k = 0 if lay["rtl"] else G["slant"]
-    for m, c in ((white, (255, 255, 255)), (hl, t2_rgb(np_["hl_color"]))):
-        t2_paint(spr, (_shear(m, k, cy0 + _cap(f) / 2.0) if k else m, (0, 0)), c)
-    spr.info.update({"line_y": yb, "top": yt, "band_h": bh, "n_lines": n})
-    return spr
+def _clear_shift(fm, q, x, y, sx, sy, W, H, s):
+    """Smallest inward shift (dx toward the canvas centre horizontally first, then dy vertically) that leaves the sprite clear of the
+    frame mask -> (dx, dy), or (None, None). Rails run the full side height, so a horizontal step is tried before a vertical one."""
+    step = max(2, int(round(4 * s)))
+    nx, ny = int(180 * s) // step, int(H * 0.45) // step
+    for c in range(0, nx + ny + 1):                                     # total shift in steps: the cheapest clear place wins
+        for i in range(max(0, c - ny), min(c, nx) + 1):                 # i steps inward horizontally, c - i vertically
+            dx, dy = i * step, (c - i) * step
+            xx, yy = x + sx * dx, y + sy * dy
+            if xx < 0 or yy < 0 or xx + q.width * 4 > W + 8 or yy + q.height * 4 > H + 8:
+                continue
+            if not _hits(fm, q, xx, yy):
+                return sx * dx, sy * dy
+    return None, None
 
 
 # ---- items ------------------------------------------------------------------------------------------------------------------
+def _font(path):
+    if path and os.path.isfile(str(path)):
+        return str(path)
+    if path:
+        t4_warn("t4 nameplate: font '%s' not found - using the default bold font." % Path(str(path)).name)
+    p = t2_font("arabic", "ع")[0]
+    return p if p and os.path.isfile(p) else default_font()
+
+
 def _cues(cfg):
     out = []
     for c in caption_streams(cfg):
         try:
-            cues = parse_srt(c["srt"])
+            out.append(parse_srt(c["srt"]))
         except Exception:
             continue
-        if cues:
-            out.append(cues)
     return out
 
 
-def _build(np_, W, H, fp):
-    """-> [(sprite, cx, cy)] for a W x H canvas (card, bar). Wide canvas: card bottom-right + bar bottom-left; narrow: card above the bar."""
-    s = min(W, H) / 1080.0
-    safe, stacked = G["safe"] * s, W < H
-    y_line = H - G["line_y"] * s
-    max_w = W - 2 * safe if stacked else min(W - 2 * safe, 0.52 * W)          # wide canvas: a long name shrinks, the card stays <= 52 % of W
-    card = t4_nameplate_sprite(np_, fp, s, max_w)
-    rl = None
-    if card is not None and not stacked:
-        rl = W - safe - card.info["panel"][2] - G["tag_gap"] * s
-    bar = t4_tagline_sprite(np_, fp, s, W, rl)
-    out = []
-    if bar is not None:
-        top = y_line - bar.info["line_y"]
-        out.append((bar, W / 2.0, top + bar.height / 2.0))
-    if card is not None:
-        px, py, pw, ph = card.info["panel"]
-        gap = G["gap_stack"] * s if (stacked and bar is not None) else G["gap"] * s
-        pb = (y_line - (bar.info["band_h"] if (stacked and bar is not None) else 0) - gap)
-        _stripes_below(card, np_["color"], gap if not stacked else gap * 0.5, s)
-        out.append((card, W - safe - pw - px + card.width / 2.0, pb - ph - py + card.height / 2.0))
-    return out
+def _window(cfg, entry, label, duration, default_hold):
+    return t4_time(dict(entry, label=label), _cues(cfg) if entry.get("trigger") else None, duration, default_hold)
+
+
+def _item(spr, win, anchor, c, W, H, s, fm, label, placed, duration):
+    pos = _place(spr, anchor, W, H, s, c["inset_x"], c["inset_y"], fm, label)
+    if pos is None:
+        return None
+    cx, cy, rect, _ = pos
+    placed.append((label, rect))
+    anim = c["anim"] if c["anim"] != "auto" else ("slide_right" if anchor.endswith("left") else "slide_left")
+    persistent = win[1] >= float(duration) - 0.01                       # lasts to the end of the video -> no fade-out at the very end
+    return Item(spr, win[0], win[1], cx, cy, anim, c["anim_dur"], out=not persistent, rtl=bool(spr.info.get("rtl")))
+
+
+def _tag_items(cfg, c, duration, W, H, s, fm, placed):
+    label = "name tag '%s'" % (c["name"] or c["role"])[:30]
+    win = _window(cfg, c, label, duration, 5.0)
+    if win is None:
+        return []
+    icon = c["icon"]
+    if icon and icon not in ICON_NAMES:
+        t4_warn("%s: icon '%s' unknown (use one of: %s) - no icon." % (label, icon, ", ".join(ICON_NAMES)))
+        icon = ""
+    # widest panel: canvas - safe margin - glow tails (~30 px) on both sides; frame on: +36 px each side so the tag can still clear the rails
+    fp, max_w = _font(c.get("font")), W - 2 * (T4_SAFE + 30 + (36 if fm is not None else 0)) * s
+    spr = _cached(_SPR, ("tag", c["style"], c["name"], c["role"], icon, c["color"], fp, W, H),
+                  lambda: t4_tag_sprite(c["style"], c["name"], c["role"], icon, c["color"], fp, s, max_w))
+    if spr is None:
+        t4_warn("%s: name and role are both empty - skipped." % label)
+        return []
+    it = _item(spr, win, c["anchor"], c, W, H, s, fm, label, placed, duration)
+    return [it] if it else []
+
+
+def _list_items(cfg, c, duration, W, H, s, fm, placed):
+    win = _window(cfg, c, "corner list", duration, None)
+    if win is None:
+        return []
+    out, fp = [], _font(c.get("font"))
+    if c["icon"]:
+        lap = _cached(_SPR, ("lap", c["icon"], c["color"], W, H), lambda: t4_laptop_sprite(c["icon"], T4_LIST["laptop_w"], c["color"], s))
+        out.append(_item(lap, win, c["icon_anchor"], c, W, H, s, fm, "corner list icon", placed, duration))
+    key = ("list", repr(c["rows"]), c["size"], c["color"], fp, W, H)
+    lst = _cached(_SPR, key, lambda: t4_list_sprite(c["rows"], c["size"], c["color"], fp, s, (W - 2 * T4_SAFE * s) * 0.6))
+    out.append(_item(lst, win, c["anchor"], c, W, H, s, fm, "corner list", placed, duration))
+    return [i for i in out if i]
+
+
+def _warn_overlaps(placed):
+    for i, (a, ra) in enumerate(placed):
+        for b, rb in placed[i + 1:]:
+            if ra[0] < rb[2] and rb[0] < ra[2] and ra[1] < rb[3] and rb[1] < ra[3]:
+                t4_warn("%s and %s overlap - give one of them another corner (anchor) or an inset." % (a, b))
 
 
 def t4_nameplate_items(cfg, duration):
-    """Timeline items of the lower third (card + bar share one window and one animation). [] when off / not timed / no canvas."""
-    t4 = cfg.get("t4") if isinstance(cfg, dict) else None
-    np_ = t4_nameplate_cfg(t4.get("nameplate") if isinstance(t4, dict) else None)
-    if not np_["on"]:
+    """Items of the name tag and the corner list (each one sprite, timed + animated); [] when both are off. Never raises."""
+    t4 = cfg.get("t4") if isinstance(cfg, dict) and isinstance(cfg.get("t4"), dict) else {}
+    tag, lst = t4_nameplate_cfg(t4.get("nameplate")), t4_corner_list_cfg(t4.get("corner_list"))
+    if not (tag["on"] or lst["on"]):
         return []
     try:
         W, H = int(cfg["canvas"][0]), int(cfg["canvas"][1])
     except (KeyError, TypeError, ValueError, IndexError):
-        t4_warn("nameplate: the job has no canvas - skipped.")
+        t4_warn("t4 nameplate: the job has no canvas - skipped.")
         return []
-    win = t4_time(dict(np_, label="nameplate"), _cues(cfg) if str(np_.get("trigger") or "").strip() else [], duration, 6.0)
-    if win is None:
-        return []
-    fp = np_.get("font") if isinstance(np_.get("font"), str) and os.path.isfile(np_["font"]) else default_font()
-    key = (W, H, fp, repr({k: np_[k] for k in T4_NAMEPLATE if k not in ("anim", "anim_dur", "on")}))
-    if key not in _CACHE:
-        if len(_CACHE) >= 3:
-            _CACHE.pop(next(iter(_CACHE)))
-        _CACHE[key] = _build(np_, W, H, fp)
-    rtl = is_rtl_text(np_["name1"] + " " + np_["name2"])
-    return [Item(spr, win[0], win[1], cx, cy, np_["anim"], np_["anim_dur"], out=True, rtl=rtl) for spr, cx, cy in _CACHE[key]]
+    s = min(W, H) / 1080.0
+    placed, items = [], []
+    try:
+        fm = _frame_mask(W, H, t4_frame_cfg(t4.get("frame")), s)
+        if tag["on"]:
+            items += _tag_items(cfg, tag, duration, W, H, s, fm, placed)
+        if lst["on"]:
+            items += _list_items(cfg, lst, duration, W, H, s, fm, placed)
+        _warn_overlaps(placed)
+    except Exception as e:
+        t4_warn("t4 nameplate: could not be drawn (%s: %s) - skipped." % (type(e).__name__, e))
+    return items
+
+
+# ---- questions --------------------------------------------------------------------------------------------------------------
+def _ask_corner(prompt, default, key, allow_none=False):
+    """Corner question -> 'top-left' | ... (or '' for 'none' when allowed)."""
+    labels = (["None (hide it)"] if allow_none else []) + ["Top-left", "Top-right", "Bottom-left", "Bottom-right"]
+    n = ask_choice(prompt, labels, default=CORNERS.index(default) + 1 + (1 if allow_none else 0), key=key) - (1 if allow_none else 0)
+    return CORNERS[n - 1] if n >= 1 else ""
+
+
+def _ask_motion(prompt, corner, key, whole_video):
+    """Timing + animation questions -> dict(start|trigger, hold?, anim, anim_dur). whole_video: offer 'keep it for the whole video' first."""
+    if whole_video and yn("Keep the %s on screen for the whole video?" % prompt, default=True):
+        out = {"start": 0.0}
+    else:
+        out = t4_ask_when(prompt.capitalize(), 5.0, key=key + "_when")
+    out["anim"] = ask_anim("%s animation" % prompt.capitalize(), default="slide_right" if (corner or "left").endswith("left") else "slide_left",
+                           key=key + "_anim")
+    out["anim_dur"] = ask("Animation duration (seconds)", default=0.45, key=key + "_adur", cast=c_float)
+    return out
+
+
+def t4_ask_nameplate():
+    """Question group 'nameplate' (called by t4_ask_config). -> the dict for cfg['t4']['nameplate']."""
+    if not yn("Add a name tag (name + role - references R2 / R10)?", default=False):
+        return {"on": False}
+    st = ask_choice("Tag style:", ["tag_a - hexagon-cut glass panel, code icon | name + role, stripes in the corner (R2)",
+                                   "tag_b - chamfered panel, capitals, bright bar + stripes on the bottom edge (R10)"],
+                    default=1, key="t4_np_style")
+    style = TAG_STYLES[st - 1]
+    d = T4_NAMEPLATE
+    clean = lambda s: "" if s.strip() in ("-", "none") else s.strip()
+    name = ask("Name (Arabic works too)", default=d["name"], key="t4_np_name", cast=clean)
+    role = ask("Role / subtitle ('-' = none)", default=d["role"], key="t4_np_role", cast=clean)
+    ic = ask_choice("Icon in the tag:", ["None"] + list(ICON_NAMES), default=2, key="t4_np_icon")
+    color = ask("Tag colour (hex or name)", default=d["color"], key="t4_np_color", cast=c_color)
+    anchor = _ask_corner("Corner:", STYLE_ANCHOR[style], "t4_np_corner_" + style)
+    out = {"on": True, "style": style, "name": name, "role": role, "icon": "" if ic == 1 else ICON_NAMES[ic - 2], "color": color, "anchor": anchor}
+    out.update(_ask_motion("name tag", anchor, "t4_np", whole_video=False))
+    return out
+
+
+def t4_ask_corner_list():
+    """Question group 'corner_list' (called by t4_ask_config). -> the dict for cfg['t4']['corner_list']."""
+    if not yn("Add the corner list (laptop icon + service rows - reference R10)?", default=False):
+        return {"on": False}
+    d = T4_CORNER_LIST
+    rows = []
+    for i, r in enumerate(DEFAULT_ROWS, 1):
+        v = ask("Row %d: text, or icon|text (icons: %s; '-' = no row)" % (i, ", ".join(ICON_NAMES)), default="%s|%s" % (r["icon"], r["text"]),
+                key="t4_cl_row%d" % i, cast=lambda s: s.strip())
+        if v and v != "-":
+            rows.append(v)
+    laptop = _ask_corner("Laptop icon corner:", d["icon_anchor"], "t4_cl_icon_corner", allow_none=True)
+    anchor = _ask_corner("List corner:", d["anchor"], "t4_cl_corner")
+    color = ask("Colour (hex or name)", default=d["color"], key="t4_cl_color", cast=c_color)
+    out = {"on": True, "rows": rows, "icon": "laptop" if laptop else "", "icon_anchor": laptop or d["icon_anchor"], "anchor": anchor, "color": color}
+    out.update(_ask_motion("corner list", anchor, "t4_cl", whole_video=True))
+    return out
