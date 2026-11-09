@@ -626,4 +626,142 @@ try:
     rec("T4-9 --still on both canvases (4 logos + connector): tiles drawn over the video, the right half of the canvas is byte-identical to the tile-less render", not bad_s, "; ".join(bad_s))
 finally:
     shutil.rmtree(ttmp, ignore_errors=True)
+# ---- T4-11 cards: image cards (chamfered neon border, label tag with stripes, connector with end dot) ---------------------------------------
+from mt.templates.t4.cards import _conn_points, _elbow, _side, t4_ask_image_cards, t4_cards_cfg, t4_cards_items   # noqa: E402
+from mt.templates.t4.cards_art import t4_card_sprite, t4_load_media, t4_split_label   # noqa: E402
+ktmp = Path(tempfile.mkdtemp(prefix="t4crd_"))
+try:
+    for nm, (w_, h_), col in (("sq", (400, 400), (240, 96, 40)), ("wide", (800, 300), (40, 110, 255)), ("tall", (200, 600), (250, 205, 40))):
+        Image.new("RGB", (w_, h_), col).save(ktmp / f"{nm}.png")
+    (ktmp / "broken.png").write_text("not an image", encoding="utf-8"); (ktmp / "clip.mp4").write_bytes(b"x")
+    SQ, WD, TL = (str(ktmp / f"{n}.png") for n in ("sq", "wide", "tall"))
+    def cj(cv, fo, cards, **extra):
+        return dict({"canvas": list(CV[cv]), "t4": t4_cfg({"canvas_mode": cv, "frame": {"on": fo}, "cards": cards})}, **extra)
+    def card_ink(it, W, H):
+        full = Image.new("L", (W, H), 0)
+        full.paste(it.sprite.getchannel("A").point(lambda v: 255 if v > INK_THR else 0), (int(it.cx - it.sprite.width / 2), int(it.cy - it.sprite.height / 2)))
+        return full
+    a = t4_cards_cfg([{"media": SQ, "label": {"text": " LIVE ", "color": "zz", "anchor": "tl"}, "anchor": "7", "xy": ["10%", 20], "width": "x", "height": -5, "inset_x": "q",
+                       "color": "zz", "anim": "bogus", "connector": {"target": "20%,40%", "side": "diag", "style": "line", "attach": 9, "end_dot": "both"}, "extra": 1}, "junk", 5, {"media": 7}])
+    g = a[0]
+    rec("T4-11 t4_cards_cfg: junk dropped; label / anchor / xy / width / height / inset / colour / anim fall back; connector cleaned; extras kept; never raises",
+        len(a) == 2 and g["label"] == {"text": "LIVE", "color": "", "anchor": "top-left"} and g["anchor"] == "bottom-left" and g["xy"] == ["10%", 20.0] and g["width"] == 480.0
+        and g["height"] is None and g["inset_x"] == 0.0 and g["color"] == "#19d3ff" and g["anim"] == "auto" and g["extra"] == 1 and a[1]["media"] == ""
+        and g["connector"]["target"] == ["20%", "40%"] and g["connector"]["side"] == "auto" and g["connector"]["style"] == "line" and g["connector"]["attach"] == 0.35
+        and g["connector"]["end_dot"] == "both" and t4_cards_cfg(None) == [] and t4_cards_cfg("x") == [], f"{g}")
+    b, c, d = t4_cards_cfg({"on": False}), t4_cards_cfg({"media": SQ}), t4_cards_cfg({"on": True, "cards": [{"media": SQ}]})
+    e = [t4_cards_cfg([{"media": SQ, "label": lab_}])[0]["label"] for lab_ in ("-", "", "ABC", {"text": "none"}, 7)]
+    k = [t4_cards_cfg([{"media": SQ, "connector": cn}])[0]["connector"] for cn in ([100, 200], "10%,20%", {}, {"points": [[1, 2]]}, {"points": ["card", [5, 5]]}, 7)]
+    rec("T4-11 cfg forms: {on: False} -> []; one dict; {on, cards}; label '-' / '' / none -> {}; label string; connector shorthand [x, y] / 'x,y'; no target + < 2 points -> {}",
+        b == [] and len(c) == 1 and c[0]["anchor"] == "top-right" and c[0]["connector"] == {} and c[0]["label"] == {} and len(d) == 1
+        and e[0] == {} and e[1] == {} and e[2] == {"text": "ABC", "color": "", "anchor": "bottom-right"} and e[3] == {} and e[4]["text"] == "7"
+        and k[0]["target"] == [100.0, 200.0] and k[1]["target"] == ["10%", "20%"] and k[2] == {} and k[3] == {} and k[4]["points"] == ["card", [5.0, 5.0]] and k[5] == {}, f"{e} {k}")
+    rec("T4-11 t4_cfg keeps cfg['t4']['cards'] as a list (default stays {'on': False})", t4_cfg({"cards": [{"media": "a.png"}]})["cards"] == [{"media": "a.png"}] and t4_cfg({})["cards"] == {"on": False})
+    rec("T4-11 t4_split_label: balanced two lines (LIVE CODING / DEVELOPMENT), short = 1 line, explicit newline or '|' wins, empty = none",
+        t4_split_label("LIVE CODING DEVELOPMENT") == ["LIVE CODING", "DEVELOPMENT"] and t4_split_label("CODE") == ["CODE"] and t4_split_label("A|B C") == ["A", "B C"]
+        and t4_split_label("x\ny") == ["x", "y"] and t4_split_label("") == [] and t4_split_label("Web Development Course Online") == ["Web Development", "Course Online"], f"{t4_split_label('Web Development Course Online')}")
+    ms = [t4_load_media(p) for p in ("/no/such/x.png", str(ktmp / "clip.mp4"), str(ktmp / "broken.png"), "", SQ)]
+    rec("T4-11 t4_load_media: missing / video (P13) / broken / empty -> (None, one-line message); a real picture -> RGB",
+        [m[0] is None for m in ms[:4]] == [True] * 4 and "x.png" in ms[0][1] and "P13" in ms[1][1] and "broken.png" in ms[2][1] and ms[4][0].size == (400, 400) and ms[4][1] is None, f"{[m[1] for m in ms]}")
+    FP = default_font()
+    sp, msg = t4_card_sprite(SQ, "", 480, 480, "#19d3ff", FP)
+    x0, y0, x1, y1 = sp.info["card"]
+    mid, corner = sp.convert("RGB").getpixel(((x0 + x1) // 2, (y0 + y1) // 2)), np.array(sp.convert("RGB").getpixel((x0 + 2, y0 + 2)))
+    sl, _m = t4_card_sprite(SQ, "LIVE CODING DEVELOPMENT", 480, 480, "#19d3ff", FP)
+    sw_, _m = t4_card_sprite(WD, "CODE", 480, 270, "#19d3ff", FP, "bottom-left")
+    rec("T4-11 card sprite: picture rect = 480 x 480 inside a bigger glow sprite, picture centre keeps the media colour, the chamfered corner is NOT picture (cut), no warning",
+        (x1 - x0, y1 - y0) == (480, 480) and sp.width > 480 and tuple(mid) == (240, 96, 40) and np.abs(corner - np.array((240, 96, 40))).sum() > 80 and msg is None, f"{sp.info['card']} {sp.size} {mid} {corner}")
+    rec("T4-11 label: the sprite grows (the tag sticks out under the card), the picture rect keeps its size; a left-anchored label sticks out on the left",
+        sl.height > sp.height + 20 and sl.info["card"][2] - sl.info["card"][0] == 480 and sw_.info["card"][2] - sw_.info["card"][0] == 480 and sw_.info["card"][0] > 10, f"{sp.size} {sl.size} {sw_.info['card']}")
+    bad = [(p, t4_card_sprite(p, "", 400, 300, "#19d3ff", FP)) for p in ("/no/such/x.png", str(ktmp / "clip.mp4"), str(ktmp / "broken.png"), "")]
+    gr = [np.asarray(s_.convert("RGB"), int)[(s_.info["card"][1] + s_.info["card"][3]) // 2 - 60, (s_.info["card"][0] + s_.info["card"][2]) // 2 - 80] for _p, (s_, _m) in bad]
+    rec("T4-11 missing / video / broken / empty media -> gray placeholder card (same size, gray pixel) + a message", all(m_ for _p, (_s, m_) in bad) and all(abs(v[0] - v[2]) < 40 and 60 < v[0] < 200 for v in gr)
+        and len({s_.info["card"][2] - s_.info["card"][0] for _p, (s_, _m) in bad}) == 1, f"{gr}")
+    # items per variant
+    its = {nm: quiet(t4_cards_items, cj("reels", False, [dict({"media": SQ}, **kw)]), 10.0)[0] for nm, kw in
+           (("plain", {}), ("label", {"label": "LIVE CODING DEVELOPMENT"}), ("conn", {"connector": {"target": "30%,60%"}}), ("both", {"label": "LIVE CODING DEVELOPMENT", "connector": [300, 900]}))}
+    rec("T4-11 variants: plain / label = 1 item, connector = 2 items (connector FIRST = under the card, fade; card = TileItem pop 't4_pop'), all end together at 5 s (default hold)",
+        [len(its[n]) for n in ("plain", "label", "conn", "both")] == [1, 1, 2, 2] and all(isinstance(its[n][-1], TileItem) and its[n][-1].anim == "t4_pop" for n in its)
+        and its["conn"][0].anim == "fade" and not isinstance(its["conn"][0], TileItem) and its["conn"][0].start > its["conn"][1].start and {i.end for i in its["both"]} == {5.0}, f"{[(n, [(i.anim, i.start, i.end) for i in v]) for n, v in its.items()]}")
+    ia = quiet(t4_cards_items, cj("youtube", False, [{"media": SQ, "start": 1, "hold": 2, "anim": "fade"}, {"media": SQ, "anchor": "bottom-left", "anim": "none", "end": 6}]), 10.0)[0]
+    rec("T4-11 timing + animation: start / hold -> 1.0 - 3.0 s; 'fade' = plain Item; 'none' = static; end 6 s", len(ia) == 2 and (ia[0].start, ia[0].end) == (1.0, 3.0) and ia[0].anim == "fade" and type(ia[0]) is not TileItem
+        and ia[1].anim == "none" and ia[1].end == 6.0, f"{[(i.anim, i.start, i.end) for i in ia]}")
+    bad_t = []
+    for cv, (W, H) in CV.items():
+        for fo in (False, True):
+            fa = t4_frame_plate(W, H, t4_frame_cfg({"on": True})).getchannel("A").point(lambda v: 255 if v > FRAME_THR else 0) if fo else None
+            for an in ("top-left", "top", "top-right", "left", "center", "right", "bottom-left", "bottom", "bottom-right"):
+                t4_warn_reset(); items, w = quiet(t4_cards_items, cj(cv, fo, [{"media": SQ, "anchor": an, "label": "LIVE CODING DEVELOPMENT", "connector": {"target": "50%,50%"}}]), 10.0)
+                if len(items) != 2 or w:
+                    bad_t.append(f"{cv}/{fo}/{an}: {len(items)} items warn={w}"); continue
+                ink = card_ink(items[1], W, H); bb = ink.getbbox()
+                hit = fa is not None and ImageChops.multiply(ink, fa).getbbox() is not None
+                if not (bb[0] >= 47 and bb[1] >= 47 and W - bb[2] >= 47 and H - bb[3] >= 47) or hit:
+                    bad_t.append(f"{cv}/{fo}/{an}: ink={bb} frame_hit={hit}")
+    rec("T4-11 card + label + connector, both canvases x frame off / on x all 9 anchors: 2 items, no warning, card ink >= 48 px from every edge, zero overlap with the frame plate", not bad_t, "; ".join(bad_t[:3]))
+    R = (100, 100, 300, 300)
+    el = _elbow((100, 200), (20, 260), "left", "elbow")
+    rec("T4-11 connector geometry: _side picks the facing side (larger gap wins, inside -> bottom, explicit kept); elbow = straight - 45 degree diagonal - straight; line / tiny run = one segment",
+        [_side("auto", R, *p) for p in ((50, 200), (350, 200), (200, 50), (200, 400), (50, 400), (200, 200))] == ["left", "right", "top", "bottom", "bottom", "bottom"] and _side("top", R, 50, 200) == "top"
+        and el == [(100, 200), (90.0, 200), (30.0, 260), (20, 260)] and abs((el[2][0] - el[1][0])) == abs(el[2][1] - el[1][1])
+        and _elbow((100, 200), (20, 260), "left", "line") == [(100, 200), (20, 260)] and len(_elbow((100, 100), (160, 40), "top", "elbow")) == 2, f"{el}")
+    kc = t4_cards_cfg([{"media": SQ, "connector": {"points": ["card-left", [5, 5000], "999%,50%"]}}])[0]["connector"]
+    pts = _conn_points(kc, (500, 100, 980, 580), 1080, 1920, 1.0)
+    m_ = 48 + 9 * 1.6 + 2
+    rec("T4-11 connector points: 'card-left' = the card's left edge centre; points far outside the canvas are clamped so glow + dot stay in the 48 px safe area",
+        pts[0] == (500.0, 340.0) and all(m_ - 1e-6 <= x <= 1080 - m_ + 1e-6 and m_ - 1e-6 <= y <= 1920 - m_ + 1e-6 for x, y in pts), f"{pts}")
+    W, H = CV["youtube"]
+    ic = quiet(t4_cards_items, cj("youtube", False, [{"media": SQ, "connector": {"target": [576, 648], "end_dot": True}}]), 10.0)[0][0]
+    px = np.asarray(ic.sprite.getchannel("A"))[int(648 - (ic.cy - ic.sprite.height / 2)) - 2:int(648 - (ic.cy - ic.sprite.height / 2)) + 3, int(576 - (ic.cx - ic.sprite.width / 2)) - 2:int(576 - (ic.cx - ic.sprite.width / 2)) + 3]
+    rec("T4-11 connector end dot sits exactly on the target point (opaque there)", px.max() > 230, f"max alpha at the target = {px.max()}")
+    for cv, (W, H) in CV.items():
+        ix = quiet(t4_cards_items, cj(cv, False, [{"media": SQ, "xy": ["50%", "50%"], "label": "CODE"}, {"media": TL, "xy": [-500, 99999], "width": 300}]), 10.0)[0]
+        b1, b2 = card_ink(ix[0], W, H).getbbox(), card_ink(ix[1], W, H).getbbox()
+        rec(f"T4-11 xy on {cv}: the card block is centred on 50%,50%; an xy far outside is clamped inside the safe area",
+            abs((b1[0] + b1[2]) / 2 - W / 2) < 2 and abs((b1[1] + b1[3]) / 2 - H / 2) < 2 and b2[0] >= 47 and b2[1] >= 47 and W - b2[2] >= 47 and H - b2[3] >= 47, f"{b1} {b2}")
+    t4_warn_reset(); r1, w1 = quiet(t4_cards_items, cj("reels", False, [{"media": "/no/such/a.png"}]), 10.0)
+    t4_warn_reset(); r1b, w1b = quiet(lambda: (t4_cards_items(cj("reels", False, [{"media": str(ktmp / "clip.mp4")}]), 10.0), t4_cards_items(cj("reels", False, [{"media": str(ktmp / "clip.mp4")}]), 10.0)))
+    t4_warn_reset(); r2, w2 = quiet(t4_cards_items, dict(cj("reels", False, [{"media": SQ, "trigger": "never said"}]), captions=[]), 10.0)
+    t4_warn_reset(); r3, w3 = quiet(t4_cards_items, cj("reels", False, [{"media": SQ, "start": 50}]), 10.0)
+    r4 = quiet(t4_cards_items, {"t4": t4_cfg({"cards": [{"media": SQ}]})}, 10.0)[0]
+    r5 = quiet(t4_cards_items, cj("reels", False, {"on": False}), 10.0)[0]
+    rec("T4-11 never raises: missing picture -> still 1 card + ONE warning; video -> placeholder + warning naming P13 (printed once per render); trigger not found / start after the end -> skipped + 1 warning; no canvas / module off -> []",
+        len(r1) == 1 and len(w1) == 1 and len(r1b[0]) == 1 and len(w1b) == 1 and "P13" in w1b[0] and r2 == [] and len(w2) == 1 and r3 == [] and len(w3) == 1 and r4 == [] and r5 == [], f"{w1} {w1b} {w2} {w3}")
+    t4_warn_reset(); r, w = quiet(t4_cards_items, cj("reels", False, [{"media": SQ, "anchor": "top-right"}, {"media": TL, "anchor": "top-right"}]), 10.0)
+    rec("T4-11 two cards on the same anchor -> an overlap warning (never silent)", len(r) == 2 and any("overlap" in x for x in w), f"{w}")
+    jb = dict(job_for(ctmp / "none.mp4", "youtube", "fill"), t4=cj("youtube", True, [{"media": SQ, "connector": [900, 500]}])["t4"])
+    rec("T4-11 render.build_items: the T4 hook draws the card items next to captions / nameplate / tiles", len([i for i in quiet(build_items, jb, 10.0)[0] if i.anim in ("t4_pop", "fade")]) == 2)
+    def ask_k(ans):
+        it_ = itertools.chain(ans, itertools.repeat("")); old = builtins.input; builtins.input = lambda *_: next(it_)
+        try: return quiet(t4_ask_image_cards)[0]
+        finally: builtins.input = old
+    D.clear(); q0 = ask_k(["n"])
+    D.clear(); q1 = ask_k(["y", SQ, "LIVE CODING", "400", "1", "y", "30%,40%", "1", "0:02", "4", "fade"])
+    D.clear(); q2 = ask_k(["y", "/nope.png", SQ, "", "", "", "n", "2", "open the project", "", ""])
+    D.clear()
+    rec("T4-11 question group: n -> {'on': False}; answers -> one card (media, label, width, anchor, connector target, start + hold, anim); a missing path is re-asked; Enter = defaults",
+        q0 == {"on": False} and len(q1) == 1 and q1[0]["media"] == SQ and q1[0]["label"] == "LIVE CODING" and q1[0]["width"] == 400.0 and q1[0]["anchor"] == "top-left"
+        and q1[0]["connector"]["target"] == ["30%", "40%"] and q1[0]["start"] == 2.0 and q1[0]["hold"] == 4.0 and q1[0]["anim"] == "fade"
+        and q2[0]["media"] == SQ and q2[0]["label"] == "" and q2[0]["width"] == 480.0 and q2[0]["anchor"] == "top-right" and "connector" not in q2[0] and q2[0]["trigger"] == "open the project" and q2[0]["anim"] == "pop", f"{q1} {q2}")
+    bad_s = []
+    for cv, (W, H) in CV.items():
+        mp4 = ktmp / f"v_{cv}.mp4"
+        subprocess.run([FFMPEG, "-y", "-hide_banner", "-loglevel", "error", "-f", "lavfi", "-i", f"testsrc2=s={W}x{H}:r=25:d=2", "-pix_fmt", "yuv420p", str(mp4)], check=True)
+        res = {}
+        for nm, cd in (("off", []), ("plain", [{"media": SQ}]), ("label", [{"media": SQ, "label": "LIVE CODING DEVELOPMENT"}]), ("conn", [{"media": SQ, "connector": {"target": "30%,60%"}}])):
+            job = dict(job_for(mp4, cv, "fill"), t4=t4_cfg({"canvas_mode": cv, "fit": "fill", "cards": cd}), output=str(ktmp / "o.mp4"))
+            out = ktmp / f"s_{cv}_{nm}.png"; quiet(render_still, job, str(out), 1.5)
+            res[nm] = np.asarray(Image.open(out).convert("RGB"), int) if out.is_file() else None
+        if any(v is None for v in res.values()):
+            bad_s.append(f"{cv}: still failed"); continue
+        df = {nm: np.abs(res[nm] - res["off"]).max(axis=2) > 2 for nm in ("plain", "label", "conn")}
+        bb = {nm: (np.where(m.any(axis=0))[0], np.where(m.any(axis=1))[0]) for nm, m in df.items()}
+        tx, ty = int(W * 0.3), int(H * 0.6)
+        ok = (df["plain"].sum() > 20000 and bb["plain"][0].min() >= 24 and bb["plain"][1].min() >= 24 and bb["plain"][0].max() <= W - 24 and not df["plain"][:, :int(W * 0.45)].any()
+              and not df["label"][:, :int(W * 0.45)].any() and bb["label"][1].max() > bb["plain"][1].max() + 20 and df["conn"][ty - 3:ty + 4, tx - 3:tx + 4].any() and df["conn"].sum() > df["plain"].sum() + 150)
+        if not ok:
+            bad_s.append(f"{cv}: px plain/label/conn={df['plain'].sum()}/{df['label'].sum()}/{df['conn'].sum()} plain x={bb['plain'][0].min()}-{bb['plain'][0].max()} y={bb['plain'][1].min()}-{bb['plain'][1].max()} label ymax={bb['label'][1].max()}")
+    rec("T4-11 --still on both canvases (plain / label / connector): the card is drawn over the video in the top-right, the label sticks out below it, the connector reaches its target, the left of the canvas stays byte-identical", not bad_s, "; ".join(bad_s))
+finally:
+    shutil.rmtree(ktmp, ignore_errors=True)
 print(sum(rows), "pass,", len(rows) - sum(rows), "fail"); sys.exit(0 if all(rows) else 1)

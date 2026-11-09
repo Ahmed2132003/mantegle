@@ -6,6 +6,7 @@ import tempfile
 from mt.templates.t4.captions import t4_caption_items, t4_caption_style  # noqa: F401  (t4_caption_style = registry hook)
 from mt.common import D, IMAGE_EXTS, ask, ask_choice, c_color, c_existing_file, c_int, probe
 from mt.templates.t4.base import t4_apply_backdrop
+from mt.templates.t4.cards import t4_ask_image_cards, t4_cards_cfg, t4_cards_items
 from mt.templates.t4.frame import t4_ask_frame, t4_frame_cfg, t4_frame_part
 from mt.templates.t4.nameplate import t4_ask_corner_list, t4_ask_nameplate, t4_corner_list_cfg, t4_nameplate_cfg, t4_nameplate_items
 from mt.templates.t4.tiles import t4_ask_tiles, t4_tiles_cfg, t4_tiles_items
@@ -35,6 +36,7 @@ def t4_ask_config(video_info):
     t4["nameplate"] = t4_ask_nameplate()               # question groups 'nameplate' (tag_a / tag_b) and 'corner_list' (T4-9)
     t4["corner_list"] = t4_ask_corner_list()
     t4["tiles"] = t4_ask_tiles()                       # question group 'tiles' (T4-10): a list with one group, or {'on': False}
+    t4["cards"] = t4_ask_image_cards()                 # question group 'cards' (T4-11): a list with one image card, or {'on': False}
     t4 = t4_cfg(t4)
     return {"template_id": 5, "canvas": canvas, "video_box": _full_box(canvas, fit), "background": {"type": "color", "value": t4["backdrop"]["value"]},
             "layers": [], "t4": t4}
@@ -120,8 +122,9 @@ def t4_build_static_layers(cfg, tmp):
     t4["nameplate"] = t4_nameplate_cfg(t4.get("nameplate"))          # complete dicts (extras kept); drawn as Items by t4_build_items
     t4["corner_list"] = t4_corner_list_cfg(t4.get("corner_list"))
     t4["tiles"] = t4_tiles_cfg(t4.get("tiles")) or {"on": False}      # complete groups (extras kept), drawn as Items by t4_build_items
+    t4["cards"] = t4_cards_cfg(t4.get("cards")) or {"on": False}      # complete image cards (extras kept), drawn as Items by t4_build_items
     t4_compose_fg(cfg, tmp)
 
 
 def t4_build_items(cfg, duration, splits, lbox, rbox):
-    return t4_caption_items(cfg, duration) + t4_nameplate_items(cfg, duration) + t4_tiles_items(cfg, duration)   # captions (render.py skips t4_style) + tag / list + logo tiles
+    return t4_caption_items(cfg, duration) + t4_nameplate_items(cfg, duration) + t4_tiles_items(cfg, duration) + t4_cards_items(cfg, duration)   # captions (render.py skips t4_style) + tag / list + logo tiles + image cards

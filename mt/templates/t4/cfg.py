@@ -67,7 +67,7 @@ def t4_cfg(raw):
                 d = copy.deepcopy(src)
                 d["on"] = bool(src.get("on", False))
                 out[m] = d
-            elif m == "tiles" and isinstance(src, list):          # tiles = a LIST of groups (t4/tiles.py normalises it)
+            elif m in ("tiles", "cards") and isinstance(src, list):          # tiles / cards = a LIST (t4/tiles.py, t4/cards.py normalise it)
                 out[m] = copy.deepcopy(src)
         for k, v in raw.items():                         # unknown keys survive (forward compatibility with newer jobs)
             if k not in out:
