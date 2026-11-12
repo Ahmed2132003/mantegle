@@ -32,7 +32,7 @@ def t4_load_media(path):
     if not path or not os.path.isfile(str(path)):
         return None, "cards: image '%s' is missing - gray placeholder." % (name or "(empty path)")
     if str(path).lower().endswith(VIDEO_EXTS):
-        return None, "cards: '%s' is a video - videos are baked by cards_video.py, not loaded as a picture - gray placeholder." % name
+        return None, "cards: '%s' is a video - videos are baked by cards_video.py (P13), not loaded as a picture - gray placeholder." % name
     try:
         with Image.open(str(path)) as im:
             im.seek(0)

@@ -359,13 +359,12 @@ def t4_ask_image_cards():
     """Question group 'cards' (called by t4_ask_config). -> a list with ONE card, or {'on': False}. More cards: edit the job file."""
     if not yn("Add an image card (picture in a neon border, optional label + connector - references R2 / R8)?", default=False):
         return {"on": False}
-    kind = ask_choice("Card media:", ["Picture (PNG / JPG)", "Video clip (MP4 ...)", "A segment of the original video"], default=1, key="t4_card_kind")
-    if kind == 1:
-        c = {"media": ask("Card picture (PNG / JPG path)", key="t4_card_img", cast=c_existing_file(IMAGE_EXTS))}
-    else:
-        c = {"media": ask("Card video (MP4 ...; loops when no segment is given; muted)", key="t4_card_vid", cast=c_existing_file(VIDEO_EXTS)) if kind == 2 else "original"}
-        for k, q in (("seg_start", "Segment start (seconds or mm:ss; Enter = %s)" % ("the card's start time" if kind == 3 else "0")),
-                     ("seg_end", "Segment end (seconds or mm:ss; Enter = %s)" % ("the card's hold time" if kind == 3 else "the clip's end / loop"))):
+    def _c_media(s):
+        return "original" if s.strip().lower() == "original" else c_existing_file(IMAGE_EXTS + VIDEO_EXTS)(s)
+    c = {"media": ask("Card picture or video (PNG / JPG / MP4 path, or the word original = a segment of the main video)", key="t4_card_img", cast=_c_media)}
+    if c["media"] == "original" or c["media"].lower().endswith(VIDEO_EXTS):
+        for k, q in (("seg_start", "Segment start (seconds or mm:ss; Enter = %s)" % ("the card's start time" if c["media"] == "original" else "0")),
+                     ("seg_end", "Segment end (seconds or mm:ss; Enter = %s)" % ("the card's hold time" if c["media"] == "original" else "the clip's end / loop"))):
             v = ask(q, allow_empty=True, cast=c_time)
             if v not in (None, ""):
                 c[k] = v

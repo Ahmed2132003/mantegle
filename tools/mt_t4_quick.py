@@ -662,7 +662,7 @@ try:
         and t4_split_label("x\ny") == ["x", "y"] and t4_split_label("") == [] and t4_split_label("Web Development Course Online") == ["Web Development", "Course Online"], f"{t4_split_label('Web Development Course Online')}")
     ms = [t4_load_media(p) for p in ("/no/such/x.png", str(ktmp / "clip.mp4"), str(ktmp / "broken.png"), "", SQ)]
     rec("T4-11 t4_load_media: missing / video (P13) / broken / empty -> (None, one-line message); a real picture -> RGB",
-        [m[0] is None for m in ms[:4]] == [True] * 4 and "x.png" in ms[0][1] and "P13" in ms[1][1] and "broken.png" in ms[2][1] and ms[4][0].size == (400, 400) and ms[4][1] is None, f"{[m[1] for m in ms]}")
+        [m[0] is None for m in ms[:4]] == [True] * 4 and "x.png" in ms[0][1] and "video" in ms[1][1] and "broken.png" in ms[2][1] and ms[4][0].size == (400, 400) and ms[4][1] is None, f"{[m[1] for m in ms]}")
     FP = default_font()
     sp, msg = t4_card_sprite(SQ, "", 480, 480, "#19d3ff", FP)
     x0, y0, x1, y1 = sp.info["card"]
@@ -720,13 +720,13 @@ try:
         rec(f"T4-11 xy on {cv}: the card block is centred on 50%,50%; an xy far outside is clamped inside the safe area",
             abs((b1[0] + b1[2]) / 2 - W / 2) < 2 and abs((b1[1] + b1[3]) / 2 - H / 2) < 2 and b2[0] >= 47 and b2[1] >= 47 and W - b2[2] >= 47 and H - b2[3] >= 47, f"{b1} {b2}")
     t4_warn_reset(); r1, w1 = quiet(t4_cards_items, cj("reels", False, [{"media": "/no/such/a.png"}]), 10.0)
-    t4_warn_reset(); r1b, w1b = quiet(lambda: (t4_cards_items(cj("reels", False, [{"media": str(ktmp / "clip.mp4")}]), 10.0), t4_cards_items(cj("reels", False, [{"media": str(ktmp / "clip.mp4")}]), 10.0)))
+    t4_warn_reset(); r1b, w1b = quiet(lambda: (t4_cards_items(cj("reels", False, [{"media": str(ktmp / "gone.mp4")}]), 10.0), t4_cards_items(cj("reels", False, [{"media": str(ktmp / "gone.mp4")}]), 10.0)))
     t4_warn_reset(); r2, w2 = quiet(t4_cards_items, dict(cj("reels", False, [{"media": SQ, "trigger": "never said"}]), captions=[]), 10.0)
     t4_warn_reset(); r3, w3 = quiet(t4_cards_items, cj("reels", False, [{"media": SQ, "start": 50}]), 10.0)
     r4 = quiet(t4_cards_items, {"t4": t4_cfg({"cards": [{"media": SQ}]})}, 10.0)[0]
     r5 = quiet(t4_cards_items, cj("reels", False, {"on": False}), 10.0)[0]
-    rec("T4-11 never raises: missing picture -> still 1 card + ONE warning; video -> placeholder + warning naming P13 (printed once per render); trigger not found / start after the end -> skipped + 1 warning; no canvas / module off -> []",
-        len(r1) == 1 and len(w1) == 1 and len(r1b[0]) == 1 and len(w1b) == 1 and "P13" in w1b[0] and r2 == [] and len(w2) == 1 and r3 == [] and len(w3) == 1 and r4 == [] and r5 == [], f"{w1} {w1b} {w2} {w3}")
+    rec("T4-11 never raises: missing picture -> still 1 card + ONE warning; missing video -> placeholder + warning naming the file (printed once per render); trigger not found / start after the end -> skipped + 1 warning; no canvas / module off -> []",
+        len(r1) == 1 and len(w1) == 1 and len(r1b[0]) == 1 and len(w1b) == 1 and "gone.mp4" in w1b[0] and r2 == [] and len(w2) == 1 and r3 == [] and len(w3) == 1 and r4 == [] and r5 == [], f"{w1} {w1b} {w2} {w3}")
     t4_warn_reset(); r, w = quiet(t4_cards_items, cj("reels", False, [{"media": SQ, "anchor": "top-right"}, {"media": TL, "anchor": "top-right"}]), 10.0)
     rec("T4-11 two cards on the same anchor -> an overlap warning (never silent)", len(r) == 2 and any("overlap" in x for x in w), f"{w}")
     jb = dict(job_for(ctmp / "none.mp4", "youtube", "fill"), t4=cj("youtube", True, [{"media": SQ, "connector": [900, 500]}])["t4"])
