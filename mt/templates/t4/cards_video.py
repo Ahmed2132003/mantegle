@@ -165,4 +165,9 @@ def t4_prepare_card_layers(cfg, info, tmpdir):
             layers.append(_bake(cfg, plan, n, tmpdir, info, dur_eff))
         except (Exception, SystemExit) as e:
             t4_warn("cards: video card %d could not be prepared (%s: %s) - skipped." % (plan["idx"] + 1, type(e).__name__, e))
-    return layers
+    try:                                                           # T4 split (R7): its baked clip goes FIRST = under the cards
+        from mt.templates.t4.split_video import t4_split_prepare_layers
+        split_layers = t4_split_prepare_layers(cfg, info, tmpdir)
+    except Exception:
+        split_layers = []
+    return split_layers + layers

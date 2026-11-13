@@ -151,3 +151,12 @@
 - Safe zone (px at short side 1080): portrait (200, 560, 880, 1280), landscape (660, 130, 1260, 1000); asserted for slots, placed ink, connectors and the real --still in tools/mt_t4_overview_check.py.
 - Verified: (fill after running) overview check, mt_quick, mt_t3_quick, mt_t4_quick, web_dev, charts.
 - GAPS: zone + slot numbers are estimates until compared with R5 / R6; stills not yet compared.
+
+## P21 - T4 split: diagonal split-screen takeover (assumed task number, ref R7)
+- DONE: NEW t4/split.py (cfg, geometry, seam + label Items, questions) + t4/split_video.py (baked alpha clip). Edits: t4/__init__.py (import, question group, cfg completion, split items FIRST in t4_build_items), cards_video.py (t4_prepare_card_layers also returns the split layer, first = under the cards). NEW tools/mt_t4_split_check.py.
+- Public: T4_SPLIT, t4_split_cfg, t4_split_plan, t4_split_u, t4_split_mask, t4_split_cover, t4_split_items, t4_ask_split, t4_split_prepare_layers.
+- cfg['t4']['split'] = {on (must be true in a job), media (image|video), angle 12, side auto|bottom|top|left|right (auto: bottom on reels, right on YouTube), pos, labels [2 x text|{text,color,anchor}], color, seam_width, wipe 0.55, seg_start/seg_end, start|trigger, end|hold (6 s)}.
+- Look: media cut by the diagonal polygon, seam = neon connector moved along its normal (one Item per frame while wiping, frame-exact with the baked clip), labels = glass HUD tags 'NN | TEXT' + L corner brackets (reels: 01 top-left, 02 bottom-left; YouTube: 01 top-left, 02 top-right). Clip is area 'box' = under the frame plate, over the speaker video.
+- --still: media drawn as an Item (first frame of a video); no wipe in stills.
+- GAPS: media 'original' (segment of the main video) not supported; reframing of the speaker = later task; labels have no per-label timing; compared with R7 by eye only.
+
