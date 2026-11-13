@@ -20,7 +20,10 @@ from mt.ask import ask_anim
 from mt.common import ask_choice, yn
 from mt.draw import Item
 from mt.templates.t4 import scenes_title  # noqa: F401  (registers the 'title_block' widget)
-from mt.templates.t4 import scenes_widgets  # noqa: F401  (registers the 'code_window' widget)
+from mt.templates.t4 import scenes_widgets  # noqa: F401  (registers the 'code_window' widget)\
+from mt.templates.t4 import scenes_ring
+from mt.templates.t4 import scenes_bullets  # noqa: F401  (registers the 'bullet_list' widget)
+from mt.templates.t4 import scenes_card  # noqa: F401  (registers the 'info_card' widget)
 from mt.templates.t4.scenes_widgets import t4_widget_line_items
 from mt.templates.t4.kit import connector
 from mt.templates.t4.nameplate import T4_SAFE, _bool, _flt, _ink_box, _window
@@ -31,8 +34,18 @@ from mt.templates.t4.warn import t4_warn
 
 DEFAULT_PRESET = "web_dev"
 PRESET_LABEL = {"web_dev": "Web development HUD (R5 / R6)"}
-SLOTS = {"web_dev": {"portrait": {"title": (48, 60, 984, 220), "code": (48, 295, 434, 242)},          # R5: content centred on y 170; text area = 984 - 175 - 32
-                     "landscape": {"title": (48, 126, 780, 116), "code": (52, 316, 543, 289)}}}       # R6: content centred on y 184 (P15-P17 add their slots here)
+SLOTS = {"web_dev": {"portrait": {"title": (48, 60, 984, 220),        # R5: content centred on y 170; text area = 984 - 175 - 32
+                                  "code": (48, 295, 434, 242),
+                                  "ring": (637, 296, 240, 240),                                  
+                                  "bullets": (48, 640, 984, 440),
+                                  "card": (48, 1100, 984, 190)},
+
+                     "landscape": {"title": (48, 126, 780, 116),       # R6: content centred on y 184 (P15-P17 add their slots here)
+                                   "code": (52, 316, 543, 289),
+                                   "ring": (700, 300, 320, 320),
+                                   "bullets": (1080, 270, 780, 420),
+                                   "card": (1080, 720, 780, 170)}}}
+
 CONNECTORS = {"web_dev": {"portrait": [], "landscape": []}}
 T4_SCENE = {"on": True, "preset": DEFAULT_PRESET, "widgets": [], "start": 0.0, "trigger": "", "end": None, "hold": None, "anim": "fade",
             "anim_dur": 0.45, "stagger": 0.2, "connectors": None}
@@ -142,7 +155,7 @@ def _shift(a, b, lo, hi):
 
 def _put(sprite, box, W, H, s):
     """Sprite whose origin (info['origin']) = the box's top-left -> (cx, cy of the Item, ink rect on the canvas, moved px) | None (empty sprite)."""
-    ink = _ink_box(sprite)
+    ink = sprite.info.get("ink") or _ink_box(sprite)    
     if ink is None:
         return None
     ox, oy = sprite.info.get("origin", (0, 0))
@@ -189,9 +202,9 @@ def _widget_items(cfg, scene, label, win, ctx, slots, rects, placed):
         placed.append(("%s widget '%s'" % (label, key), pl[2]))
         ready.append((sp, pl))
     steps, last = t4_stagger(len(ready), scene["stagger"]), max(win[0], win[1] - 0.1)
-    items = [_make_item(sp, min(win[0] + d, last), win[1], pl[0], pl[1], scene) for (sp, pl), d in zip(ready, steps)]
+    items = [_make_item(sp, min(win[0] + d, last), win[1], pl[0], pl[1], scene) for (sp, pl), d in zip(ready, steps) if not sp.info.get("lines_only")]    
     for (sp, pl), d in zip(ready, steps):                                   # typewriter widgets: one 'reveal' Item per code line
-        items += t4_widget_line_items(sp, pl[0], pl[1], min(win[0] + d, last), win[1], scene["anim_dur"])
+        items += t4_widget_line_items(sp, pl[0], pl[1], min(win[0] + d, last), win[1], 0.0 if sp.info.get("lines_only") else scene["anim_dur"])
     return items, (min(win[0] + steps[-1], last) if steps else win[0])
 
 

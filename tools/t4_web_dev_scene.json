@@ -1,0 +1,23 @@
+{
+  "en": [{
+    "preset": "web_dev", "start": 0, "hold": 6, "anim": "fade", "anim_dur": 0.45, "stagger": 0.2,
+    "widgets": [
+      {"type": "title_block", "title": "Web Development", "subtitle": "Building Digital Solutions", "icon": "code"},
+      {"type": "code_window", "file": "main.py", "reveal": "typewriter", "line_step": 0.35, "line_dur": 0.4},
+      {"type": "ring", "rings": 3, "icon": "code"},
+      {"type": "bullet_list", "items": ["Responsive websites", "Fast and secure", "Modern UI / UX"], "line_step": 0.3, "line_dur": 0.35},
+      {"type": "info_card", "icon": "globe", "title": "Web Technology", "subtitle": "Build \u2022 Develop \u2022 Deploy"}
+    ]
+  }],
+  "ar": [{
+    "preset": "web_dev", "start": 0, "hold": 6, "anim": "fade", "anim_dur": 0.45, "stagger": 0.2,
+    "widgets": [
+      {"type": "title_block", "title": "تطوير الويب", "subtitle": "نبني حلولا رقمية", "icon": "code"},
+      {"type": "code_window", "file": "main.py", "reveal": "typewriter", "line_step": 0.35, "line_dur": 0.4,
+       "code": ["def create_better_future():", "    return \"Learn \u2022 Build \u2022 Grow\"", "", "# مرحبا بكم في منصة Eduvia", "print(create_better_future())"]},
+      {"type": "ring", "rings": 3, "icon": "code"},
+      {"type": "bullet_list", "items": ["مواقع متجاوبة", "سريعة وآمنة", "واجهات حديثة"], "line_step": 0.3, "line_dur": 0.35},
+      {"type": "info_card", "icon": "globe", "title": "تقنيات الويب", "subtitle": "تصميم \u2022 تطوير \u2022 نشر"}
+    ]
+  }]
+}
