@@ -160,7 +160,7 @@ def t4_ask_card():
     out = {"icon": ask("Card icon (kit name or PNG path, '-' = none)", default=d["icon"], key="t4_card_icon"),
            "title": ask("Card title", default=d["title"], key="t4_card_title"),
            "subtitle": ask("Card subtitle (empty = none)", default=d["subtitle"], key="t4_card_subtitle")}
-    out["align"] = ["auto", "left", "right"][ask_choice("Alignment", ["Auto (Arabic = right)", "Left", "Right"], default=0)]
+    out["align"] = ["auto", "left", "right"][ask_choice("Alignment", ["Auto (Arabic = right)", "Left", "Right"], default=1, key="t4_card_align") - 1]
     return out
 
 

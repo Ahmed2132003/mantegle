@@ -54,6 +54,32 @@ SLOTS = {"web_dev": {"portrait": {"title": (48, 60, 984, 220),        # R5: cont
                                    "card": (1080, 720, 780, 170)}}}
 
 CONNECTORS = {"web_dev": {"portrait": [], "landscape": []}}
+# ---- preset 'tech_overview': speaker stays visible in the CENTRE (no widget over the face area) ----------------------------
+SLOTS["tech_overview"] = {
+    "portrait": {"title": (48, 60, 984, 200), "code": (48, 290, 434, 242), "ring": (690, 290, 240, 240),
+                 "badge": (684, 1306, 348, 56),
+                 "bullets": (48, 1380, 470, 230), "chart": (560, 1380, 472, 230),
+                 "progress": (48, 1630, 520, 230), "card": (590, 1640, 442, 170)},
+    "landscape": {"title": (48, 60, 590, 116), "code": (52, 210, 543, 289), "progress": (52, 540, 560, 300), "badge": (52, 880, 340, 64),
+                  "ring": (1300, 60, 280, 280), "bullets": (1300, 375, 572, 200), "chart": (1300, 600, 572, 230),
+                  "card": (1300, 860, 572, 160)}}
+CONNECTORS["tech_overview"] = {
+    "portrait": [{"points": ["code-right", "ring-left"]}, {"points": ["bullets-right", "chart-left"]},
+                 {"points": ["bullets-bottom", "progress-top"]}, {"points": ["chart-bottom", "card-top"]}],
+    "landscape": [{"points": ["code-bottom", "progress-top"]}, {"points": ["progress-bottom", "badge-top"]},
+                  {"points": ["ring-bottom", "bullets-top"]}, {"points": ["bullets-bottom", "chart-top"]},
+                  {"points": ["chart-bottom", "card-top"]}]}
+PRESET_LABEL["tech_overview"] = "Tech overview HUD (speaker stays in the centre, R5 / R6)"
+SAFE_ZONE = {"tech_overview": {"portrait": (200, 560, 880, 1280), "landscape": (660, 130, 1260, 1000)}}   # px at short side 1080: no widget ink / line here
+DEFAULT_WIDGETS = {"tech_overview": [
+    {"type": "title_block", "title": "Tech Overview", "subtitle": "Build. Ship. Scale."},
+    {"type": "code_window", "file": "main.py"},
+    {"type": "ring", "icon": "chip"},
+    {"type": "badge", "text": "Python", "icon": "code"},
+    {"type": "bullet_list", "items": ["Frontend & Backend", "Cloud & DevOps", "AI & Automation"]},
+    {"type": "bar_chart", "values": [30, 55, 45, 80, 95], "labels": ["Jan", "Feb", "Mar", "Apr", "May"]},
+    {"type": "progress_list", "rows": ["code|Python|90", "database|SQL|75", "globe|Web|60"]},
+    {"type": "info_card", "icon": "cloud", "title": "Cloud Ready", "subtitle": "Build \u2022 Test \u2022 Deploy"}]}
 T4_SCENE = {"on": True, "preset": DEFAULT_PRESET, "widgets": [], "start": 0.0, "trigger": "", "end": None, "hold": None, "anim": "fade",
             "anim_dur": 0.45, "stagger": 0.2, "connectors": None}
 _LINE = {"points": [], "color": "#19d3ff", "end_dot": True, "width": 2.5, "glow": 9.0}
@@ -122,6 +148,8 @@ def _scene(raw):
     ws = raw.get("widgets")
     ws = [ws] if isinstance(ws, dict) else ws if isinstance(ws, (list, tuple)) else []
     out["widgets"] = [w for w in (_widget(x) for x in ws) if w is not None]
+    if "widgets" not in raw and out["preset"] in DEFAULT_WIDGETS:         # a scene that only names the preset = the ready default scene
+        out["widgets"] = [w for w in (_widget(x) for x in copy.deepcopy(DEFAULT_WIDGETS[out["preset"]])) if w is not None]
     trig = raw.get("trigger")
     out["trigger"] = trig.strip() if isinstance(trig, str) else ""
     out["start"] = raw["start"] if raw.get("start") is not None else (None if out["trigger"] else 0.0)
@@ -290,13 +318,16 @@ def t4_ask_scenes():
     """Question group 'scenes' (called by t4_ask_config). -> a list with ONE scene, or {'on': False}. More scenes: edit the job file."""
     if not yn("Add an infographic scene (title block + more widgets in later tasks - reference R5 / R6)?", default=False):
         return {"on": False}
-    names = sorted(SLOTS)
+    names = sorted(SLOTS)                     # 'tech_overview' sorts first = the Enter default; put web_dev first by hand if you prefer
     p = ask_choice("Scene layout", [PRESET_LABEL.get(n, n) for n in names], default=1, key="t4_scene_preset")
-    widgets = []
-    for name in WIDGETS:
-        if name in WIDGET_ASK and yn("Add the '%s' widget?" % name, default=True):
-            widgets.append(dict(WIDGET_ASK[name](), type=name, slot=WIDGET_SLOT.get(name, "")))
-    sc = {"preset": names[p - 1], "widgets": widgets}
+    preset, widgets = names[p - 1], []
+    if preset in DEFAULT_WIDGETS and yn("Use the ready default scene (all widgets, placeholder texts)?", default=True):
+        widgets = copy.deepcopy(DEFAULT_WIDGETS[preset])
+    else:
+        for name in WIDGETS:
+            if name in WIDGET_ASK and yn("Add the '%s' widget?" % name, default=True):
+                widgets.append(dict(WIDGET_ASK[name](), type=name, slot=WIDGET_SLOT.get(name, "")))
+    sc = {"preset": preset, "widgets": widgets}
     sc.update(t4_ask_when("Scene", 6.0, key="t4_scene_when"))
     sc["anim"] = ask_anim("Scene animation (widgets appear one after another)", default="fade", key="t4_scene_anim")
     return [sc]

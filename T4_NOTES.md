@@ -144,3 +144,10 @@
 - Growth: plot cut into <= 8 bands = pre-built staggered fade Items, no per-frame drawing. 5 s scene cost: reels 7.8-9.7 ms/frame avg (worst 50 ms), youtube 5.9-19.5 ms/frame avg (worst 22-93 ms); only 47 of 125 frames really drawn (16-36 ms each), the rest reuse the signature cache.
 - Regression: mt_t4_quick 112/112, mt_t4_web_dev_check 46/46.
 - GAPS: one gradient for all bars; progress fill does not animate (rows fade in staggered); no y-axis tick labels; reveal anim is LTR even for Arabic.
+
+## P20 - T4 scenes preset 'tech_overview' (refs R5 / R6)
+- DONE: SLOTS / CONNECTORS / PRESET_LABEL['tech_overview'] + SAFE_ZONE + DEFAULT_WIDGETS in t4/scenes.py (all 8 widgets, both aspects); a scene with only {"preset": "tech_overview"} = the full default scene; t4_ask_scenes offers "ready default scene" (Enter-through); scenes_card.py ask_choice default fix (Enter was rejected).
+- Public: SAFE_ZONE, DEFAULT_WIDGETS. cfg keys: none new.
+- Safe zone (px at short side 1080): portrait (200, 560, 880, 1280), landscape (660, 130, 1260, 1000); asserted for slots, placed ink, connectors and the real --still in tools/mt_t4_overview_check.py.
+- Verified: (fill after running) overview check, mt_quick, mt_t3_quick, mt_t4_quick, web_dev, charts.
+- GAPS: zone + slot numbers are estimates until compared with R5 / R6; stills not yet compared.
