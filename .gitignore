@@ -6,3 +6,7 @@ out/
 T4_BUNDLE.txt
 T4_NOTES_P14.txt
 T4_P1*_*.txt
+
+_send_*/
+_send_*.zip
+mt/templates/t4.zip

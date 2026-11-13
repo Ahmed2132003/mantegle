@@ -365,9 +365,10 @@ def t4_widget_line_items(sp, cx, cy, start, end, delay):
         lines = sp.info.get("lines") or []
         step, dur = float(sp.info.get("line_step", 0.35)), float(sp.info.get("line_dur", 0.4))
         last = max(start, end - 0.1)
+        anim = sp.info.get("line_anim", "reveal")
         for i, (ls, x, y) in enumerate(lines):
             t0 = min(start + delay + i * step, last)
-            out.append(Item(ls, t0, end, cx - sp.width / 2.0 + x + ls.width / 2.0, cy - sp.height / 2.0 + y + ls.height / 2.0, "reveal", dur, out=True))
+            out.append(Item(ls, t0, end, cx - sp.width / 2.0 + x + ls.width / 2.0, cy - sp.height / 2.0 + y + ls.height / 2.0, anim, dur, out=True))            
     except Exception as e:
         t4_warn("code_window: typewriter lines could not be built (%s: %s)." % (type(e).__name__, e))
     return out
