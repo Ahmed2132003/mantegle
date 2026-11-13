@@ -24,6 +24,7 @@ from mt.templates.t4 import scenes_widgets  # noqa: F401  (registers the 'code_w
 from mt.templates.t4 import scenes_ring
 from mt.templates.t4 import scenes_bullets  # noqa: F401  (registers the 'bullet_list' widget)
 from mt.templates.t4 import scenes_card  # noqa: F401  (registers the 'info_card' widget)
+from mt.templates.t4 import scenes_charts  # noqa: F401  (registers 'bar_chart', 'progress_list', 'badge')
 from mt.templates.t4.scenes_widgets import t4_widget_line_items
 from mt.templates.t4.kit import connector
 from mt.templates.t4.nameplate import T4_SAFE, _bool, _flt, _ink_box, _window
@@ -38,12 +39,18 @@ SLOTS = {"web_dev": {"portrait": {"title": (48, 60, 984, 220),        # R5: cont
                                   "code": (48, 295, 434, 242),
                                   "ring": (637, 296, 240, 240),                                  
                                   "bullets": (48, 640, 984, 440),
+                                  "chart": (64, 1310, 952, 300),
+                                  "progress": (64, 1630, 952, 220),
+                                  "badge": (684, 556, 316, 64),                                  
                                   "card": (48, 1100, 984, 190)},
 
                      "landscape": {"title": (48, 126, 780, 116),       # R6: content centred on y 184 (P15-P17 add their slots here)
                                    "code": (52, 316, 543, 289),
                                    "ring": (700, 300, 320, 320),
                                    "bullets": (1080, 270, 780, 420),
+                                   "chart": (52, 640, 560, 392),
+                                   "progress": (672, 650, 380, 380),
+                                   "badge": (860, 150, 340, 64),
                                    "card": (1080, 720, 780, 170)}}}
 
 CONNECTORS = {"web_dev": {"portrait": [], "landscape": []}}
