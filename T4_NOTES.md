@@ -167,3 +167,11 @@
 - Motion: same u(t) as t4_split_u (eased wipe in, hold, back) -> zoom + overlay offset; target = centre of the largest axis-aligned rect on the speaker's side of the seam; picture always covers the canvas. Audio untouched.
 - WHY overlay offsets: crop after scale eval=frame keeps its first size (x clamps to 0) - same idea as t3_layout_video.
 - GAPS: --still does not apply it (PIL twin); fill mode only; no easing / focus options; scale eval=frame runs for the whole video (cost small, 2 px chroma steps); a video that already fills the canvas exactly needs scale > 1 to move.
+
+## P22 - T4 broll: full-canvas takeover + HUD decor (assumed task number, ref R4)
+- DONE: NEW t4/broll.py (cfg, plan, wipe mask, items, questions), t4/broll_decor.py (decor plate), t4/broll_video.py (clip baking). Edits: t4/__init__.py (import, question, cfg completion, broll items FIRST in t4_build_items), cards_video.py (broll layer FIRST = bottom). NEW tools/mt_t4_broll_check.py.
+- Public: T4_BROLL, t4_broll_cfg, t4_broll_plan, t4_broll_mask, t4_broll_items, t4_ask_broll, t4_broll_decor, t4_broll_prepare_layers.
+- cfg['t4']['broll'] = {on (must be true in a job), media (video|image), start|trigger, end|hold (5 s), decor True, anim fade|wipe|none, anim_dur 0.5, angle 20, seg_start/seg_end, color, stripe_color}.
+- Layer: muted, area 'box' (= whole canvas) -> under the frame plate; speaker audio never touched. fade = layer fade (one transcode); wipe = alpha clip baked per frame (slower on long holds).
+- Decor = ONE cached full-canvas sprite Item (grid, 4 neon streaks, code icon TL, dot matrix TR, hazard stripes BL) with fade in/out.
+- GAPS: wipe has no neon seam line; one b-roll per job (list = later); 'original' segment not supported; decor positions are estimates until compared with R4; frame icon (top-right) may sit close to the dot matrix.

@@ -170,4 +170,9 @@ def t4_prepare_card_layers(cfg, info, tmpdir):
         split_layers = t4_split_prepare_layers(cfg, info, tmpdir)
     except Exception:
         split_layers = []
-    return split_layers + layers
+    try:                                                           # T4 b-roll takeover: its baked clip goes FIRST = bottom of all video layers
+        from mt.templates.t4.broll_video import t4_broll_prepare_layers
+        broll_layers = t4_broll_prepare_layers(cfg, info, tmpdir)
+    except Exception:
+        broll_layers = []
+    return broll_layers + split_layers + layers
