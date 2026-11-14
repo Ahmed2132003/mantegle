@@ -257,7 +257,12 @@ def build_ffmpeg_cmd(cfg, info, duration, out_path, preview, overlay_path):
     if lay3:
         from mt.templates.t3.layout import t3_layout_video
         _vf, ox, oy = t3_layout_video(cfg)
-        v_f = f"[r0]{_vf}[v]"
+    if cfg.get("template_id") == 5:             # T4 reframe (mt/templates/t4/reframe.py): zoom + shift the speaker while the split is shown
+        from mt.templates.t4.reframe import t4_reframe_vf
+        _rf = t4_reframe_vf(cfg, info, box)
+        if _rf:
+            _vf, ox, oy = _rf
+            v_f = f"[r0]{_vf}[v]"
     fc = f"{bg_f};{src};{v_f};[bg][v]overlay={ox}:{oy}[base0]"
     cur = "base0"
     if splits:

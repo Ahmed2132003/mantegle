@@ -14,6 +14,7 @@ from mt.templates.t4.tiles import t4_ask_tiles, t4_tiles_cfg, t4_tiles_items
 from mt.templates.t4.warn import t4_warn, t4_warn_reset
 from mt.templates.t4.scenes import t4_ask_scenes, t4_scenes_cfg, t4_scenes_items
 from mt.templates.t4.split import t4_ask_split, t4_split_cfg, t4_split_items
+from mt.templates.t4.reframe import t4_ask_reframe, t4_reframe_cfg
 from mt.templates.t4.cfg import CANVAS_REELS, T4_DEFAULTS, T4_MODULES, t4_canvas, t4_cfg  # noqa: F401
 
 
@@ -42,6 +43,7 @@ def t4_ask_config(video_info):
     t4["cards"] = t4_ask_image_cards()                 # question group 'cards' (T4-11): a list with one image card, or {'on': False}
     t4["scenes"] = t4_ask_scenes()
     t4["split"] = t4_ask_split()
+    t4["reframe"] = t4_ask_reframe(t4["split"])
     t4 = t4_cfg(t4)
     return {"template_id": 5, "canvas": canvas, "video_box": _full_box(canvas, fit), "background": {"type": "color", "value": t4["backdrop"]["value"]},
             "layers": [], "t4": t4}
@@ -130,6 +132,7 @@ def t4_build_static_layers(cfg, tmp):
     t4["cards"] = t4_cards_cfg(t4.get("cards")) or {"on": False}      # complete image cards (extras kept), drawn as Items by t4_build_items
     t4["scenes"] = t4_scenes_cfg(t4.get("scenes")) or {"on": False}
     t4["split"] = t4_split_cfg(t4.get("split"))                       # complete dict; drawn by t4_build_items (seam + labels) + baked clip
+    t4["reframe"] = t4_reframe_cfg(t4.get("reframe"))                 # {on, focus_x, focus_y, scale}; drawn by build_ffmpeg_cmd (no items)
     t4_compose_fg(cfg, tmp)
 
 

@@ -160,3 +160,10 @@
 - --still: media drawn as an Item (first frame of a video); no wipe in stills.
 - GAPS: media 'original' (segment of the main video) not supported; reframing of the speaker = later task; labels have no per-label timing; compared with R7 by eye only.
 
+## P21b - T4 reframe of the speaker during the split (assumed task number, ref R7)
+- DONE: NEW t4/reframe.py: zoom + shift of the speaker video while the split is shown, pure ffmpeg expressions (no baking). render.py: ONE guarded block (template_id == 5) after the T3 video block; __init__.py: import + 1 question line + 1 cfg-completion line. NEW tools/mt_t4_reframe_check.py.
+- Public: T4_REFRAME, t4_reframe_cfg, t4_visible_rect, t4_reframe_u_expr, t4_reframe_filter, t4_reframe_vf -> (vf, ox, oy) | None, t4_ask_reframe.
+- cfg['t4']['reframe'] = {on False, focus_x 0.5, focus_y 0.4, scale 1.35 (1..3)}; focus = face position in the SOURCE (0..1, or percent). Off / no split / 'fit' = the P19 command unchanged.
+- Motion: same u(t) as t4_split_u (eased wipe in, hold, back) -> zoom + overlay offset; target = centre of the largest axis-aligned rect on the speaker's side of the seam; picture always covers the canvas. Audio untouched.
+- WHY overlay offsets: crop after scale eval=frame keeps its first size (x clamps to 0) - same idea as t3_layout_video.
+- GAPS: --still does not apply it (PIL twin); fill mode only; no easing / focus options; scale eval=frame runs for the whole video (cost small, 2 px chroma steps); a video that already fills the canvas exactly needs scale > 1 to move.
