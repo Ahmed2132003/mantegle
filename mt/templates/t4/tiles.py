@@ -335,9 +335,9 @@ def _c_points(s):
     return pts
 
 
-def t4_ask_tiles():
+def t4_ask_tiles(gate=True):
     """Question group 'tiles' (called by t4_ask_config). -> a list with ONE group, or {'on': False}. More groups: edit the job file."""
-    if not yn("Add glass logo tiles (PNG logos in a grid - reference R2)?", default=False):
+    if gate and not yn("Add glass logo tiles (PNG logos in a grid - reference R2)?", default=False):
         return {"on": False}
     imgs = []
     while len(imgs) < MAX_IMAGES:

@@ -56,9 +56,9 @@ def t4_frame_cfg(raw):
     return out
 
 
-def t4_ask_frame():
+def t4_ask_frame(gate=True):
     """Question group 'frame' (called by t4_ask_config). -> the frame dict for cfg['t4']['frame']."""
-    if not yn("Add the neon HUD frame (corner brackets, side ticks, bottom bar)?", default=False):
+    if gate and not yn("Add the neon HUD frame (corner brackets, side ticks, bottom bar)?", default=False):
         return {"on": False}
     text = ask("Bottom bar text ('-' = no bar; Arabic works too)", default=T4_FRAME["text"], key="t4_frame_text",
                cast=lambda s: "" if s.strip() in ("-", "none") else s.strip())
@@ -194,6 +194,8 @@ def t4_frame_plate(W, H, fcfg):
     """The transparent W x H RGBA frame plate for a normalised frame dict (cached per size + look; returns a private copy)."""
     W, H = int(W), int(H)
     fp = fcfg.get("font")
+    if isinstance(fp, str) and fp.strip() and not os.path.isfile(fp):
+        t4_warn("frame: font '%s' not found - using the default font." % os.path.basename(fp))
     fp = fp if isinstance(fp, str) and os.path.isfile(fp) else default_font()
     ic = fcfg["icon"] if fcfg["icon"] in ICON_NAMES else ""
     key = (W, H, fcfg["color"], fcfg["text"], ic, bool(fcfg["show_ticks"]), fp)

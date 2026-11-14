@@ -314,9 +314,9 @@ def _one_scene(cfg, sc, label, duration, W, H, placed):
 
 
 # ---- questions --------------------------------------------------------------------------------------------------------------
-def t4_ask_scenes():
+def t4_ask_scenes(gate=True):
     """Question group 'scenes' (called by t4_ask_config). -> a list with ONE scene, or {'on': False}. More scenes: edit the job file."""
-    if not yn("Add an infographic scene (title block + more widgets in later tasks - reference R5 / R6)?", default=False):
+    if gate and not yn("Add an infographic scene (title block + more widgets in later tasks - reference R5 / R6)?", default=False):
         return {"on": False}
     names = sorted(SLOTS)                     # 'tech_overview' sorts first = the Enter default; put web_dev first by hand if you prefer
     p = ask_choice("Scene layout", [PRESET_LABEL.get(n, n) for n in names], default=1, key="t4_scene_preset")

@@ -117,10 +117,10 @@ _PRESET = {}     # {"path": saved template chosen in the selector, "sel": True w
 
 
 def _saved_templates():
-    """[(path, registry_id)] for every templates/*.json: Template 2 / 3 designs -> 2 / 3, everything else -> 4 (Custom)."""
+    """[(path, registry_id)] for every templates/*.json: Template 2 / 3 / 4 designs -> 2 / 3 / 5, everything else -> 4 (Custom)."""
     out = []
     for p in list_templates():
-        out.append((p, _tpl_template_id(p) if _tpl_template_id(p) in (2, 3) else 4))
+        out.append((p, _tpl_template_id(p) if _tpl_template_id(p) in (2, 3, 5) else 4))
     return out
 
 

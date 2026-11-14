@@ -358,9 +358,9 @@ def _ask_motion(prompt, corner, key, whole_video):
     return out
 
 
-def t4_ask_nameplate():
+def t4_ask_nameplate(gate=True):
     """Question group 'nameplate' (called by t4_ask_config). -> the dict for cfg['t4']['nameplate']."""
-    if not yn("Add a name tag (name + role - references R2 / R10)?", default=False):
+    if gate and not yn("Add a name tag (name + role - references R2 / R10)?", default=False):
         return {"on": False}
     st = ask_choice("Tag style:", ["tag_a - hexagon-cut glass panel, code icon | name + role, stripes in the corner (R2)",
                                    "tag_b - chamfered panel, capitals, bright bar + stripes on the bottom edge (R10)"],
@@ -378,9 +378,9 @@ def t4_ask_nameplate():
     return out
 
 
-def t4_ask_corner_list():
+def t4_ask_corner_list(gate=True):    
     """Question group 'corner_list' (called by t4_ask_config). -> the dict for cfg['t4']['corner_list']."""
-    if not yn("Add the corner list (laptop icon + service rows - reference R10)?", default=False):
+    if gate and not yn("Add the corner list (laptop icon + service rows - reference R10)?", default=False):
         return {"on": False}
     d = T4_CORNER_LIST
     rows = []

@@ -168,9 +168,9 @@ def t4_broll_items(cfg, duration):
 
 
 # ---- questions --------------------------------------------------------------------------------------------------------------
-def t4_ask_broll():
+def t4_ask_broll(gate=True):
     """Question group 'broll' (called by t4_ask_config). -> dict for cfg['t4']['broll'] or {'on': False}."""
-    if not yn("Add a b-roll takeover (full-canvas clip / image over the speaker, speaker audio continues, HUD decoration - reference R4)?", default=False):
+    if gate and not yn("Add a b-roll takeover (full-canvas clip / image over the speaker, speaker audio continues, HUD decoration - reference R4)?", default=False):
         return {"on": False}
     media = ask("B-roll media (video or image path)", key="t4_broll_media", cast=c_existing_file(IMAGE_EXTS + VIDEO_EXTS))
     out = {"on": True, "media": media}

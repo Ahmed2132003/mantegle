@@ -186,20 +186,9 @@ def _interactive_t3(cfg, tpl_entry):
 
 
 def _interactive_t4(cfg, tpl_entry):
-    """Template 4 flow: video -> SRT(s) -> canvas + fit/fill -> captions -> texts / elements / layers / video layers -> output."""
-    cfg["video"], info = ask_video_path()
-    srt_paths = ask_srt_paths(parse_srt)
-    tpl = tpl_entry["ask_config"](info)
-    cfg.update({k: tpl[k] for k in ("canvas", "video_box", "background", "t4")})
-    cfg["layers"] = []
-    cfg["captions"] = [tpl_entry["caption_style"](i, p) for i, p in enumerate(srt_paths)]
-    cfg["cards"] = []
-    cfg["texts"] = ask_texts(info["duration"])
-    cfg["elements"] = ask_elements(info["duration"])
-    cfg["layers"] = ask_layers(*cfg["canvas"])
-    cfg["video_layers"] = ask_video_layers(info["duration"])
-    ask_output_options(cfg)
-    return cfg
+    """Template 4 flow (13 numbered groups, each starts with 'Use this module? (y/n)'; saved styles): see mt/templates/t4/flow.py."""
+    from mt.templates.t4.flow import t4_interview
+    return t4_interview(cfg, tpl_entry)
 
 
 def interactive():
@@ -209,6 +198,32 @@ def interactive():
         _PRESET.clear()
 
 
+_T4_RECAP_NAMES = {"nameplate": "name tag", "corner_list": "corner list", "broll": "b-roll"}
+
+
+def _t4_mod_on(v):
+    """A T4 module is a dict {on: ...} or (tiles / cards / scenes) a list of items; junk = off. Never raises."""
+    if isinstance(v, dict):
+        return bool(v.get("on"))
+    return isinstance(v, list) and any(isinstance(i, dict) and i.get("on", True) for i in v)
+
+
+def _recap_t4(cfg):
+    """Template 4 part of the recap: canvas + fit | numbered groups ON / off. Never raises (a damaged job still prints a line)."""
+    t4 = t4_cfg(cfg.get("t4"))
+    cv = cfg.get("canvas") if isinstance(cfg.get("canvas"), (list, tuple)) and len(cfg["canvas"]) == 2 else ["?", "?"]
+    n = lambda k: len(cfg.get(k) or []) if isinstance(cfg.get(k), list) else 0
+    cap = n("captions")
+    mods = [("captions x%d" % cap, cap > 0)]
+    mods += [(_T4_RECAP_NAMES.get(m, m), _t4_mod_on(t4[m])) for m in T4_MODULES if m != "tags" or _t4_mod_on(t4[m])]
+    mods += [("texts x%d" % n("texts"), n("texts") > 0), ("elements x%d" % n("elements"), n("elements") > 0),
+             ("layers x%d" % n("layers"), n("layers") > 0), ("video layers x%d" % n("video_layers"), n("video_layers") > 0)]
+    if t4["fit"] == "fit":
+        mods.insert(0, ("backdrop " + t4["backdrop"]["type"], True))
+    return f"  |  {cv[0]}x{cv[1]} {t4['fit']}  |  ON: " + (", ".join(a for a, on in mods if on) or "-") + \
+        "  |  off: " + (", ".join(a.split(" x")[0] for a, on in mods if not on) or "-")
+        
+        
 def recap_line(cfg):
     """One line: template name + which Template 2 modules are on."""
     e = get_template(cfg)
@@ -228,14 +243,7 @@ def recap_line(cfg):
         return line + "  |  ON: " + (", ".join(n for n, on in mods if on) or "-") + \
             "  |  off: " + (", ".join(n.split(" x")[0] for n, on in mods if not on) or "-")
     if e["id"] == 5:
-        t4 = t4_cfg(cfg.get("t4"))
-        cv = cfg.get("canvas") or ["?", "?"]
-        mods = [(m, bool(t4[m]["on"])) for m in T4_MODULES] + [
-            ("captions x%d" % len(cfg.get("captions", [])), bool(cfg.get("captions"))),
-            ("texts x%d" % len(cfg.get("texts", [])), bool(cfg.get("texts"))),
-            ("elements x%d" % len(cfg.get("elements", [])), bool(cfg.get("elements")))]
-        return line + f"  |  {cv[0]}x{cv[1]} {t4['fit']}  |  ON: " + (", ".join(n for n, on in mods if on) or "-") + \
-            "  |  off: " + (", ".join(n.split(" x")[0] for n, on in mods if not on) or "-")
+        return line + _recap_t4(cfg)
     if e["id"] != 2:
         return line
     t2 = cfg.get("t2") or {}

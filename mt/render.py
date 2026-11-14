@@ -84,9 +84,16 @@ def preflight_cfg(cfg, need_video=True):
 def _load_job(path):
     try:
         job = json.loads(Path(path).read_text(encoding="utf-8-sig"))
+        if not isinstance(job, dict):
+            raise TypeError("the job file must hold one JSON object {...}")
         if (isinstance(job, dict) and job.get("template_id") == 3 and "t3" not in job
                 and (job.get("background") or {}).get("type") != "t3"):
             job["template_id"] = 4      # jobs saved before S4 used id 3 for Custom; real Template 3 jobs carry cfg["t3"]
+        if job.get("template_id") == 5:                 # Template 4: no 'video' -> a clear message, no 'output' -> <video>_edited.mp4
+            if not job.get("video"):
+                raise KeyError("video")
+            if not job.get("output"):
+                job["output"] = str(Path(str(job["video"])).with_suffix("")) + "_edited.mp4"
         return job
     except FileNotFoundError:
         raise ValueError(f"job file not found: {path}")

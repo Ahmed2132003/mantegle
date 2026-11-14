@@ -1,0 +1,18 @@
+﻿TASK REF: R4
+
+Read T4_RULES.md and T4_NOTES.md first.
+
+Create: mt/templates/t4/broll.py
+
+Implement a full-canvas takeover of a video/image segment while the speaker audio continues. Add a HUD decoration plate on top:
+- diagonal neon light streaks
+- faint grid lines
+- code icon watermark at top-left
+- dot matrix at top-right
+- hazard stripes at bottom-left
+
+Use cross-fade or diagonal wipe for entry/exit.
+Configuration: {media, start|trigger, hold, decor on/off, anim}.
+Use the existing video-layer baking implementation for the clip; do not invent a parallel baking path.
+
+Verify both canvases and confirm speaker audio remains continuous throughout the takeover and transitions. Follow existing project conventions and the guidance in T4_RULES.md / T4_NOTES.md.

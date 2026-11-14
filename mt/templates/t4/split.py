@@ -348,9 +348,9 @@ def t4_split_items(cfg, duration):
 
 
 # ---- questions --------------------------------------------------------------------------------------------------------------
-def t4_ask_split():
+def t4_ask_split(gate=True):
     """Question group 'split' (called by t4_ask_config). -> the dict for cfg['t4']['split'] or {'on': False}."""
-    if not yn("Add a diagonal split-screen (a clip / image wipes in on one side, neon seam + two HUD labels - reference R7)?", default=False):
+    if gate and not yn("Add a diagonal split-screen (a clip / image wipes in on one side, neon seam + two HUD labels - reference R7)?", default=False):
         return {"on": False}
     media = ask("Split media (image or video path)", key="t4_split_media", cast=c_existing_file(IMAGE_EXTS + VIDEO_EXTS))
     l1 = ask("Label 1, the speaker side ('-' = none)", default=DEFAULT_LABELS[0], key="t4_split_l1", cast=lambda v: v.strip())

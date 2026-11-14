@@ -355,9 +355,9 @@ def _c_target(s):
     return p
 
 
-def t4_ask_image_cards():
+def t4_ask_image_cards(gate=True):
     """Question group 'cards' (called by t4_ask_config). -> a list with ONE card, or {'on': False}. More cards: edit the job file."""
-    if not yn("Add an image card (picture in a neon border, optional label + connector - references R2 / R8)?", default=False):
+    if gate and not yn("Add an image card (picture in a neon border, optional label + connector - references R2 / R8)?", default=False):
         return {"on": False}
     def _c_media(s):
         return "original" if s.strip().lower() == "original" else c_existing_file(IMAGE_EXTS + VIDEO_EXTS)(s)
